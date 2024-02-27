@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - GameManager
+  - EventSystem
+  - PauseBlackButton
+  - BlackContinueButton
+  - BlackOptionsButton
+  - BlackPlayButton
+  - BlackQuitButton
+  - SmallBlackHomeButton
+  - CanvasTitleScene
+  - CanvasOptionsScene
+  - CanvasMainScene
+  - LeftBlackButton
+  - Reset
+  - Apply
+  - UIManager
+  - HighScore
+  - Score
+  - Timer
+  - Button
+  - HorizontalBlackButton
+  - GameOverScreen
+  - PauseMenuScreen
+  - SmallBlackHomeButtonForGameOver
+  - PressAnyKeyToStart
+  - CanvasMainMenuScene
+  - Gem
+  - MainMenuBackgroundMusic
+  - AudioManager
+  - SettingsManager
+  - MainGameMusic
+  - SoundsVolume
+  - MenuMusicVolume
+  - MasterVolume
+  - ClickSoundEffects
+  - SoundsVolumeSlider
+  - SoundsVolumeText
+  - FxTemporaire
+  - ParticleManager
+  - TreeTrunkDown
+  - TreeTrunkUp
+  - Obstacles
+  - TreeLogs
+  - BestTime
+  - LowerBounds
+  - UpperBounds
+  - CollisionParticleEffect
+  - GemParticleEffect
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
