@@ -62,10 +62,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a77c095d3377be94d96251c0c3f3436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeLogs: {fileID: 2471727181482173279}
   lowerYRange: -15
   upperYRange: 8
   xBounds: 70
+  playerController: {fileID: 0}
+  treeLogs: {fileID: 2471727181482173279}
 --- !u!65 &1011001812385649916
 BoxCollider:
   m_ObjectHideFlags: 0

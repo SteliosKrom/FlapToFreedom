@@ -4,53 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GameManager
-  - EventSystem
-  - PauseBlackButton
-  - BlackContinueButton
-  - BlackOptionsButton
-  - BlackPlayButton
-  - BlackQuitButton
-  - SmallBlackHomeButton
-  - CanvasTitleScene
-  - CanvasOptionsScene
   - CanvasMainScene
-  - LeftBlackButton
-  - Reset
-  - Apply
-  - UIManager
-  - HighScore
   - Score
   - Timer
-  - Button
-  - HorizontalBlackButton
-  - GameOverScreen
-  - PauseMenuScreen
-  - SmallBlackHomeButtonForGameOver
-  - PressAnyKeyToStart
-  - CanvasMainMenuScene
-  - Gem
-  - MainMenuBackgroundMusic
-  - AudioManager
-  - SettingsManager
   - MainGameMusic
-  - SoundsVolume
-  - MenuMusicVolume
-  - MasterVolume
   - ClickSoundEffects
-  - SoundsVolumeSlider
-  - SoundsVolumeText
-  - FxTemporaire
-  - ParticleManager
+  - Gem
   - TreeTrunkDown
   - TreeTrunkUp
-  - Obstacles
   - TreeLogs
-  - BestTime
-  - LowerBounds
-  - UpperBounds
-  - CollisionParticleEffect
-  - GemParticleEffect
+  - LeftBlackButton
   layers:
   - Default
   - TransparentFX

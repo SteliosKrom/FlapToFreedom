@@ -65,14 +65,12 @@ public class GameManager : MonoBehaviour
         //TimeScore();
     }
 
+    //THIS WILL GO TO PLAYER CONTROLLER
     public void AddForceToPlayer()
     {
        // playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
        // StartCoroutine(PlayIntro());
     }
-
-
-    // We use an IEnumerator to make out starting point animation 
 
 
     public void GameOver()
@@ -136,8 +134,6 @@ public class GameManager : MonoBehaviour
             bestScore = playerController.score;
             PlayerPrefs.SetInt("BestScore", bestScore);
             PlayerPrefs.Save();
-            //  Debug.Log("Best score is: " + bestScore);
-            //  Debug.Log("Checked and saved best score!");
             UpdateBestScore(bestScore);
         }
         bestScoreText.text = bestScore.ToString();
@@ -150,8 +146,6 @@ public class GameManager : MonoBehaviour
             bestTime = (int)time;
             PlayerPrefs.SetInt("BestTime", bestTime);
             PlayerPrefs.Save();
-            //  Debug.Log("Best time is: " + bestTime);
-            //  Debug.Log("Checked and saved best score!");
             UpdateBestTime(bestTime);
         }
         bestTimeText.text = bestTime.ToString();
@@ -169,12 +163,10 @@ public class GameManager : MonoBehaviour
         bestScoreText.text = "Best Score: " + bestScore;
     }
 
-
     public void LoadBestScoreOnStartGame()
     {
         bestScore = PlayerPrefs.GetInt("BestScore");
         UpdateBestScore(bestScore);
-        //  Debug.Log("Loading of the best score value: " + bestScore);
     }
 
     public void LoadBestTimeOnStartGame()

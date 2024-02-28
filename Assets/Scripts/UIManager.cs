@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//SPLIT MY UI ELEMENTS TO DIFFERENT CLASSES! (MAIN MENU UI ELEMENTS ON ANOTHER CLASS) & (MAIN GAME UI ELEMENTS ON ANOTHER CLASS)
 public class UIManager : MonoBehaviour
 {
     // Delay variables!

@@ -64,6 +64,7 @@
     <Compile Include="Assets\2DBackgroundPack\Demo\Script\ParallaxBackground_0.cs" />
     <Compile Include="Assets\Scripts\GameScene\Player\PlayerOutOfBounds.cs" />
     <Compile Include="Assets\Scripts\DestroyOutOfBounds.cs" />
+    <Compile Include="Assets\Scripts\MenuScene\MainGameUI\MainGameUIManager.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
     <Compile Include="Assets\Scripts\AudioManager.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Assets\Scripts\PressAnyKeyToStartFunctionality.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\GameScene\MoveBackgroundLeft.cs" />
+    <Compile Include="Assets\Scripts\MenuScene\MainMenuUI\MenuUIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
