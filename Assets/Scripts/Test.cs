@@ -12,7 +12,7 @@ public class Test : MonoBehaviour
 
     private void Update()
     {
-        TimeScore();
+        //TimeScore();
     }
     public void TimeScore()
     {
@@ -29,6 +29,7 @@ public class Test : MonoBehaviour
             timerText.text = "Timer: " + time.ToString();
             Debug.Log("Currently Playing");
         }
+
         else
         {
             Debug.Log("Currently Game Over");

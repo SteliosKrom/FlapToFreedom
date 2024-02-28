@@ -119,11 +119,11 @@ public class GameManager : MonoBehaviour
 
     public void UpdateTimer()
     {
-        // time += Time.deltaTime;
-        // int minutes = Mathf.FloorToInt(time / 60);
-        // int seconds = Mathf.FloorToInt(time % 60);
-        // timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        // timerText.text = "Timer: " + timerText.text;            
+         //time += Time.deltaTime;
+         //int minutes = Mathf.FloorToInt(time / 60);
+         //int seconds = Mathf.FloorToInt(time % 60);
+         //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+         //timerText.text = "Timer: " + timerText.text;         
     }
 
     public void TimeScore()
@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Currently Game Over");
         }
-
     }
 
     public void CheckSaveBestScore()

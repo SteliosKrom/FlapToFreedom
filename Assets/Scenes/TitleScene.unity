@@ -432,7 +432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xA9 2024 TheDarkKnightGames. All Rights Reserved!"
+  m_text: "\xA9 2024 TheLegendKnightGames. All Rights Reserved!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7dc3cdbb54487cd4eae7687399c9035c, type: 2}
   m_sharedMaterial: {fileID: -9061458706648311415, guid: 7dc3cdbb54487cd4eae7687399c9035c, type: 2}

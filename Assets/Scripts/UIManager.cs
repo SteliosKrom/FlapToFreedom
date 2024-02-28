@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     {
         settingsManager = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
     }
 
@@ -135,12 +135,13 @@ public class UIManager : MonoBehaviour
                 {
                     gameManager.PauseGame();
                 }
+
                 else
                 {
+                    gameManager.ResumeGame();
                 }      
             }
-        }
-       
+        } 
     }
 
     public void HomeBlackButton()

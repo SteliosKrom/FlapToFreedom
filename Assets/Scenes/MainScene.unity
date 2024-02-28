@@ -3868,7 +3868,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -62.13041, w: 13.310079}
+  m_margin: {x: 0, y: 0, z: -62.13041, w: -19.990784}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6522,6 +6522,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: time
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
       propertyPath: timerText
       value: 
