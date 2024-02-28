@@ -2355,7 +2355,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: pauseMenuScreen
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
       propertyPath: playerController
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: gameOverMenuScreen
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4685844530832768504, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
