@@ -137,7 +137,6 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    gameManager.ResumeGame();
                 }      
             }
         }

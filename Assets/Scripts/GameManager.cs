@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Managers")]
     public static GameManager instance;
     private PlayerController playerController;
     private AudioManager audioManager;
-    
+
     [Header("UI")]
     public UIManager uiManager;
     public GameObject pauseMenuScreen;
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         animator = GetComponent<Animator>();
 
-        CheckPlayerControllerNullReference();
+        AddForceToPlayer();
 
         LoadBestScoreOnStartGame();
         LoadBestTimeOnStartGame();
@@ -52,13 +53,6 @@ public class GameManager : MonoBehaviour
         // Update best score and time
         UpdateBestTime(bestTime);
         UpdateBestScore(bestScore);
-
-        // Check for null bestTimeText
-        if (bestTimeText == null)
-        {
-            Debug.Log("bestTimeText is null in Awake!");
-        }
-
     }
 
     private void Start()
@@ -70,7 +64,8 @@ public class GameManager : MonoBehaviour
     {
         //TimeScore();
     }
-    public void CheckPlayerControllerNullReference()
+
+    public void AddForceToPlayer()
     {
         playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
         StartCoroutine(PlayIntro());
@@ -92,9 +87,9 @@ public class GameManager : MonoBehaviour
         {
             distanceCovered = (Time.time - startTime) * speed;
             fractionOfJourney = distanceCovered / journeyLength;
-        
+
             playerController.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
-            
+
             yield return null;
         }
     }
@@ -113,7 +108,6 @@ public class GameManager : MonoBehaviour
         pauseMenuScreen.SetActive(true);
         audioManager.mainGameMusicAudioSource.Pause();
         audioManager.PressButtonSound();
-    //    Debug.Log("Pause menu screen is enabled after delay!");
     }
 
     public void ResumeGame()
@@ -121,16 +115,15 @@ public class GameManager : MonoBehaviour
         pauseMenuScreen.SetActive(false);
         audioManager.mainGameMusicAudioSource.UnPause();
         audioManager.PressButtonSound();
-     //   Debug.Log("Pause menu screen is disabled after delay");
     }
 
     public void UpdateTimer()
     {
-       // time += Time.deltaTime;
-       // int minutes = Mathf.FloorToInt(time / 60);
-       // int seconds = Mathf.FloorToInt(time % 60);
-       // timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-       // timerText.text = "Timer: " + timerText.text;            
+        // time += Time.deltaTime;
+        // int minutes = Mathf.FloorToInt(time / 60);
+        // int seconds = Mathf.FloorToInt(time % 60);
+        // timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        // timerText.text = "Timer: " + timerText.text;            
     }
 
     public void TimeScore()
@@ -148,11 +141,12 @@ public class GameManager : MonoBehaviour
             timerText.text = "Timer: " + time.ToString();
             Debug.Log("Currently Playing");
         }
+
         else
         {
             Debug.Log("Currently Game Over");
         }
-        
+
     }
 
     public void CheckSaveBestScore()
@@ -162,8 +156,8 @@ public class GameManager : MonoBehaviour
             bestScore = playerController.score;
             PlayerPrefs.SetInt("BestScore", bestScore);
             PlayerPrefs.Save();
-          //  Debug.Log("Best score is: " + bestScore);
-          //  Debug.Log("Checked and saved best score!");
+            //  Debug.Log("Best score is: " + bestScore);
+            //  Debug.Log("Checked and saved best score!");
             UpdateBestScore(bestScore);
         }
         bestScoreText.text = bestScore.ToString();
@@ -176,8 +170,8 @@ public class GameManager : MonoBehaviour
             bestTime = (int)time;
             PlayerPrefs.SetInt("BestTime", bestTime);
             PlayerPrefs.Save();
-          //  Debug.Log("Best time is: " + bestTime);
-          //  Debug.Log("Checked and saved best score!");
+            //  Debug.Log("Best time is: " + bestTime);
+            //  Debug.Log("Checked and saved best score!");
             UpdateBestTime(bestTime);
         }
         bestTimeText.text = bestTime.ToString();
@@ -185,9 +179,9 @@ public class GameManager : MonoBehaviour
 
     public void UpdateBestTime(int bestTime)
     {
-            int minutes = Mathf.FloorToInt(bestTime / 60);
-            int seconds = Mathf.FloorToInt(bestTime % 60);
-            bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+        int minutes = Mathf.FloorToInt(bestTime / 60);
+        int seconds = Mathf.FloorToInt(bestTime % 60);
+        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void UpdateBestScore(int bestScore)
@@ -200,7 +194,7 @@ public class GameManager : MonoBehaviour
     {
         bestScore = PlayerPrefs.GetInt("BestScore");
         UpdateBestScore(bestScore);
-      //  Debug.Log("Loading of the best score value: " + bestScore);
+        //  Debug.Log("Loading of the best score value: " + bestScore);
     }
 
     public void LoadBestTimeOnStartGame()

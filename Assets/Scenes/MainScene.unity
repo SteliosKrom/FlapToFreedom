@@ -6651,7 +6651,7 @@ MonoBehaviour:
   lowerYRange: -15
   upperYRange: 8
   xBounds: -34
-  playerController: {fileID: 0}
+  playerController: {fileID: 7322479139134554206}
 --- !u!1001 &7508097252367126110
 PrefabInstance:
   m_ObjectHideFlags: 0
