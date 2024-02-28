@@ -3,15 +3,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-//SPLIT THIS INTO MORE THAN 1 CLASS, so its 1 class per scene usage
 public class UIManager : MonoBehaviour
 {
-    public GameObject pauseMenuScreen;
-    public GameObject gameOverMenuScreen;
-
     // Delay variables!
     private float loadDelay = 0.1f;
     private float goBackDelay = 0.1f;
+
+
+    // Managers variables!
+    public SettingsManager settingsManager;
+    public AudioManager audioManager;
+    public PlayerController playerController;
+    public GameManager gameManager;
+
 
     // Button variables!
     public Button quitButton;
@@ -28,21 +32,16 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     public void StartGame()
     {
-       // settingsManager = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
-       // audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-       // playerController = GameObject.Find("PlayerController").GetComponent<PlayerController>();
-       // gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
+        settingsManager = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();  
     }
 
 
     void Update()
     {
-        if(RoundManager.Instance.currentState == GameState.Playing ||
-            RoundManager.Instance.currentState == GameState.Pause)
-        {
-            InputForPauseMenuScreen();
-        }
-        
+        InputForPauseMenuScreen();
     }
 
     public void QuitGame()
@@ -120,25 +119,29 @@ public class UIManager : MonoBehaviour
     IEnumerator ContinueGameAfterDelay()
     {
         yield return new WaitForSecondsRealtime(loadDelay);       
-        pauseMenuScreen.SetActive(false);
-       // audioManager.mainGameMusicAudioSource.UnPause();
+        gameManager.pauseMenuScreen.SetActive(false);
+        audioManager.mainGameMusicAudioSource.UnPause();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
     public void InputForPauseMenuScreen()
     {
         // Check the current game state!
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameManager != null)
         {
-            if (true)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-              //  gameManager.PauseGame();
-            }
-            else
-            {
+                if (true)
+                {
+                    gameManager.PauseGame();
+                }
 
-            }      
-        }          
+                else
+                {
+                    gameManager.ResumeGame();
+                }      
+            }
+        } 
     }
 
     public void HomeBlackButton()
@@ -168,6 +171,6 @@ public class UIManager : MonoBehaviour
 
     public void OnPointerEnter()
     {
-       // audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
+        audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
     }
 }

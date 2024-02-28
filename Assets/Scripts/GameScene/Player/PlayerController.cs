@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-             //   Debug.LogError($"{name} Gem particle not found!", gameObject);
+                //Debug.LogError($"{name} Gem particle not found!", gameObject);
             }
 
         }
