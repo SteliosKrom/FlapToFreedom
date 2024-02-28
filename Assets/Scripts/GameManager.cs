@@ -5,64 +5,47 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Text variables!
+    public static GameManager instance;
+    private PlayerController playerController;
+    private AudioManager audioManager;
+    
+    [Header("UI")]
+    public UIManager uiManager;
+    public GameObject pauseMenuScreen;
+    public GameObject gameOverMenuScreen;
+
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
 
-
-    // Managers variables!
-    private PlayerController playerController;
-    private AudioManager audioManager;
-    public UIManager uiManager;
-
-
-    // Game object variables!
-    public GameObject pauseMenuScreen;
-    public GameObject gameOverMenuScreen;
-
-
-    // Transform variables!
+    [Header("Gameplay")]
     public Transform startingPoint;
-
-
-    // Animator variables!
-    public Animator animator;
-
-
-    // Float variables!
     private readonly float speed = 10f;
     public float time;
-
-
-    // Int variables!
+    private float timer = 0f;
+    private float interval = 1f;
     public int bestScore;
     public int bestTime;
+    [SerializeField] private bool isGameOver;
 
+    [Header("Effects")]
+    public Animator animator;
 
-    // Game state variables!
-    public GameState currentState; //= GameState.Playing;
-
-    public bool gameIsOver = false;
-
+    #region Getters and Setters
+    public PlayerController PlayerController { get => playerController; set => playerController = value; }
+    public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
+    #endregion
 
     private void Awake()
     {
-        //currentState = GameState.Playing;
-        state = GameState1.Playing;
-
-        // Assign playerController first
+        instance = this;
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        // Assign other components and perform null checks
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         animator = GetComponent<Animator>();
 
-        // Check other null references
         CheckPlayerControllerNullReference();
 
-        // Load best score and time
         LoadBestScoreOnStartGame();
         LoadBestTimeOnStartGame();
 
@@ -76,70 +59,21 @@ public class GameManager : MonoBehaviour
             Debug.Log("bestTimeText is null in Awake!");
         }
 
-        Debug.Log(currentState + "Calling awake!");
     }
 
-    private void Update()
+    private void Start()
     {
-        /**switch (currentState)
-        {
-            case GameState.Playing:
-                Debug.Log("Entering playing state!");
-                uiManager.InputForPauseMenuScreen();
-                Time.timeScale = 1f;
-                UpdateTimer();
-                break;
-
-            case GameState.Paused:
-                //uiManager.InputForPauseMenuScreen();
-                //Time.timeScale = 0f;
-                break;
-
-            case GameState.GameOver:
-                Debug.Log("Entering game over state!");
-                GameOver();
-                break;
-        }*/
-
-
-       
-
-        if (gameIsOver == false)
-        {
-            UpdateTimer1();
-        }
+        isGameOver = false;
     }
 
-    public enum GameState
+    private void LateUpdate()
     {
-        Playing,
-        Paused,
-        GameOver,
+        //TimeScore();
     }
-
-    public enum GameState1
-    {
-        Playing,
-        Paused,
-        GameOver,
-    }
-    public GameState1 state;
-
-
-
     public void CheckPlayerControllerNullReference()
     {
-        if (playerController != null)
-        {
-            playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
-            StartCoroutine(PlayIntro());
-            Debug.Log("The game started!");
-        }
-
-        else
-        {
-            Debug.LogError($"{name} PlayerController not found!", gameObject);
-        }
+        playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
+        StartCoroutine(PlayIntro());
     }
 
 
@@ -158,76 +92,67 @@ public class GameManager : MonoBehaviour
         {
             distanceCovered = (Time.time - startTime) * speed;
             fractionOfJourney = distanceCovered / journeyLength;
-
-            if (playerController != null)
-            {
-                playerController.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
-            }
-
-            else
-            {
-                Debug.LogError($"{name} PlayerController not found!", gameObject);
-            }
+        
+            playerController.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
+            
             yield return null;
         }
     }
 
     public void GameOver()
     {
+        Debug.Log("Game Over Was Played");
         gameOverMenuScreen.SetActive(true);
         audioManager.mainGameMusicAudioSource.Stop();
-        //state = GameState1.GameOver;
-        gameIsOver = true;
+        isGameOver = true;
     }
 
 
     public void PauseGame()
     {
-        if (currentState == GameState.Playing)
-        {
-            //currentState = GameState.Paused;
-            pauseMenuScreen.SetActive(true);
-            audioManager.mainGameMusicAudioSource.Pause();
-            audioManager.PressButtonSound();
-            Time.timeScale = 0f;
-            Debug.Log("Pause menu screen is enabled after delay!");
-        }
+        pauseMenuScreen.SetActive(true);
+        audioManager.mainGameMusicAudioSource.Pause();
+        audioManager.PressButtonSound();
+    //    Debug.Log("Pause menu screen is enabled after delay!");
     }
 
     public void ResumeGame()
     {
-        if (currentState == GameState.Paused)
-        {
-            //currentState = GameState.Playing;
-            pauseMenuScreen.SetActive(false);
-            audioManager.mainGameMusicAudioSource.UnPause();
-            audioManager.PressButtonSound();
-            Time.timeScale = 1f;
-            Debug.Log("Pause menu screen is disabled after delay");
-        }
+        pauseMenuScreen.SetActive(false);
+        audioManager.mainGameMusicAudioSource.UnPause();
+        audioManager.PressButtonSound();
+     //   Debug.Log("Pause menu screen is disabled after delay");
     }
 
-    public void UpdateTimer1()
+    public void UpdateTimer()
     {
-        Debug.Log(state);
+       // time += Time.deltaTime;
+       // int minutes = Mathf.FloorToInt(time / 60);
+       // int seconds = Mathf.FloorToInt(time % 60);
+       // timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+       // timerText.text = "Timer: " + timerText.text;            
+    }
 
-        //if (state == GameState1.Playing)
-        //{
-            if (timerText != null)
-            {
-                time += Time.deltaTime;
-                int minutes = Mathf.FloorToInt(time / 60);
-                int seconds = Mathf.FloorToInt(time % 60);
-                timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-                timerText.text = "Timer: " + timerText.text;
-               
-            }
+    public void TimeScore()
+    {
+        Debug.Log("Game Over bool: " + isGameOver);
+        if (!isGameOver)
+        {
+            timer += Time.deltaTime;
 
-            else
+            if (timer >= interval)
             {
-                Debug.Log("Timer text is null and time doesn't change!", timerText);
+                time += 1;
+                timer = 0f;
             }
-        //}
+            timerText.text = "Timer: " + time.ToString();
+            Debug.Log("Currently Playing");
+        }
+        else
+        {
+            Debug.Log("Currently Game Over");
+        }
+        
     }
 
     public void CheckSaveBestScore()
@@ -237,8 +162,8 @@ public class GameManager : MonoBehaviour
             bestScore = playerController.score;
             PlayerPrefs.SetInt("BestScore", bestScore);
             PlayerPrefs.Save();
-            Debug.Log("Best score is: " + bestScore);
-            Debug.Log("Checked and saved best score!");
+          //  Debug.Log("Best score is: " + bestScore);
+          //  Debug.Log("Checked and saved best score!");
             UpdateBestScore(bestScore);
         }
         bestScoreText.text = bestScore.ToString();
@@ -251,8 +176,8 @@ public class GameManager : MonoBehaviour
             bestTime = (int)time;
             PlayerPrefs.SetInt("BestTime", bestTime);
             PlayerPrefs.Save();
-            Debug.Log("Best time is: " + bestTime);
-            Debug.Log("Checked and saved best score!");
+          //  Debug.Log("Best time is: " + bestTime);
+          //  Debug.Log("Checked and saved best score!");
             UpdateBestTime(bestTime);
         }
         bestTimeText.text = bestTime.ToString();
@@ -260,32 +185,14 @@ public class GameManager : MonoBehaviour
 
     public void UpdateBestTime(int bestTime)
     {
-        if (bestTimeText != null)
-        {
             int minutes = Mathf.FloorToInt(bestTime / 60);
             int seconds = Mathf.FloorToInt(bestTime % 60);
             bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
-            Debug.Log("Best time updates: " + bestTime);
-        }
-
-        else
-        {
-            Debug.LogError($"{name}bestTimeText is null in UpdateBestTime!", gameObject);
-        }
     }
 
     public void UpdateBestScore(int bestScore)
     {
-        if (bestScoreText != null)
-        {
-            bestScoreText.text = "Best Score: " + bestScore;
-            Debug.Log("Best score updates: " + bestScore);
-        }
-
-        else
-        {
-            Debug.LogError($"{name}Best score text not found!", gameObject);
-        }
+        bestScoreText.text = "Best Score: " + bestScore;
     }
 
 
@@ -293,14 +200,13 @@ public class GameManager : MonoBehaviour
     {
         bestScore = PlayerPrefs.GetInt("BestScore");
         UpdateBestScore(bestScore);
-        Debug.Log("Loading of the best score value: " + bestScore);
+      //  Debug.Log("Loading of the best score value: " + bestScore);
     }
 
     public void LoadBestTimeOnStartGame()
     {
         bestTime = PlayerPrefs.GetInt("BestTime");
         UpdateBestTime(bestTime);
-        Debug.Log("Loading of the best time value: " + bestTime);
     }
 }
 

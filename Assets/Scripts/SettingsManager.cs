@@ -83,7 +83,7 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
 
-        Debug.Log("Settings are saved and audio mixer is working!");
+      //  Debug.Log("Settings are saved and audio mixer is working!");
     }
 
     public void LoadSettings()
@@ -115,14 +115,14 @@ public class SettingsManager : MonoBehaviour
             qualityDropdown.value = qualityDropdownValue;
         }
 
-        Debug.Log("Saved settings has been loaded!");
+      //  Debug.Log("Saved settings has been loaded!");
     }
 
     public void MenuMusicVolumeSlider()
     {
         float menuVolume = menuMusicVolumeSlider.value;
         menuMusicVolumeSliderText.text = menuVolume.ToString("0.0");
-        Debug.Log("Display of main menu volume text as string!");
+      //  Debug.Log("Display of main menu volume text as string!");
     }
 
     public void GameVolumeSlider()
@@ -130,21 +130,21 @@ public class SettingsManager : MonoBehaviour
         float gameVolume = gameVolumeSlider.value;
         gameVolumeSliderText.text = gameVolume.ToString("0.0");
         myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
-        Debug.Log("Display of game volume text as string!");
+     //   Debug.Log("Display of game volume text as string!");
     }
 
     public void SoundsVolumeSlider()
     {
         float soundsVolume = soundsVolumeSlider.value;
         soundsVolumeSliderText.text = soundsVolume.ToString("0.0");
-        Debug.Log("Display of sounds volume text as string!");
+       // Debug.Log("Display of sounds volume text as string!");
     }
 
     public void MasterVolumeSlider()
     {
         float masterVolume = masterVolumeSlider.value;
         masterVolumeSliderText.text = masterVolume.ToString("0.0");
-        Debug.Log("Display of master volume text as string!");
+      //  Debug.Log("Display of master volume text as string!");
     }
 
     public void ResetSettings()

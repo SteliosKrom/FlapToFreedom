@@ -118,29 +118,23 @@ public class UIManager : MonoBehaviour
 
     IEnumerator ContinueGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
-        
-        if (gameManager.currentState == GameManager.GameState.Paused)
-        {
-            //gameManager.currentState = GameManager.GameState.Playing;
-            gameManager.pauseMenuScreen.SetActive(false);
-            audioManager.mainGameMusicAudioSource.UnPause();
-            Debug.Log("Continue button is pressed and pause menu screen gone!");
-        }
+        yield return new WaitForSecondsRealtime(loadDelay);       
+        gameManager.pauseMenuScreen.SetActive(false);
+        audioManager.mainGameMusicAudioSource.UnPause();
+        Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
     public void InputForPauseMenuScreen()
     {
         // Check the current game state!
-        if (gameManager != null && gameManager.currentState != GameManager.GameState.GameOver)
+        if (gameManager != null)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (gameManager.currentState == GameManager.GameState.Playing)
+                if (true)
                 {
                     gameManager.PauseGame();
                 }
-
                 else
                 {
                     gameManager.ResumeGame();

@@ -18,17 +18,12 @@ public class AudioManager : MonoBehaviour
     public AudioClip onPointerEnterAudioClip;
 
 
-    private void Start()
-    {
-
-    }
-
     public void PressButtonSound()
     {
         if (clickButtonSoundClip != null)
         {
             clickButtonAudioSource.PlayOneShot(clickButtonSoundClip);
-            Debug.Log("Press button sound is active!");
+          //  Debug.Log("Press button sound is active!");
         }
     }
 
@@ -37,14 +32,14 @@ public class AudioManager : MonoBehaviour
         if (toggleAudioClip != null)
         {
             clickToggleAudioSource.PlayOneShot(toggleAudioClip);
-            Debug.Log("Press toggle button sound is active!");
+        //    Debug.Log("Press toggle button sound is active!");
         }
     }
 
     public void PlayerJumpSound()
     {
         jumpSoundAudioSource.PlayOneShot(jumpSoundClip);
-        Debug.Log("Jump sound clip works!");
+     //   Debug.Log("Jump sound clip works!");
     }
 
     public void GameOverSound()
@@ -52,7 +47,7 @@ public class AudioManager : MonoBehaviour
         if (gameOverSoundClip != null)
         {
             gameOverSoundAudioSource.PlayOneShot(gameOverSoundClip);
-            Debug.Log("Game over sound is enabled!");
+         //   Debug.Log("Game over sound is enabled!");
         }
     }
 }

@@ -4403,6 +4403,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 40, y: 19.999998, z: 0.19999999}
   m_Center: {x: 0, y: 0, z: 0.0000000027939677}
+--- !u!1 &1570104454
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570104455}
+  - component: {fileID: 1570104456}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1570104455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570104454}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.029463, y: -2.7690165, z: -0.07484415}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1570104456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570104454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bba55464ea41a34fa5022e944d849c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerText: {fileID: 1267386405}
+  time: 0
 --- !u!1 &1582634312
 GameObject:
   m_ObjectHideFlags: 0
@@ -5192,19 +5238,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022a872c8f29cbe4c94e1c4c18011433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 1267386405}
-  bestScoreText: {fileID: 1718344115}
-  bestTimeText: {fileID: 1011549976}
   uiManager: {fileID: 2493093107849467632}
   pauseMenuScreen: {fileID: 1719164943}
   gameOverMenuScreen: {fileID: 1582634312}
+  timerText: {fileID: 1267386405}
+  bestScoreText: {fileID: 1718344115}
+  bestTimeText: {fileID: 1011549976}
   startingPoint: {fileID: 1851335588}
-  animator: {fileID: 0}
   time: 0
   bestScore: 0
   bestTime: 0
-  currentState: 0
-  state: 0
+  isGameOver: 0
+  animator: {fileID: 0}
 --- !u!4 &1851335588
 Transform:
   m_ObjectHideFlags: 0
@@ -6321,7 +6366,7 @@ GameObject:
   - component: {fileID: 7322479139134554205}
   - component: {fileID: 7322479139134554208}
   - component: {fileID: 7322479139134554206}
-  - component: {fileID: 7322479139134554207}
+  - component: {fileID: 7322479139134554209}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6483,7 +6528,6 @@ MonoBehaviour:
   scoreText: {fileID: 450003680}
   audioManager: {fileID: 6297076732293194931}
   uiManager: {fileID: 2493093107849467632}
-  gameManager: {fileID: 7508097252367126112}
   playerRb: {fileID: 7322479139134554204}
   startJumpForce: 0.8
   score: 0
@@ -6496,23 +6540,6 @@ MonoBehaviour:
   gemParticlePoolSize: 20
   treeLogsPoolSize: 20
   collisionParticlePoolSize: 20
---- !u!114 &7322479139134554207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7322479139134554201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a77c095d3377be94d96251c0c3f3436f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  treeLogs: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
-  lowerYRange: -15
-  upperYRange: 8
-  xBounds: -34
-  playerController: {fileID: 7322479139134554206}
 --- !u!82 &7322479139134554208
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6609,6 +6636,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7322479139134554209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7322479139134554201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4431686df11446548993359ab3b7b325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowerYRange: -15
+  upperYRange: 8
+  xBounds: -34
+  playerController: {fileID: 0}
 --- !u!1001 &7508097252367126110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6617,6 +6660,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 1267386405}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: uiManager
+      value: 
+      objectReference: {fileID: 2493093107849467632}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: bestTimeText
+      value: 
+      objectReference: {fileID: 1011549976}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: bestScoreText
+      value: 
+      objectReference: {fileID: 1718344115}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: startingPoint
+      value: 
+      objectReference: {fileID: 1851335588}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: pauseMenuScreen
+      value: 
+      objectReference: {fileID: 1719164943}
+    - target: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+      propertyPath: gameOverMenuScreen
+      value: 
+      objectReference: {fileID: 1582634312}
     - target: {fileID: 4685844530832768504, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -6664,41 +6735,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4685844530832768504, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7508097252367126112}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
---- !u!1 &7508097252367126111 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4685844530832768504, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
+--- !u!114 &7508097252367126112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2058408185723202829, guid: 4db9fb31b2c4ab94c8c3a54e67416560, type: 3}
   m_PrefabInstance: {fileID: 7508097252367126110}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7508097252367126112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7508097252367126111}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 022a872c8f29cbe4c94e1c4c18011433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 1267386405}
-  bestScoreText: {fileID: 1718344115}
-  bestTimeText: {fileID: 1011549976}
-  uiManager: {fileID: 2493093107849467632}
-  pauseMenuScreen: {fileID: 1719164943}
-  gameOverMenuScreen: {fileID: 1582634312}
-  startingPoint: {fileID: 1851335588}
-  animator: {fileID: 0}
-  time: 0
-  bestScore: 0
-  bestTime: 0
-  currentState: 0
-  state: 0
 --- !u!1 &7799607694800591436
 GameObject:
   m_ObjectHideFlags: 0
@@ -6740,3 +6789,4 @@ SceneRoots:
   - {fileID: 7322479139134554202}
   - {fileID: 1851335588}
   - {fileID: 1660051144}
+  - {fileID: 1570104455}

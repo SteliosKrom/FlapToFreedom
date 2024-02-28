@@ -25,9 +25,6 @@ public class MoveBackgroundLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.currentState == GameManager.GameState.Playing)
-        {
-            transform.Translate(Vector3.left * speed * Time.deltaTime);
-        }     
+         transform.Translate(Vector3.left * speed * Time.deltaTime);            
     }
 }

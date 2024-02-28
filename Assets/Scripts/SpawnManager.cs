@@ -7,7 +7,6 @@ public class SpawnManager : MonoBehaviour
 {
     // Managers variables!
     public GameManager gameManager;
-    private PlayerController playerController;
 
     // Game object variables!
     public GameObject treeLogsPrefab;
@@ -25,30 +24,15 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         InvokeRepeating("SpawnObjects", startDelay, spawnRate);
-        Debug.Log("Spawn objects with a delay!");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void SpawnObjects()
     {
-        if (treeLogsPrefab != null && gameManager.currentState == GameManager.GameState.Playing)
-        {
-            var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
-            Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
-            Debug.Log("Instantiating objects between boundaries");
-        }
-
-        else
-        {
-            Debug.Log("Game is over objects are not spawning!");
-        }
+        var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
+        GameObject boundObj = Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        DestroyOutOfBounds treeBounds = boundObj.GetComponent<DestroyOutOfBounds>();
+        treeBounds.SetPlayerReference(gameManager.PlayerController);
     }
 }

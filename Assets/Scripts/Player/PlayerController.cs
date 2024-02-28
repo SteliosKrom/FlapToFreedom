@@ -12,21 +12,16 @@ public class PlayerController : MonoBehaviour
     // Managers variables!
     public AudioManager audioManager;
     public UIManager uiManager;
-    public GameManager gameManager;
-
 
     // Rigidbody variables!
     public Rigidbody2D playerRb;
-
 
     // Float variables!
     public float startJumpForce;
     private readonly float jumpForce = 1f;
 
-
     // Int variables!
     public int score;
-
 
     // Game object variables!
     public GameObject player;
@@ -93,25 +88,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (gameManager.currentState == GameManager.GameState.Playing && transform.position.x >= gameManager.startingPoint.position.x)
+        if (!GameManager.instance.IsGameOver)
         {
             InputForPlayerMovement();
-        }
-
-        else if (gameManager.currentState == GameManager.GameState.GameOver)
-        {
-            gameManager.GameOver();
         }
     }
 
     //Here we give input to our player!
     public void InputForPlayerMovement()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && gameManager.currentState == GameManager.GameState.Playing)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
             audioManager.PlayerJumpSound();
-            Debug.Log("We give force to the player!");
+           // Debug.Log("We give force to the player!");
         }
     }
 
@@ -120,7 +110,7 @@ public class PlayerController : MonoBehaviour
     {
         score++;
         scoreText.text = "Score: " + score;
-        Debug.Log("Score updates: " + score);
+       // Debug.Log("Score updates: " + score);
     }
 
     public void OnTriggerEnter2D(Collider2D other)
@@ -142,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                Debug.LogError($"{name} Gem particle not found!", gameObject);
+             //   Debug.LogError($"{name} Gem particle not found!", gameObject);
             }
 
         }
@@ -161,10 +151,10 @@ public class PlayerController : MonoBehaviour
             }
 
             player.SetActive(false);
-            gameManager.GameOver();
+            GameManager.instance.GameOver();
             audioManager.GameOverSound();
-            gameManager.CheckSaveBestScore();
-            gameManager.CheckSaveBestTime();
+            GameManager.instance.CheckSaveBestScore();
+            GameManager.instance.CheckSaveBestTime();
             Debug.Log($"{name}Player collided with the tree logs!", gameObject);
         }
     }
@@ -206,8 +196,8 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 ReturnObjectToPool(obj);
                 UpdateScore();
-                gameManager.CheckSaveBestScore();
-                gameManager.CheckSaveBestTime();
+                GameManager.instance.CheckSaveBestScore();
+                GameManager.instance.CheckSaveBestTime();
                 Debug.Log($"{name}Player collected an object!", gameObject);
             }     
         }
