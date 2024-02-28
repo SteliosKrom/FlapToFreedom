@@ -86,6 +86,7 @@
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\GameScene\RoundManager\RoundManager.cs" />
     <Compile Include="Assets\Scripts\PressAnyKeyToStartFunctionality.cs" />
+    <Compile Include="Assets\Scripts\Test.cs" />
     <Compile Include="Assets\Scripts\GameScene\MoveBackgroundLeft.cs" />
   </ItemGroup>
   <ItemGroup>

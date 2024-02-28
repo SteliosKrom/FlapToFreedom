@@ -119,8 +119,8 @@ public class UIManager : MonoBehaviour
     IEnumerator ContinueGameAfterDelay()
     {
         yield return new WaitForSecondsRealtime(loadDelay);       
-        gameManager.pauseMenuScreen.SetActive(false);
-        audioManager.mainGameMusicAudioSource.UnPause();
+       // gameManager.pauseMenuScreen.SetActive(false);
+       // audioManager.mainGameMusicAudioSource.UnPause();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
@@ -171,6 +171,6 @@ public class UIManager : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
+       // audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
     }
 }
