@@ -8,7 +8,7 @@ public class PressAnyKeyToStartFunctionality : MonoBehaviour
 {
     public bool isPressed = false;
 
-    private AudioManager audioManager;
+    private AudioManager audioManager;  //use instance reference instead
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class PressAnyKeyToStartFunctionality : MonoBehaviour
         {
             isPressed = true;
             SceneManager.LoadScene("MainMenuScene");
-            audioManager.PressButtonSound();
+           // audioManager.PressButtonSound();
             Debug.Log("Main menu scene loads!");
         }
 

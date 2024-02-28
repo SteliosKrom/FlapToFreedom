@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
 
-
 public class SettingsManager : MonoBehaviour
 {
     // Variables that we are using in our code!

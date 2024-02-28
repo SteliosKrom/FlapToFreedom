@@ -15,6 +15,10 @@ public class MoveBackgroundLeft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         transform.Translate(Vector3.left * speed * Time.deltaTime);            
+        if(RoundManager.Instance.currentState == GameState.Playing ||
+            RoundManager.Instance.currentState == GameState.Intro)
+        {
+            transform.Translate(Vector3.left * speed * Time.deltaTime);
+        }       
     }
 }

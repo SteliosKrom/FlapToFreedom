@@ -1,5 +1,6 @@
 using UnityEngine;
 
+//REMOVE THIS CLASS AND HANDLE VIA PLAYER CONTROLLER
 public class BoundsBase : MonoBehaviour
 {
     [SerializeField] private float lowerYRange;

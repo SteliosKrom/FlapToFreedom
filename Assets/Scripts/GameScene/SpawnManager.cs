@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // Managers variables!
-    public GameManager gameManager;
-
     // Game object variables!
     public GameObject treeLogsPrefab;
 
@@ -23,9 +20,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        InvokeRepeating("SpawnObjects", startDelay, spawnRate);
+        InvokeRepeating("SpawnObjects", startDelay, spawnRate);  //CANCEL INVOKE ON GAME OVER
     }
 
     public void SpawnObjects()
@@ -33,6 +28,6 @@ public class SpawnManager : MonoBehaviour
         var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
         GameObject boundObj = Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
         DestroyOutOfBounds treeBounds = boundObj.GetComponent<DestroyOutOfBounds>();
-        treeBounds.SetPlayerReference(gameManager.PlayerController);
+        treeBounds.SetPlayerReference(RoundManager.Instance.PlayerController);
     }
 }

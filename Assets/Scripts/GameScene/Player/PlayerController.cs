@@ -1,16 +1,17 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     // Text variables!
     [SerializeField] TextMeshProUGUI scoreText;
-
-
+    public Transform startingPoint;
+    private readonly float speed = 10f;
     // Managers variables!
-    public AudioManager audioManager;
     public UIManager uiManager;
 
     // Rigidbody variables!
@@ -47,22 +48,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         // Here we give physics to our player and get the components needed!
-        
-        if (!GameObject.Find("Player").TryGetComponent<Rigidbody2D>(out playerRb))
-        {
-            Debug.LogError($"{name}Rigidbody2D not found on Player!", gameObject);
-        }
 
-        // Check and assign AudioManager!
-        if (audioManager == null)
-        {
-            audioManager = GameObject.FindObjectOfType<AudioManager>();
+        playerRb = this.GetComponent<Rigidbody2D>();
 
-            if (audioManager == null)
-            {
-                Debug.LogError("AudioManager not found in the scene!");
-            }
-        }
+        AddForceToPlayer();
 
         // Check and assign UIManager!
         if (uiManager == null)
@@ -88,10 +77,10 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.instance.IsGameOver)
+        if(RoundManager.Instance.currentState == GameState.Playing)
         {
-            InputForPlayerMovement();
-        }
+        InputForPlayerMovement();
+        }   
     }
 
     //Here we give input to our player!
@@ -100,7 +89,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            audioManager.PlayerJumpSound();
+        //    audioManager.PlayerJumpSound();
            // Debug.Log("We give force to the player!");
         }
     }
@@ -113,8 +102,10 @@ public class PlayerController : MonoBehaviour
        // Debug.Log("Score updates: " + score);
     }
 
+    //handle out of bounds/death collision here
     public void OnTriggerEnter2D(Collider2D other)
     {
+        //ADD CHECK OUT OF BOUNDS ON TRIGGER ENTER COLLISION
         if (other.gameObject.CompareTag("Gem"))
         {
             CollectObject(other.gameObject);
@@ -129,15 +120,13 @@ public class PlayerController : MonoBehaviour
                 gemParticle.transform.position = other.transform.position;
                 gemParticle.SetActive(true);
             }
-
             else
             {
              //   Debug.LogError($"{name} Gem particle not found!", gameObject);
             }
 
         }
-
-        if (other.gameObject.CompareTag("TreeTrunkDown") || other.gameObject.CompareTag("TreeTrunkUp"))
+        else if (other.gameObject.CompareTag("TreeTrunkDown") || other.gameObject.CompareTag("TreeTrunkUp"))
         {
 
             // Instantiate collision particle effect if available in the pool!
@@ -151,11 +140,12 @@ public class PlayerController : MonoBehaviour
             }
 
             player.SetActive(false);
-            GameManager.instance.GameOver();
-            audioManager.GameOverSound();
-            GameManager.instance.CheckSaveBestScore();
-            GameManager.instance.CheckSaveBestTime();
-            Debug.Log($"{name}Player collided with the tree logs!", gameObject);
+            RoundManager.Instance.GameOver();
+         //   GameManager.instance.GameOver();
+          //  audioManager.GameOverSound();
+          //  AudioManager.Instance.PlaySound(source, clip)  have source and clip in your player controller and then pass them in
+          //  GameManager.instance.CheckSaveBestScore();
+         //   GameManager.instance.CheckSaveBestTime();
         }
     }
 
@@ -169,6 +159,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //move pooling to a new Class
     public GameObject GetPooledObject(List<GameObject> pool)
     {
         // Check for an inactive object in the pool!
@@ -196,8 +187,8 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 ReturnObjectToPool(obj);
                 UpdateScore();
-                GameManager.instance.CheckSaveBestScore();
-                GameManager.instance.CheckSaveBestTime();
+               // GameManager.instance.CheckSaveBestScore();
+               // GameManager.instance.CheckSaveBestTime();
                 Debug.Log($"{name}Player collected an object!", gameObject);
             }     
         }
@@ -244,5 +235,33 @@ public class PlayerController : MonoBehaviour
         {
             gemParticlePool.Add(obj);
         }
+    }
+
+    public void AddForceToPlayer()
+    {
+        playerRb.AddForce(Vector2.up * startJumpForce, ForceMode2D.Impulse); //this should be on your player controller
+        StartCoroutine(PlayIntro());
+    }
+
+    IEnumerator PlayIntro()
+    {
+        Vector3 startPos = transform.position;
+        Vector3 endPos = startingPoint.position;
+
+        float journeyLength = Vector3.Distance(startPos, endPos);
+        float startTime = Time.time;
+        float distanceCovered = (startTime - startTime) * speed;
+        float fractionOfJourney = distanceCovered / journeyLength;
+
+        while (fractionOfJourney < 1)
+        {
+            distanceCovered = (Time.time - startTime) * speed;
+            fractionOfJourney = distanceCovered / journeyLength;
+
+            transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
+
+            yield return null;
+        }
+        RoundManager.Instance.currentState = GameState.Playing;
     }
 }

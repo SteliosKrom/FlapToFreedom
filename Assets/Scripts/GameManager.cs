@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+//REMOVE THIS COMPLETELY
 public class GameManager : MonoBehaviour
 {
     [Header("Managers")]
@@ -12,8 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public UIManager uiManager;
-    public GameObject pauseMenuScreen;
-    public GameObject gameOverMenuScreen;
+
 
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI bestScoreText;
@@ -67,54 +67,35 @@ public class GameManager : MonoBehaviour
 
     public void AddForceToPlayer()
     {
-        playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
-        StartCoroutine(PlayIntro());
+       // playerController.playerRb.AddForce(Vector2.up * playerController.startJumpForce, ForceMode2D.Impulse);
+       // StartCoroutine(PlayIntro());
     }
 
 
     // We use an IEnumerator to make out starting point animation 
-    IEnumerator PlayIntro()
-    {
-        Vector3 startPos = playerController.transform.position;
-        Vector3 endPos = startingPoint.position;
 
-        float journeyLength = Vector3.Distance(startPos, endPos);
-        float startTime = Time.time;
-        float distanceCovered = (startTime - startTime) * speed;
-        float fractionOfJourney = distanceCovered / journeyLength;
-
-        while (fractionOfJourney < 1)
-        {
-            distanceCovered = (Time.time - startTime) * speed;
-            fractionOfJourney = distanceCovered / journeyLength;
-
-            playerController.transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
-
-            yield return null;
-        }
-    }
 
     public void GameOver()
     {
         Debug.Log("Game Over Was Played");
-        gameOverMenuScreen.SetActive(true);
-        audioManager.mainGameMusicAudioSource.Stop();
+      //  gameOverMenuScreen.SetActive(true);
+       // audioManager.mainGameMusicAudioSource.Stop();
         isGameOver = true;
     }
 
 
     public void PauseGame()
     {
-        pauseMenuScreen.SetActive(true);
-        audioManager.mainGameMusicAudioSource.Pause();
-        audioManager.PressButtonSound();
+     //   pauseMenuScreen.SetActive(true);
+      //  audioManager.mainGameMusicAudioSource.Pause();
+       // audioManager.PressButtonSound();
     }
 
     public void ResumeGame()
     {
-        pauseMenuScreen.SetActive(false);
-        audioManager.mainGameMusicAudioSource.UnPause();
-        audioManager.PressButtonSound();
+      //  pauseMenuScreen.SetActive(false);
+      //  audioManager.mainGameMusicAudioSource.UnPause();
+     //   audioManager.PressButtonSound();
     }
 
     public void UpdateTimer()
