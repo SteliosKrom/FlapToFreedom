@@ -12,16 +12,14 @@ public class MainGameUIManager : MonoBehaviour
     public RoundManager roundManager;
 
     [Header("AUDIO SOURCES")]
-    public AudioSource mainGameMusicAudioSource;
-
+    [SerializeField] private AudioSource onPointerEnterAudioSource;
 
     [Header("AUDIO CLIPS")]
-    public AudioClip mainGameMusicAudioClip;
+    [SerializeField] private AudioClip onPointerEnterAudioClip;
 
     private void Start()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-        roundManager = GameObject.Find("RoundManager").GetComponent<RoundManager>();
+
     }
 
     private void Update()
@@ -79,7 +77,7 @@ public class MainGameUIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         RoundManager.Instance.pauseMenuScreen.SetActive(false);
-        RoundManager.Instance.mainGameMusicAudioSource.UnPause();
+        RoundManager.Instance.MainGameMusicAudioSource.UnPause();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
@@ -111,7 +109,7 @@ public class MainGameUIManager : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        // audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
+        AudioManager.Instance.PlaySound(onPointerEnterAudioSource, onPointerEnterAudioClip);
     }
 
 }

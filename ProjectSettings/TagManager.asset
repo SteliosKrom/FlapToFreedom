@@ -13,12 +13,14 @@ TagManager:
   - TreeTrunkDown
   - TreeTrunkUp
   - TreeLogs
-  - LeftBlackButton
   - BestTime
   - GameOverScreen
   - HighScore
   - PauseMenuScreen
   - AudioManager
+  - Bounds
+  - LeftBound
+  - UpDownBound
   layers:
   - Default
   - TransparentFX

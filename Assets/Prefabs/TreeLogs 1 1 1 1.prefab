@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3480958861154267879}
   - component: {fileID: 7235783615817485269}
-  - component: {fileID: 6530749442529344957}
   - component: {fileID: 1011001812385649916}
   m_Layer: 0
   m_Name: TreeLogs 1 1 1 1
@@ -50,23 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
---- !u!114 &6530749442529344957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2471727181482173279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a77c095d3377be94d96251c0c3f3436f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lowerYRange: -15
-  upperYRange: 8
-  xBounds: 70
-  playerController: {fileID: 0}
-  treeLogs: {fileID: 2471727181482173279}
 --- !u!65 &1011001812385649916
 BoxCollider:
   m_ObjectHideFlags: 0

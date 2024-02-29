@@ -87,7 +87,6 @@
     <Compile Include="Assets\Scripts\GameScene\RepeatBackground.cs" />
     <Compile Include="Assets\Scripts\OptionsScene\SettingsManager.cs" />
     <Compile Include="Assets\Scripts\Test.cs" />
-    <Compile Include="Assets\Scripts\GameScene\DestroyOutOfBounds.cs" />
     <Compile Include="Assets\Scripts\GameScene\MoveBackgroundLeft.cs" />
   </ItemGroup>
   <ItemGroup>

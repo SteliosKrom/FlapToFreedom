@@ -22,14 +22,14 @@ public class RoundManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bestTimeText;
     public GameObject gameOverMenuScreen;
     public GameObject pauseMenuScreen;
-    
+
 
     [Header("GAMEPLAY")]
     public Transform startingPoint;
     [SerializeField] private readonly float speed = 10f;
     public float time;
     private float timer = 0f;
-    private float interval = 1f;
+    private readonly float interval = 1f;
     public int bestScore;
     public int bestTime;
     [SerializeField] private bool isGameOver;
@@ -40,23 +40,20 @@ public class RoundManager : MonoBehaviour
 
 
     [Header("AUDIO SOURCES")]
-    public AudioSource mainGameMusicAudioSource;
-    public AudioSource pressButtonSoundAudioSource;
-    public AudioSource jumpSoundAudioSource;
-    public AudioSource mainMenuMusicAudioSource;
+    [SerializeField] private AudioSource mainGameMusicAudioSource;
+    [SerializeField] private AudioSource pressButtonSoundAudioSource;
 
     [Header("AUDIO CLIPS")]
-    public AudioClip mainGameMusicAudioClip;
-    public AudioClip pressButtonSoundAudioClip;
-    public AudioClip jumpSoundAudioAudioClip;
-    public AudioClip mainMenuMusicAudioClip;
+    [SerializeField] private AudioClip mainGameMusicAudioClip;
+    [SerializeField] private AudioClip pressButtonSoundAudioClip; 
 
+
+    public AudioSource MainGameMusicAudioSource { get => mainGameMusicAudioSource; set => mainGameMusicAudioSource = value; }
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
     public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
     private void Awake()
     {
         Instance = this;
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
         LoadBestScoreOnStartGame();
         LoadBestTimeOnStartGame();
@@ -91,7 +88,6 @@ public class RoundManager : MonoBehaviour
             timerText.text = "Timer: " + time.ToString();
             Debug.Log("Currently Playing");
         }
-        
         else
         {
             Debug.Log("Currently Game Over");
@@ -102,7 +98,7 @@ public class RoundManager : MonoBehaviour
     {
         currentState = GameState.GameOver;
         gameOverMenuScreen.SetActive(true);
-        AudioManager.Instance.PlaySound(mainGameMusicAudioSource, mainGameMusicAudioClip);
+        AudioManager.Instance.PlaySound(playerController.gameOverAudioSource, playerController.gameOverAudioClip);
         isGameOver = true;
     }
 
@@ -111,7 +107,7 @@ public class RoundManager : MonoBehaviour
         pauseMenuScreen.SetActive(true);
         mainGameMusicAudioSource.Pause();
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
-        
+
     }
 
     public void ResumeGame()

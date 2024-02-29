@@ -4,14 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    private float loadDelay = 0.1f;
-    private float goBackDelay = 0.1f;
+    [Header("GAMEPLAY")]
+    public float delay = 1.0f;
 
+    [Header("MANAGERS")]
     public AudioManager audioManager;
+
+    [Header("AUDIO SOURCES")]
+    public AudioSource onPointerEnterAudioSource;
+
+    [Header("AUDIO CLIPS")]
+    public AudioClip onPointerEnterAudioClip;
 
     private void Start()
     {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
     }
 
     public void QuitGame()
@@ -22,7 +29,7 @@ public class MenuUIManager : MonoBehaviour
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
 
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
@@ -44,7 +51,7 @@ public class MenuUIManager : MonoBehaviour
 
     IEnumerator LoadOptionsSceneAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("OptionsScene");
         Debug.Log("Options Button is pressed after a delay!");
     }
@@ -58,7 +65,7 @@ public class MenuUIManager : MonoBehaviour
 
     IEnumerator LoadMainGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
         Debug.Log("Play Button is pressed after a delay!");
@@ -66,6 +73,6 @@ public class MenuUIManager : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        // audioManager.onPointerEnterAudioSource.PlayOneShot(audioManager.onPointerEnterAudioClip);
+        AudioManager.Instance.PlaySound(onPointerEnterAudioSource, onPointerEnterAudioClip);
     }
 }
