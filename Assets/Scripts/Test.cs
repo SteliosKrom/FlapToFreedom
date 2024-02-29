@@ -16,8 +16,8 @@ public class Test : MonoBehaviour
     }
     public void TimeScore()
     {
-        Debug.Log("Game Over bool: " + GameManager.instance.IsGameOver);
-        if (!GameManager.instance.IsGameOver)
+        Debug.Log("Game Over bool: " + RoundManager.Instance.IsGameOver);
+        if (!RoundManager.Instance.IsGameOver)
         {
             timer += Time.deltaTime;
 

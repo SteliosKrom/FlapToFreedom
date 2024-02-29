@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [Header("MANAGERS")]
     public static AudioManager Instance;
 
     private void Awake()

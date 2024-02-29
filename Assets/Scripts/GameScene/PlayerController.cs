@@ -7,28 +7,34 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    // Text variables!
+    [Header("MANAGERS")]
+    public MainGameUIManager mainGameUIManager;
+
+
+    [Header("UI")]
     [SerializeField] TextMeshProUGUI scoreText;
+
+
+    [Header("GAMEPLAY")]
     public Transform startingPoint;
     private readonly float speed = 10f;
-    // Managers variables!
-    public UIManager uiManager;
-
-    // Rigidbody variables!
     public Rigidbody2D playerRb;
-
-    // Float variables!
     public float startJumpForce;
     private readonly float jumpForce = 1f;
-
-    // Int variables!
     public int score;
-
-    // Game object variables!
     public GameObject player;
 
+    [Header("AUDIO SOURCES")]
+    public AudioSource gameOverAudioSource;
 
-    // Object pools!
+
+    [Header("AUDIO CLIPS")]
+    public AudioClip gameOverAudioClip;
+
+
+
+
+
     public GameObject gemPrefab;
     public GameObject treeLogsPrefab;
     public GameObject collisionParticlePrefab;
@@ -54,13 +60,13 @@ public class PlayerController : MonoBehaviour
         AddForceToPlayer();
 
         // Check and assign UIManager!
-        if (uiManager == null)
+        if (mainGameUIManager == null)
         {
-            uiManager = GameObject.FindObjectOfType<UIManager>();
+            mainGameUIManager = GameObject.FindObjectOfType<MainGameUIManager>();
 
-            if (uiManager == null)
+            if (mainGameUIManager == null)
             {
-                Debug.LogError("UIManager not found in the scene!");
+                Debug.Log($"{name}Main game ui manager not found!", gameObject);
             }
         }
 
@@ -79,7 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         if(RoundManager.Instance.currentState == GameState.Playing)
         {
-        InputForPlayerMovement();
+            InputForPlayerMovement();
         }   
     }
 
@@ -141,11 +147,9 @@ public class PlayerController : MonoBehaviour
 
             player.SetActive(false);
             RoundManager.Instance.GameOver();
-         //   GameManager.instance.GameOver();
-          //  audioManager.GameOverSound();
-          //  AudioManager.Instance.PlaySound(source, clip)  have source and clip in your player controller and then pass them in
-          //  GameManager.instance.CheckSaveBestScore();
-         //   GameManager.instance.CheckSaveBestTime();
+            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+             RoundManager.Instance.CheckSaveBestScore();
+             RoundManager.Instance.CheckSaveBestTime();
         }
     }
 
