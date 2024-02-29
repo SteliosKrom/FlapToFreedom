@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("MANAGERS")]
+    public static PlayerController Instance;
     public MainGameUIManager mainGameUIManager;
 
 
@@ -23,6 +26,10 @@ public class PlayerController : MonoBehaviour
     private readonly float jumpForce = 1f;
     public int score;
     public GameObject player;
+    [SerializeField] private float lowerYRange;
+    [SerializeField] private float upperYRange;
+    [SerializeField] private float xBounds;
+
 
     [Header("AUDIO SOURCES")]
     public AudioSource gameOverAudioSource;
@@ -30,8 +37,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("AUDIO CLIPS")]
     public AudioClip gameOverAudioClip;
-
-
 
 
 
@@ -83,10 +88,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(RoundManager.Instance.currentState == GameState.Playing)
+        if (RoundManager.Instance.currentState == GameState.Playing)
         {
             InputForPlayerMovement();
-        }   
+        }
+
+        DestroyPlayerOutOfBoundaries();
     }
 
     //Here we give input to our player!
@@ -95,8 +102,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-        //    audioManager.PlayerJumpSound();
-           // Debug.Log("We give force to the player!");
+            //    audioManager.PlayerJumpSound();
+            // Debug.Log("We give force to the player!");
         }
     }
 
@@ -105,7 +112,7 @@ public class PlayerController : MonoBehaviour
     {
         score++;
         scoreText.text = "Score: " + score;
-       // Debug.Log("Score updates: " + score);
+        // Debug.Log("Score updates: " + score);
     }
 
     //handle out of bounds/death collision here
@@ -141,15 +148,15 @@ public class PlayerController : MonoBehaviour
 
             if (collisionParticle != null)
             {
-                collisionParticle.transform.position = player.transform.position;    
+                collisionParticle.transform.position = player.transform.position;
                 collisionParticle.SetActive(true);
             }
 
             player.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-             RoundManager.Instance.CheckSaveBestScore();
-             RoundManager.Instance.CheckSaveBestTime();
+            RoundManager.Instance.CheckSaveBestScore();
+            RoundManager.Instance.CheckSaveBestTime();
         }
     }
 
@@ -191,10 +198,10 @@ public class PlayerController : MonoBehaviour
                 obj.SetActive(false);
                 ReturnObjectToPool(obj);
                 UpdateScore();
-               // GameManager.instance.CheckSaveBestScore();
-               // GameManager.instance.CheckSaveBestTime();
+                RoundManager.Instance.CheckSaveBestScore();
+                RoundManager.Instance.CheckSaveBestTime();
                 Debug.Log($"{name}Player collected an object!", gameObject);
-            }     
+            }
         }
 
         else
@@ -243,7 +250,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddForceToPlayer()
     {
-        playerRb.AddForce(Vector2.up * startJumpForce, ForceMode2D.Impulse); //this should be on your player controller
+        playerRb.AddForce(Vector2.up * startJumpForce, ForceMode2D.Impulse); 
         StartCoroutine(PlayIntro());
     }
 
@@ -267,5 +274,23 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         RoundManager.Instance.currentState = GameState.Playing;
+    }
+
+
+    public void DestroyPlayerOutOfBoundaries()
+    {
+        if (transform.position.y <= lowerYRange)
+        {
+            PlayerController.Instance.player.SetActive(false);
+            RoundManager.Instance.GameOver();
+            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+        }
+
+        else if (transform.position.y >= upperYRange)
+        {
+            PlayerController.Instance.player.SetActive(false);
+            RoundManager.Instance.GameOver();
+            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+        }
     }
 }

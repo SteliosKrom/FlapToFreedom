@@ -4,12 +4,19 @@ using UnityEngine.SceneManagement;
 
 public class MainGameUIManager : MonoBehaviour
 {
-    private float loadDelay = 0.1f;
-    private float goBackDelay = 0.1f;
+    [Header("GAMEPLAY")]
+    private float delay = 1.0f;
 
-
+    [Header("MANAGERS")]
     public AudioManager audioManager;
     public RoundManager roundManager;
+
+    [Header("AUDIO SOURCES")]
+    public AudioSource mainGameMusicAudioSource;
+
+
+    [Header("AUDIO CLIPS")]
+    public AudioClip mainGameMusicAudioClip;
 
     private void Start()
     {
@@ -36,7 +43,7 @@ public class MainGameUIManager : MonoBehaviour
 
                 else
                 {
-                    roundManager.ResumeGame();
+                    roundManager.PauseGame();
                 }
             }
         }
@@ -50,7 +57,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
 
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
@@ -70,9 +77,9 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator ContinueGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
-        // gameManager.pauseMenuScreen.SetActive(false);
-        // audioManager.mainGameMusicAudioSource.UnPause();
+        yield return new WaitForSecondsRealtime(delay);
+        RoundManager.Instance.pauseMenuScreen.SetActive(false);
+        RoundManager.Instance.mainGameMusicAudioSource.UnPause();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
@@ -84,7 +91,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator HomeBlackButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("MainMenuScene");
         Debug.Log("Main menu scene is loaded and home black button is pressed!");
     }
@@ -96,7 +103,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator RestartButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(loadDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
         Debug.Log("Restart button pressed and loaded main game scene and game over menu scree gone!");

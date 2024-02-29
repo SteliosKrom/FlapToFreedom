@@ -2773,6 +2773,7 @@ Transform:
   - {fileID: 2012615772}
   - {fileID: 80153278}
   - {fileID: 184670540}
+  - {fileID: 1395519009}
   m_Father: {fileID: 1769799107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &958869546
@@ -3922,13 +3923,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395519008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1332.11, y: 679.8105, z: -5.777125}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1311.941, y: 681.3173, z: -6.777125}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2370169264711563361}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 958869545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1415021767
 GameObject:
@@ -4582,11 +4583,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerController: {fileID: 2377504059540669454}
   timerText: {fileID: 1267386405}
+  bestScoreText: {fileID: 0}
+  bestTimeText: {fileID: 0}
+  gameOverMenuScreen: {fileID: 0}
+  pauseMenuScreen: {fileID: 0}
   startingPoint: {fileID: 1851335588}
   time: 0
   bestScore: 0
   bestTime: 0
+  isGameOver: 0
   currentState: 0
+  mainGameMusicAudioSource: {fileID: 0}
+  pressButtonSoundAudioSource: {fileID: 0}
+  jumpSoundAudioSource: {fileID: 0}
+  mainMenuMusicAudioSource: {fileID: 0}
+  mainGameMusicAudioClip: {fileID: 0}
+  pressButtonSoundAudioClip: {fileID: 0}
+  jumpSoundAudioAudioClip: {fileID: 0}
+  mainMenuMusicAudioClip: {fileID: 0}
 --- !u!4 &1621841108
 Transform:
   m_ObjectHideFlags: 0
@@ -5293,16 +5307,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 022a872c8f29cbe4c94e1c4c18011433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiManager: {fileID: 0}
-  timerText: {fileID: 1267386405}
-  bestScoreText: {fileID: 1718344115}
-  bestTimeText: {fileID: 1011549976}
   startingPoint: {fileID: 1851335588}
   time: 0
+  timer: 0
+  interval: 1
   bestScore: 0
   bestTime: 0
-  isGameOver: 0
-  animator: {fileID: 0}
 --- !u!4 &1851335588
 Transform:
   m_ObjectHideFlags: 0
@@ -6257,13 +6267,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8d93c2a2f0c8349a38ad375bc44569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainGameUIManager: {fileID: 0}
   scoreText: {fileID: 450003680}
   startingPoint: {fileID: 1851335588}
-  uiManager: {fileID: 0}
   playerRb: {fileID: 7469946879017297230}
   startJumpForce: 0.8
   score: 0
   player: {fileID: 353129727772895786}
+  gameOverAudioSource: {fileID: 0}
+  gameOverAudioClip: {fileID: 0}
   gemPrefab: {fileID: 5238773754038558672, guid: f8c51c965dd234e439de44f8852d4cf4, type: 3}
   treeLogsPrefab: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
   collisionParticlePrefab: {fileID: 4410060223635755662, guid: 230f0d42a70ed104f82efe32a1216129, type: 3}
@@ -11374,4 +11386,3 @@ SceneRoots:
   - {fileID: 1281461878}
   - {fileID: 1858994685}
   - {fileID: 1769799107}
-  - {fileID: 1395519009}

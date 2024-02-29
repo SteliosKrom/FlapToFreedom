@@ -20,13 +20,13 @@ public class RoundManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
-    [SerializeField] GameObject gameOverMenuScreen;
-    [SerializeField] GameObject pauseMenuScreen;
-
+    public GameObject gameOverMenuScreen;
+    public GameObject pauseMenuScreen;
+    
 
     [Header("GAMEPLAY")]
     public Transform startingPoint;
-    private readonly float speed = 10f;
+    [SerializeField] private readonly float speed = 10f;
     public float time;
     private float timer = 0f;
     private float interval = 1f;

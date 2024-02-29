@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\MenuScene\DontDestroy.cs" />
     <Compile Include="Assets\2DBackgroundPack\Demo\Script\ParallaxBackground_0.cs" />
     <Compile Include="Assets\Scripts\TitleScene\TitleBlinkingScript.cs" />
+    <Compile Include="Assets\Scripts\GameScene\ObjectPooling.cs" />
     <Compile Include="Assets\Scripts\MenuScene\OptionsUIManager.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Scripts\CFX_AutoRotate.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RandomDirectionTranslate.cs" />
@@ -78,13 +79,10 @@
     <Compile Include="Assets\2DBackgroundPack\Demo\Script\BackgroundControl_0.cs" />
     <Compile Include="Assets\Scripts\GameScene\PlayerController.cs" />
     <Compile Include="Assets\Scripts\MenuScene\MenuUIManager.cs" />
-    <Compile Include="Assets\Scripts\BaseClasses\BoundsBase.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\Scripts\GameScene\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\TitleScene\TitleUIManager.cs" />
-    <Compile Include="Assets\Scripts\GameScene\PlayerOutOfBounds.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
-    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\GameScene\RepeatBackground.cs" />
     <Compile Include="Assets\Scripts\OptionsScene\SettingsManager.cs" />
