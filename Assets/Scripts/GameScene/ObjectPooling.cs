@@ -5,7 +5,6 @@ using UnityEngine;
 public class ObjectPooling : MonoBehaviour
 {
     [Header("MANAGERS")]
-    public static ObjectPooling Instance;
     public PlayerController playerController;
 
     [Header("POOLING FIELDS")]

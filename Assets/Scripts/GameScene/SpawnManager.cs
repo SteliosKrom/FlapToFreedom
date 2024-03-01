@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -25,7 +26,15 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnObjects()
     {
-        var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
-        Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        if (RoundManager.Instance.currentState == GameState.Playing)
+        {
+            var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
+            Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        }
+        else
+        {
+            CancelInvoke("SpawnObjects");
+        }
+
     }
 }

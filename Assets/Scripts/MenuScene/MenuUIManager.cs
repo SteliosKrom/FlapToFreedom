@@ -16,10 +16,6 @@ public class MenuUIManager : MonoBehaviour
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
 
-    private void Start()
-    {
-
-    }
 
     public void QuitGame()
     {

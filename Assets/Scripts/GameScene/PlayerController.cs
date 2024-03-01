@@ -6,12 +6,12 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PlayerController))]
 public class PlayerController : MonoBehaviour
 {
     [Header("MANAGERS")]
     public PlayerController playerController;
     public MainGameUIManager mainGameUIManager;
+    public ObjectPooling objectPooling;
 
 
     [Header("UI")]
@@ -46,43 +46,37 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-
+        mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
         playerRb = this.GetComponent<Rigidbody2D>();
-
         AddForceToPlayer();
-
-        if (mainGameUIManager == null)
-        {
-            mainGameUIManager = GameObject.FindObjectOfType<MainGameUIManager>();
-
-            if (mainGameUIManager == null)
-            {
-                Debug.Log($"{name}Main game ui manager not found!", gameObject);
-            }
-        }
-
-        score = 0;
-        scoreText.text = "Score: " + score;
     }
+
 
     private void Update()
     {
-        if (RoundManager.Instance.currentState == GameState.Playing)
-        {
-            InputForPlayerMovement();
-        }
+        InputForPlayerMovement();
     }
-
 
     public void InputForPlayerMovement()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (RoundManager.Instance.currentState == GameState.Playing)
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
-            AudioManager.Instance.PlaySound(jumpSoundAudioSource, jumpSoundAudioClip);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+                AudioManager.Instance.PlaySound(jumpSoundAudioSource, jumpSoundAudioClip);
+            }
         }
     }
 
+    public void ShowScoreOnStart()
+    {
+        if (RoundManager.Instance.currentState == GameState.Playing)
+        {
+            score = 0;
+            scoreText.text = "Score: " + score.ToString();
+        }     
+    }
 
     public void UpdateScore()
     {
@@ -90,15 +84,14 @@ public class PlayerController : MonoBehaviour
         scoreText.text = "Score: " + score;
     }
 
-
     public void OnTriggerEnter2D(Collider2D other)
     {
         //ADD CHECK OUT OF BOUNDS ON TRIGGER ENTER COLLISION
         if (other.gameObject.CompareTag("Gem"))
         {
-            ObjectPooling.Instance.CollectObject(other.gameObject);
+            objectPooling.CollectObject(other.gameObject);
 
-            GameObject gemParticle = ObjectPooling.Instance.GetPooledObject(ObjectPooling.Instance.gemParticlePool);
+            GameObject gemParticle = objectPooling.GetPooledObject(objectPooling.gemParticlePool);
 
             if (gemParticle != null)
             {
@@ -114,7 +107,7 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.CompareTag("TreeTrunkDown") || other.gameObject.CompareTag("TreeTrunkUp"))
         {
 
-            GameObject collisionParticle = ObjectPooling.Instance.GetPooledObject(ObjectPooling.Instance.collisionParticlePool);
+            GameObject collisionParticle = objectPooling.GetPooledObject(objectPooling.collisionParticlePool);
 
 
             if (collisionParticle != null)
@@ -137,8 +130,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     public void AddForceToPlayer()
     {
         playerRb.AddForce(Vector2.up * startJumpForce, ForceMode2D.Impulse);
@@ -147,6 +138,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator PlayIntro()
     {
+        
         Vector3 startPos = transform.position;
         Vector3 endPos = startingPoint.position;
 
@@ -157,37 +149,15 @@ public class PlayerController : MonoBehaviour
 
         while (fractionOfJourney < 1)
         {
+            RoundManager.Instance.currentState = GameState.Intro;
             distanceCovered = (Time.time - startTime) * speed;
             fractionOfJourney = distanceCovered / journeyLength;
-
             transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
-
-            yield return null;
+            yield return null;    
+            Debug.Log(RoundManager.Instance.currentState);
         }
         RoundManager.Instance.currentState = GameState.Playing;
+        ShowScoreOnStart();
+        Debug.Log(RoundManager.Instance.currentState);
     }
-
-
-    public void DestroyPlayerOutOfBoundaries()
-    {
-        if (transform.position.y <= lowerYRange)
-        {
-            
-        }
-
-        else if (transform.position.y >= upperYRange)
-        {
-            playerController.player.SetActive(false);
-            RoundManager.Instance.GameOver();
-            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-        }
-    }
-
-    /**public void DestroyLogsOutOfBoundaries()
-    {
-        if (gameObject.CompareTag("TreeLogs") && transform.position.x <= -XBounds)
-        {
-            
-        }
-    }**/
 }
