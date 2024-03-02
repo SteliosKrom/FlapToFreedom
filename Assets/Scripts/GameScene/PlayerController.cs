@@ -1,22 +1,11 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     [Header("MANAGERS")]
-    public PlayerController playerController; //remove player controller reference
-    //remove unused tags
-    public MainGameUIManager mainGameUIManager;  //unused reference
-
-    [Header("Object Pooling")]
-    public ObjectPooling gemParticlePooling;
-
-
-    [Header("UI")]
-    [SerializeField] TextMeshProUGUI scoreText;     //this should not be on player it should be on UI so move it out of here
-
+    public MainGameUIManager mainGameUIManager;
 
     [Header("GAMEPLAY")]
     public Transform startingPoint;
@@ -25,10 +14,6 @@ public class PlayerController : MonoBehaviour
     public float startJumpForce;
     private readonly float jumpForce = 1f;
     public int score;
-    [SerializeField] private GameObject player;     //Remove unncessary
-    [SerializeField] private float lowerYRange; //unused
-    [SerializeField] private float upperYRange; //unused
-    [SerializeField] private float xBounds; //unused
 
 
     [Header("AUDIO SOURCES")]
@@ -44,9 +29,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
-        gemParticlePooling = GameObject.Find("GemParticlePooling").GetComponent<ObjectPooling>();
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
     }
@@ -74,38 +56,35 @@ public class PlayerController : MonoBehaviour
         if (RoundManager.Instance.currentState == GameState.Playing)
         {
             score = 0;
-            scoreText.text = "Score: " + score.ToString();
-        }     
+            mainGameUIManager.ScoreText.text = "Score: " + score.ToString();
+        }
     }
 
     public void UpdateScore()
     {
         score++;
-        scoreText.text = "Score: " + score;
+        mainGameUIManager.ScoreText.text = "Score: " + score;
     }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Gem"))
         {
-            gemParticlePooling.CollectObject(other.gameObject);
-
-            GameObject gemParticle = gemParticlePooling.GetPooledObject();
+            GameObject gemParticle = ObjectPooling.Instance.GetPooledObject();
             gemParticle.transform.position = other.transform.position;
             gemParticle.SetActive(true);
-            
             other.gameObject.SetActive(false);
-
         }
+
         else if (other.gameObject.CompareTag("Logs"))
         {
             //make sure it grabs correct pooling objects
-            GameObject collisionParticle = gemParticlePooling.GetPooledObject();
+            GameObject collisionParticle = ObjectPooling.Instance.GetPooledObject();
 
-            collisionParticle.transform.position = player.transform.position;
+            collisionParticle.transform.position = gameObject.transform.position;
             collisionParticle.SetActive(true);
-            
-            player.SetActive(false);
+
+            gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
             RoundManager.Instance.CheckSaveBestScore();
@@ -113,7 +92,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Bounds"))
         {
-            player.gameObject.SetActive(false);
+            gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
         }
@@ -127,7 +106,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator PlayIntro()
     {
-        
+
         Vector3 startPos = transform.position;
         Vector3 endPos = startingPoint.position;
 
@@ -142,7 +121,7 @@ public class PlayerController : MonoBehaviour
             distanceCovered = (Time.time - startTime) * speed;
             fractionOfJourney = distanceCovered / journeyLength;
             transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
-            yield return null;    
+            yield return null;
         }
         RoundManager.Instance.currentState = GameState.Playing;
         ShowScoreOnStart();

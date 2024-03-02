@@ -26,13 +26,11 @@ public class RoundManager : MonoBehaviour
 
     [Header("GAMEPLAY")]
     public Transform startingPoint;
-    [SerializeField] private readonly float speed = 10f;
     public float time;
     private float timer = 0f;
     private readonly float interval = 1f;
     public int bestScore;
     public int bestTime;
-    [SerializeField] private bool isGameOver;  //remove unused
 
 
     [Header("STATES")]
@@ -50,7 +48,6 @@ public class RoundManager : MonoBehaviour
 
     public AudioSource MainGameMusicAudioSource { get => mainGameMusicAudioSource; set => mainGameMusicAudioSource = value; }
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
-    public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
     private void Awake()
     {
         Instance = this;
@@ -59,12 +56,6 @@ public class RoundManager : MonoBehaviour
         LoadBestTimeOnStartGame();
         UpdateBestTime(bestTime);
         UpdateBestScore(bestScore);
-    }
-
-
-    private void Start()
-    {
-        isGameOver = false;
     }
 
     private void Update()
@@ -76,7 +67,7 @@ public class RoundManager : MonoBehaviour
     }
     public void TimeScore()
     {
-        if (!RoundManager.Instance.isGameOver)      //replace with Enum
+        if (Instance.currentState != GameState.GameOver) //replace with Enum
         {
             timer += Time.deltaTime;
 
@@ -94,7 +85,7 @@ public class RoundManager : MonoBehaviour
         currentState = GameState.GameOver;
         gameOverMenuScreen.SetActive(true);
         AudioManager.Instance.PlaySound(playerController.gameOverAudioSource, playerController.gameOverAudioClip);
-        isGameOver = true;
+        Instance.currentState = GameState.GameOver;
     }
 
     public void PauseGame()
@@ -170,57 +161,5 @@ public class RoundManager : MonoBehaviour
     {
         bestTime = PlayerPrefs.GetInt("BestTime");
         UpdateBestTime(bestTime);
-    }
-
-    public void CollectObject(GameObject obj)
-    {
-        if (obj != null)
-        {
-            if (obj.CompareTag("Gem"))
-            {
-                obj.SetActive(false);
-                RoundManager.Instance.ReturnObjectToPool(obj);
-                // playerController.UpdateScore();
-                RoundManager.Instance.CheckSaveBestScore();
-                RoundManager.Instance.CheckSaveBestTime();
-                Debug.Log($"{name}Player collected an object!", gameObject);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Gem object is null!");
-        }
-        if (obj != null)
-        {
-            if (obj.CompareTag(""))
-            {
-                obj.SetActive(false);
-                RoundManager.Instance.ReturnObjectToPool(obj);
-            }
-        }
-        else
-        {
-            Debug.Log("Tree logs object is null!");
-        }
-    }
-
-    public void ReturnObjectToPool(GameObject obj)
-    {
-        if (obj.CompareTag("Gem"))
-        {
-            //   gemPool.Add(obj);
-        }
-        else if (obj.CompareTag("") || obj.CompareTag(""))
-        {
-            //     treeLogsPool.Add(obj);
-        }
-        else if (obj.CompareTag(""))
-        {
-            //   collisionParticlePool.Add(obj);
-        }
-        else if (obj.CompareTag(""))
-        {
-            // gemParticlePool.Add(obj);
-        }
     }
 }

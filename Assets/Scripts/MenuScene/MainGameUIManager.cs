@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -10,13 +11,10 @@ public class MainGameUIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
     [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("GAMEPLAY")]
-    private float delay = 1.0f;
-
-    [Header("MANAGERS")]
-    public AudioManager audioManager;   //remove refenrece use instance
-    public RoundManager roundManager;  //remove reference use instance
+    private readonly float delay = 1.0f;
 
     [Header("AUDIO")]
     public AudioMixer myAudioMixer;
@@ -24,18 +22,15 @@ public class MainGameUIManager : MonoBehaviour
     [SerializeField] private AudioClip onPointerEnterAudioClip;
     const string gameMusicVol = "GameMusicVolume";
 
+    public TextMeshProUGUI ScoreText { get => scoreText; set => scoreText = value; }
+    private void Start()
+    {
+        gameVolumeSlider.value = 1.0f;
+    }
 
     private void Update()
     {
         InputForPauseMenuScreen();
-    }
-
-    public void CheckGameVolumeSliderNullReference()
-    {
-        if (gameVolumeSlider != null)
-        {
-            gameVolumeSlider.value = 1.0f;
-        }
     }
 
     public void GameVolumeSlider()
@@ -50,13 +45,13 @@ public class MainGameUIManager : MonoBehaviour
         // Check the current game state!
         if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
         {
-            if (true)   //check for playing state || intro
+            if (RoundManager.Instance.currentState == GameState.Playing || RoundManager.Instance.currentState == GameState.Intro)   //check for playing state || intro
             {
-                roundManager.PauseGame();
+                RoundManager.Instance.PauseGame();
             }
-            else //make if else check for paused state
+            else if (RoundManager.Instance.currentState == GameState.Pause || RoundManager.Instance.currentState == GameState.Intro) //make if else check for paused state
             {
-                roundManager.ResumeGame();
+                RoundManager.Instance.ResumeGame();
             }
         }
         
@@ -121,6 +116,8 @@ public class MainGameUIManager : MonoBehaviour
         Time.timeScale = 1f;
         Debug.Log("Restart button pressed and loaded main game scene and game over menu scree gone!");
     }
+
+
 
     public void OnPointerEnter()
     {

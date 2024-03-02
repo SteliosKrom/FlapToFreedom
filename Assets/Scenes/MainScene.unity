@@ -2538,6 +2538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
+  poolingObject: {fileID: 767067297}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -3351,6 +3352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 4410060223635755662, guid: 230f0d42a70ed104f82efe32a1216129, type: 3}
+  poolingObject: {fileID: 1051766298}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -5152,7 +5154,6 @@ MonoBehaviour:
   time: 0
   bestScore: 0
   bestTime: 0
-  isGameOver: 0
   currentState: 0
   mainGameMusicAudioSource: {fileID: 1843660924}
   pressButtonSoundAudioSource: {fileID: 119461714}
@@ -5684,6 +5685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1070953327065362723, guid: e64b970f2dea646499ac37e7bf4d3815, type: 3}
+  poolingObject: {fileID: 1738425496}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -6170,8 +6172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameVolumeSlider: {fileID: 2055951192}
   gameVolumeSliderText: {fileID: 948949787}
-  audioManager: {fileID: 6297076732293194931}
-  roundManager: {fileID: 1621841107}
+  scoreText: {fileID: 450003680}
   myAudioMixer: {fileID: 24100000, guid: 667c6bb0b0ee0f94f95d1abd9d3f6803, type: 2}
   onPointerEnterAudioSource: {fileID: 1660051143}
   onPointerEnterAudioClip: {fileID: 8300000, guid: aebae0e89d575dc43ae340319487ef87, type: 3}
@@ -6906,18 +6907,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8d93c2a2f0c8349a38ad375bc44569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 2377504059540669454}
   mainGameUIManager: {fileID: 1995891267}
-  objectPooling: {fileID: 0}
-  scoreText: {fileID: 450003680}
   startingPoint: {fileID: 1851335588}
   playerRb: {fileID: 7469946879017297230}
   startJumpForce: 1.5
   score: 0
-  player: {fileID: 353129727772895786}
-  lowerYRange: 0
-  upperYRange: 0
-  xBounds: 0
   gameOverAudioSource: {fileID: 350903519}
   jumpSoundAudioSource: {fileID: 1204626868}
   gameOverAudioClip: {fileID: 8300000, guid: a8ecc56a38475954a8251fcd5923f0da, type: 3}
