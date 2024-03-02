@@ -1466,8 +1466,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
         m_MethodName: ContinueGameButton
         m_Mode: 1
         m_Arguments:
@@ -1545,8 +1545,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        - m_Target: {fileID: 1995891267}
+          m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
           m_MethodName: OnPointerEnter
           m_Mode: 1
           m_Arguments:
@@ -2015,8 +2015,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -2094,8 +2094,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        - m_Target: {fileID: 1995891267}
+          m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
           m_MethodName: OnPointerEnter
           m_Mode: 1
           m_Arguments:
@@ -2168,7 +2168,7 @@ Transform:
   m_GameObject: {fileID: 617512960}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -1278.51, y: -675.81, z: 0}
+  m_LocalPosition: {x: -1278.9, y: -675.81, z: 0}
   m_LocalScale: {x: 1000, y: 1.8876, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2772,8 +2772,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
         m_MethodName: HomeBlackButton
         m_Mode: 1
         m_Arguments:
@@ -2851,8 +2851,8 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        - m_Target: {fileID: 1995891267}
+          m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
           m_MethodName: OnPointerEnter
           m_Mode: 1
           m_Arguments:
@@ -4405,9 +4405,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: GoBackButton
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
+        m_MethodName: HomeBlackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5867,8 +5867,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
         m_MethodName: RestartButton
         m_Mode: 1
         m_Arguments:
@@ -6002,8 +6002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7df6b2f6c62b59f458265cfbaed57213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameVolumeSlider: {fileID: 2055951192}
+  gameVolumeSliderText: {fileID: 948949787}
   audioManager: {fileID: 6297076732293194931}
   roundManager: {fileID: 1621841107}
+  myAudioMixer: {fileID: 24100000, guid: 667c6bb0b0ee0f94f95d1abd9d3f6803, type: 2}
   onPointerEnterAudioSource: {fileID: 1660051143}
   onPointerEnterAudioClip: {fileID: 8300000, guid: aebae0e89d575dc43ae340319487ef87, type: 3}
 --- !u!1 &2002459703
@@ -6467,8 +6470,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
+      - m_Target: {fileID: 1995891267}
+        m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
         m_MethodName: GameVolumeSlider
         m_Mode: 1
         m_Arguments:
@@ -6743,10 +6746,9 @@ MonoBehaviour:
   scoreText: {fileID: 450003680}
   startingPoint: {fileID: 1851335588}
   playerRb: {fileID: 7469946879017297230}
-  startJumpForce: 1
+  startJumpForce: 1.5
   score: 0
   player: {fileID: 353129727772895786}
-  treeLogs: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
   lowerYRange: 0
   upperYRange: 0
   xBounds: 0

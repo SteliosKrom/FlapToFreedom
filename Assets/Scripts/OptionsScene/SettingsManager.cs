@@ -7,41 +7,34 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
-    // Variables that we are using in our code!
-
+    [Header("UI")]
     [SerializeField] private Slider menuMusicVolumeSlider;
     [SerializeField] private TextMeshProUGUI menuMusicVolumeSliderText;
 
     [SerializeField] private Slider soundsVolumeSlider;
     [SerializeField] private TextMeshProUGUI soundsVolumeSliderText;
 
-    [SerializeField] private Slider gameVolumeSlider;
-    [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
-
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private TextMeshProUGUI masterVolumeSliderText;
 
+    [Header("DISPLAY")]
     [SerializeField] private TMP_Dropdown qualityDropdown;
     [SerializeField] private TMP_Dropdown resolutionDropdown;
-
     [SerializeField] private Toggle fullScreenToggle;
+    Resolution[] resolutions;
 
+    [Header("AUDIO")]
     public AudioMixer myAudioMixer;
-
     const string menuMusicVol = "MenuMusicVolume";
     const string soundEffectsVol = "SoundsVolume";
     const string masterVol = "MasterVolume";
-    const string gameMusicVol = "GameMusicVolume";
 
-    Resolution[] resolutions;
 
     // Start is called before the first frame update
     void Start()
     {
-        // Initializing fields or components that have to be declared before any of the update method is called!
         ResolutionSettings();
         CheckQualityDropdownNullReference();
-        CheckGameVolumeSliderNullReference();
         LoadSettings();
     }
 
@@ -55,13 +48,6 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    public void CheckGameVolumeSliderNullReference()
-    {
-        if (gameVolumeSlider != null)
-        {
-            gameVolumeSlider.value = 1.0f;
-        }
-    }
 
     public void SaveSettings()
     {
@@ -81,8 +67,6 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeValue) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
-
-      //  Debug.Log("Settings are saved and audio mixer is working!");
     }
 
     public void LoadSettings()
@@ -113,42 +97,28 @@ public class SettingsManager : MonoBehaviour
         {
             qualityDropdown.value = qualityDropdownValue;
         }
-
-      //  Debug.Log("Saved settings has been loaded!");
     }
 
     public void MenuMusicVolumeSlider()
     {
         float menuVolume = menuMusicVolumeSlider.value;
         menuMusicVolumeSliderText.text = menuVolume.ToString("0.0");
-      //  Debug.Log("Display of main menu volume text as string!");
-    }
-
-    public void GameVolumeSlider()
-    {
-        float gameVolume = gameVolumeSlider.value;
-        gameVolumeSliderText.text = gameVolume.ToString("0.0");
-        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
-     //   Debug.Log("Display of game volume text as string!");
     }
 
     public void SoundsVolumeSlider()
     {
         float soundsVolume = soundsVolumeSlider.value;
         soundsVolumeSliderText.text = soundsVolume.ToString("0.0");
-       // Debug.Log("Display of sounds volume text as string!");
     }
 
     public void MasterVolumeSlider()
     {
         float masterVolume = masterVolumeSlider.value;
         masterVolumeSliderText.text = masterVolume.ToString("0.0");
-      //  Debug.Log("Display of master volume text as string!");
     }
 
     public void ResetSettings()
     {
-        //Here we are resetting all of our settings back to it's default value!
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = 1.0f;

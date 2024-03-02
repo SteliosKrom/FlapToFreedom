@@ -1,9 +1,16 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainGameUIManager : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] private Slider gameVolumeSlider;
+    [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
+
     [Header("GAMEPLAY")]
     private float delay = 1.0f;
 
@@ -11,20 +18,31 @@ public class MainGameUIManager : MonoBehaviour
     public AudioManager audioManager;
     public RoundManager roundManager;
 
-    [Header("AUDIO SOURCES")]
+    [Header("AUDIO")]
+    public AudioMixer myAudioMixer;
     [SerializeField] private AudioSource onPointerEnterAudioSource;
-
-    [Header("AUDIO CLIPS")]
     [SerializeField] private AudioClip onPointerEnterAudioClip;
+    const string gameMusicVol = "GameMusicVolume";
 
-    private void Start()
-    {
-
-    }
 
     private void Update()
     {
         InputForPauseMenuScreen();
+    }
+
+    public void CheckGameVolumeSliderNullReference()
+    {
+        if (gameVolumeSlider != null)
+        {
+            gameVolumeSlider.value = 1.0f;
+        }
+    }
+
+    public void GameVolumeSlider()
+    {
+        float gameVolume = gameVolumeSlider.value;
+        gameVolumeSliderText.text = gameVolume.ToString("0.0");
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
     }
 
     public void InputForPauseMenuScreen()
@@ -32,18 +50,21 @@ public class MainGameUIManager : MonoBehaviour
         // Check the current game state!
         if (roundManager != null)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (RoundManager.Instance.currentState == GameState.Playing || RoundManager.Instance.currentState == GameState.Intro)
             {
-                if (true)
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    roundManager.PauseGame();
-                }
+                    if (true)
+                    {
+                        roundManager.PauseGame();
+                    }
 
-                else
-                {
-                    roundManager.PauseGame();
+                    else
+                    {
+                        roundManager.ResumeGame();
+                    }
                 }
-            }
+            }         
         }
     }
 

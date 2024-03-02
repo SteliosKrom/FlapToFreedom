@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\MenuScene\MainGameUIManager.cs" />
     <Compile Include="Assets\Scripts\GameScene\RoundManager.cs" />
+    <Compile Include="Assets\Scripts\GameScene\TreeLogsController.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Scripts\CFX_AutoDestructShuriken.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Scripts\CFX_LightFlicker.cs" />

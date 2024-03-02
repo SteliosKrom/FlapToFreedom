@@ -25,8 +25,7 @@ public class PlayerController : MonoBehaviour
     public float startJumpForce;
     private readonly float jumpForce = 1f;
     public int score;
-    public GameObject player;
-    public GameObject treeLogs;
+    [SerializeField] private GameObject player;
     [SerializeField] private float lowerYRange;
     [SerializeField] private float upperYRange;
     [SerializeField] private float xBounds;
@@ -47,6 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
+        objectPooling = GameObject.Find("ObjectPooling").GetComponent<ObjectPooling>();
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
     }
@@ -86,7 +86,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        //ADD CHECK OUT OF BOUNDS ON TRIGGER ENTER COLLISION
         if (other.gameObject.CompareTag("Gem"))
         {
             objectPooling.CollectObject(other.gameObject);
@@ -124,7 +123,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("UpDownBound"))
         {
-            player.SetActive(false);
+            player.gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
         }
