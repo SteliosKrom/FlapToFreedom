@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -4748634289679549986}
   m_Layer: 0
   m_Name: TreeLogs 1 1 1 1
-  m_TagString: TreeLogs
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,7 +256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7376940716031114565, guid: e2b0b8b6e3fbe8246913c7724c4c4727, type: 3}
       propertyPath: m_TagString
-      value: TreeTrunkDown
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7376940716031114565, guid: e2b0b8b6e3fbe8246913c7724c4c4727, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -399,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7376940716031114565, guid: e2b0b8b6e3fbe8246913c7724c4c4727, type: 3}
       propertyPath: m_TagString
-      value: TreeTrunkUp
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7413505411073333368, guid: e2b0b8b6e3fbe8246913c7724c4c4727, type: 3}
       propertyPath: m_LocalScale.y

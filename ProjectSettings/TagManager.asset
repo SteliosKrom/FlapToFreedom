@@ -3,24 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - CanvasMainScene
-  - Score
-  - Timer
-  - MainGameMusic
-  - ClickSoundEffects
-  - Gem
-  - TreeTrunkDown
-  - TreeTrunkUp
-  - TreeLogs
-  - BestTime
-  - GameOverScreen
-  - HighScore
-  - PauseMenuScreen
-  - AudioManager
-  - Bounds
-  - LeftBound
-  - UpDownBound
+  tags: []
   layers:
   - Default
   - TransparentFX

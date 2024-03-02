@@ -82,7 +82,7 @@ public class ObjectPooling : MonoBehaviour
         }
         if (obj != null)
         {
-            if (obj.CompareTag("TreeLogs"))
+            if (obj.CompareTag(""))
             {
                 obj.SetActive(false);
                 ReturnObjectToPool(obj);
@@ -102,16 +102,16 @@ public class ObjectPooling : MonoBehaviour
             gemPool.Add(obj);
         }
 
-        else if (obj.CompareTag("TreeTrunkDown") || obj.CompareTag("TreeTrunkUp"))
+        else if (obj.CompareTag("") || obj.CompareTag(""))
         {
             treeLogsPool.Add(obj);
         }
-        else if (obj.CompareTag("CollisionParticleEffect"))
+        else if (obj.CompareTag(""))
         {
             collisionParticlePool.Add(obj);
         }
 
-        else if (obj.CompareTag("GemParticleEffect"))
+        else if (obj.CompareTag(""))
         {
             gemParticlePool.Add(obj);
         }

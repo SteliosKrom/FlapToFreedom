@@ -1,16 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     [Header("MANAGERS")]
-    public PlayerController playerController;
-    public MainGameUIManager mainGameUIManager;
+    public PlayerController playerController; //remove player controller reference
+    //remove unused tags
+    public MainGameUIManager mainGameUIManager;  //unused reference
     public ObjectPooling objectPooling;
 
 
@@ -103,7 +101,7 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        else if (other.gameObject.CompareTag("TreeTrunkDown") || other.gameObject.CompareTag("TreeTrunkUp"))
+        else if (other.gameObject.CompareTag("") || other.gameObject.CompareTag(""))
         {
 
             GameObject collisionParticle = objectPooling.GetPooledObject(objectPooling.collisionParticlePool);
@@ -121,7 +119,7 @@ public class PlayerController : MonoBehaviour
             RoundManager.Instance.CheckSaveBestScore();
             RoundManager.Instance.CheckSaveBestTime();
         }
-        else if (other.gameObject.CompareTag("UpDownBound"))
+        else if (other.gameObject.CompareTag(""))
         {
             player.gameObject.SetActive(false);
             RoundManager.Instance.GameOver();

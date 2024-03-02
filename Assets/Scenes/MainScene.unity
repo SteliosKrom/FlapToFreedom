@@ -316,7 +316,7 @@ GameObject:
   - component: {fileID: 119461714}
   m_Layer: 0
   m_Name: ClickSoundEffects
-  m_TagString: ClickSoundEffects
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1676,7 +1676,7 @@ GameObject:
   - component: {fileID: 450003680}
   m_Layer: 5
   m_Name: Score
-  m_TagString: Score
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2154,7 +2154,7 @@ GameObject:
   - component: {fileID: 617512962}
   m_Layer: 0
   m_Name: LeftBound
-  m_TagString: LeftBound
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2571,7 +2571,7 @@ GameObject:
   - component: {fileID: 867823460}
   m_Layer: 0
   m_Name: UpperBound
-  m_TagString: UpDownBound
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4002,7 +4002,7 @@ GameObject:
   - component: {fileID: 1267386405}
   m_Layer: 5
   m_Name: Timer
-  m_TagString: Timer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4172,7 +4172,7 @@ GameObject:
   - component: {fileID: 1289847148}
   m_Layer: 0
   m_Name: LowerBound
-  m_TagString: UpDownBound
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5604,7 +5604,7 @@ GameObject:
   - component: {fileID: 1843660924}
   m_Layer: 0
   m_Name: MainGameMusic
-  m_TagString: MainGameMusic
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6499,7 +6499,7 @@ GameObject:
   - component: {fileID: 2377504059540669454}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
