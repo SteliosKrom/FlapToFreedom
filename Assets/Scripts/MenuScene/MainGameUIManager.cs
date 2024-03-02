@@ -15,8 +15,8 @@ public class MainGameUIManager : MonoBehaviour
     private float delay = 1.0f;
 
     [Header("MANAGERS")]
-    public AudioManager audioManager;
-    public RoundManager roundManager;
+    public AudioManager audioManager;   //remove refenrece use instance
+    public RoundManager roundManager;  //remove reference use instance
 
     [Header("AUDIO")]
     public AudioMixer myAudioMixer;
@@ -48,20 +48,18 @@ public class MainGameUIManager : MonoBehaviour
     public void InputForPauseMenuScreen()
     {
         // Check the current game state!
-        if (roundManager != null)
+        if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
+            if (true)   //check for playing state || intro
             {
-                if (true)
-                {
-                    roundManager.PauseGame();
-                }
-                else
-                {
-                    roundManager.ResumeGame();
-                }
+                roundManager.PauseGame();
+            }
+            else //make if else check for paused state
+            {
+                roundManager.ResumeGame();
             }
         }
+        
     }
 
     public void QuitGame()

@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     public PlayerController playerController; //remove player controller reference
     //remove unused tags
     public MainGameUIManager mainGameUIManager;  //unused reference
-    public ObjectPooling objectPooling;
+
+    [Header("Object Pooling")]
+    public ObjectPooling gemParticlePooling;
 
 
     [Header("UI")]
-    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI scoreText;     //this should not be on player it should be on UI so move it out of here
 
 
     [Header("GAMEPLAY")]
@@ -23,10 +25,10 @@ public class PlayerController : MonoBehaviour
     public float startJumpForce;
     private readonly float jumpForce = 1f;
     public int score;
-    [SerializeField] private GameObject player;
-    [SerializeField] private float lowerYRange;
-    [SerializeField] private float upperYRange;
-    [SerializeField] private float xBounds;
+    [SerializeField] private GameObject player;     //Remove unncessary
+    [SerializeField] private float lowerYRange; //unused
+    [SerializeField] private float upperYRange; //unused
+    [SerializeField] private float xBounds; //unused
 
 
     [Header("AUDIO SOURCES")]
@@ -44,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
-        objectPooling = GameObject.Find("ObjectPooling").GetComponent<ObjectPooling>();
+        gemParticlePooling = GameObject.Find("GemParticlePooling").GetComponent<ObjectPooling>();
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
     }
@@ -86,40 +88,30 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Gem"))
         {
-            objectPooling.CollectObject(other.gameObject);
+            gemParticlePooling.CollectObject(other.gameObject);
 
-            GameObject gemParticle = objectPooling.GetPooledObject(objectPooling.gemParticlePool);
-
-            if (gemParticle != null)
-            {
-                gemParticle.transform.position = other.transform.position;
-                gemParticle.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError($"{name} Gem particle not found!", gameObject);
-            }
+            GameObject gemParticle = gemParticlePooling.GetPooledObject();
+            gemParticle.transform.position = other.transform.position;
+            gemParticle.SetActive(true);
+            
+            other.gameObject.SetActive(false);
 
         }
-        else if (other.gameObject.CompareTag("") || other.gameObject.CompareTag(""))
+        else if (other.gameObject.CompareTag("Logs"))
         {
+            //make sure it grabs correct pooling objects
+            GameObject collisionParticle = gemParticlePooling.GetPooledObject();
 
-            GameObject collisionParticle = objectPooling.GetPooledObject(objectPooling.collisionParticlePool);
-
-
-            if (collisionParticle != null)
-            {
-                collisionParticle.transform.position = player.transform.position;
-                collisionParticle.SetActive(true);
-            }
-
+            collisionParticle.transform.position = player.transform.position;
+            collisionParticle.SetActive(true);
+            
             player.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
             RoundManager.Instance.CheckSaveBestScore();
             RoundManager.Instance.CheckSaveBestTime();
         }
-        else if (other.gameObject.CompareTag(""))
+        else if (other.gameObject.CompareTag("Bounds"))
         {
             player.gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
@@ -151,10 +143,8 @@ public class PlayerController : MonoBehaviour
             fractionOfJourney = distanceCovered / journeyLength;
             transform.position = Vector3.Lerp(startPos, endPos, fractionOfJourney);
             yield return null;    
-            Debug.Log(RoundManager.Instance.currentState);
         }
         RoundManager.Instance.currentState = GameState.Playing;
         ShowScoreOnStart();
-        Debug.Log(RoundManager.Instance.currentState);
     }
 }

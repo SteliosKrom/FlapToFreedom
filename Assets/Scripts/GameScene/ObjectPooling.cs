@@ -1,67 +1,59 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
-    [Header("MANAGERS")]
-    public PlayerController playerController;
-
     [Header("POOLING FIELDS")]
-    public GameObject gemPrefab;
-    public GameObject treeLogsPrefab;
-    public GameObject collisionParticlePrefab;
-    public GameObject gemParticlePrefab;
+    [SerializeField] private GameObject objectPrefab;
 
-    public int gemPoolSize = 20;
-    public int gemParticlePoolSize = 20;
-    public int treeLogsPoolSize = 20;
-    public int collisionParticlePoolSize = 20;
+    [SerializeField] private int poolSize = 20;
+    [SerializeField] private bool autoGrow = false;
+    [SerializeField] private List<GameObject> objectPoolingList = new List<GameObject>();
 
-    public readonly List<GameObject> gemPool = new List<GameObject>();
-    public readonly List<GameObject> treeLogsPool = new List<GameObject>();
-    public readonly List<GameObject> collisionParticlePool = new List<GameObject>();
-    public readonly List<GameObject> gemParticlePool = new List<GameObject>();
 
     private void Awake()
     {
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-
-        InitializeObjectPool(gemPrefab, gemPool, gemPoolSize);
-        InitializeObjectPool(treeLogsPrefab, treeLogsPool, treeLogsPoolSize);
-        InitializeObjectPool(collisionParticlePrefab, collisionParticlePool, collisionParticlePoolSize);
-        InitializeObjectPool(gemParticlePrefab, gemParticlePool, gemParticlePoolSize);
+        for (int i = 0; i < poolSize; i++)
+        {
+            CreateObject();
+        }
     }
 
-    private void InitializeObjectPool(GameObject prefab, List<GameObject> pool, int size)
+    private GameObject CreateObject()
     {
-        for (int i = 0; i < size; i++)
-        {
-            GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-            obj.SetActive(false);
-            pool.Add(obj);
-        }
+        GameObject obj = Instantiate(objectPrefab, Vector3.zero, Quaternion.identity);
+        objectPoolingList.Add(obj);
+        obj.SetActive(false);
+        return obj;
     }
 
     //move pooling to a new Class
-    public GameObject GetPooledObject(List<GameObject> pool)
+    public GameObject GetPooledObject()
     {
         // Check for an inactive object in the pool!
-        foreach (GameObject obj in pool)
+        GameObject pooledObject = null;
+        foreach (GameObject obj in objectPoolingList)
         {
             if (obj != null && !obj.activeInHierarchy)
             {
-                return obj;
+                pooledObject = obj;
+                break;
             }
         }
 
-        // If no inactive objects are found, create a new one!
-        GameObject newObj = Instantiate(pool[0]);
-        newObj.SetActive(false);
-        pool.Add(newObj);
-        return newObj;
+        if(pooledObject == null && autoGrow) 
+        {
+            pooledObject = CreateObject();
+        }
+        else
+        {
+            Debug.LogWarning("Unable to create object but it is required");
+        }
+
+        return pooledObject;
     }
 
+    // this shouldnt be on object pooling
     public void CollectObject(GameObject obj)
     {
         if (obj != null)
@@ -70,7 +62,7 @@ public class ObjectPooling : MonoBehaviour
             {
                 obj.SetActive(false);
                 ReturnObjectToPool(obj);
-                playerController.UpdateScore();
+               // playerController.UpdateScore();
                 RoundManager.Instance.CheckSaveBestScore();
                 RoundManager.Instance.CheckSaveBestTime();
                 Debug.Log($"{name}Player collected an object!", gameObject);
@@ -94,26 +86,26 @@ public class ObjectPooling : MonoBehaviour
         }
     }
 
-
+    //This shouldnt be in object pooling
     public void ReturnObjectToPool(GameObject obj)
     {
         if (obj.CompareTag("Gem"))
         {
-            gemPool.Add(obj);
+         //   gemPool.Add(obj);
         }
 
         else if (obj.CompareTag("") || obj.CompareTag(""))
         {
-            treeLogsPool.Add(obj);
+       //     treeLogsPool.Add(obj);
         }
         else if (obj.CompareTag(""))
         {
-            collisionParticlePool.Add(obj);
+         //   collisionParticlePool.Add(obj);
         }
 
         else if (obj.CompareTag(""))
         {
-            gemParticlePool.Add(obj);
+           // gemParticlePool.Add(obj);
         }
     }
 }

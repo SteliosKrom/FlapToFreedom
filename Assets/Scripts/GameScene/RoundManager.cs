@@ -32,7 +32,7 @@ public class RoundManager : MonoBehaviour
     private readonly float interval = 1f;
     public int bestScore;
     public int bestTime;
-    [SerializeField] private bool isGameOver;
+    [SerializeField] private bool isGameOver;  //remove unused
 
 
     [Header("STATES")]
@@ -61,12 +61,13 @@ public class RoundManager : MonoBehaviour
         UpdateBestScore(bestScore);
     }
 
+
     private void Start()
     {
         isGameOver = false;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (currentState == GameState.Playing)
         {
@@ -75,8 +76,7 @@ public class RoundManager : MonoBehaviour
     }
     public void TimeScore()
     {
-        Debug.Log("Game Over bool: " + RoundManager.Instance.IsGameOver);
-        if (!RoundManager.Instance.isGameOver)
+        if (!RoundManager.Instance.isGameOver)      //replace with Enum
         {
             timer += Time.deltaTime;
 
@@ -86,11 +86,6 @@ public class RoundManager : MonoBehaviour
                 timer = 0f;
             }
             timerText.text = "Timer: " + time.ToString();
-            Debug.Log("Currently Playing");
-        }
-        else
-        {
-            Debug.Log("Currently Game Over");
         }
     }
 
@@ -109,7 +104,6 @@ public class RoundManager : MonoBehaviour
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         Time.timeScale = 0f;
         currentState = GameState.Pause;
-
     }
 
     public void ResumeGame()
