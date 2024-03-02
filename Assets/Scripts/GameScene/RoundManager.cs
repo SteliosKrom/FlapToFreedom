@@ -171,4 +171,56 @@ public class RoundManager : MonoBehaviour
         bestTime = PlayerPrefs.GetInt("BestTime");
         UpdateBestTime(bestTime);
     }
+
+    public void CollectObject(GameObject obj)
+    {
+        if (obj != null)
+        {
+            if (obj.CompareTag("Gem"))
+            {
+                obj.SetActive(false);
+                RoundManager.Instance.ReturnObjectToPool(obj);
+                // playerController.UpdateScore();
+                RoundManager.Instance.CheckSaveBestScore();
+                RoundManager.Instance.CheckSaveBestTime();
+                Debug.Log($"{name}Player collected an object!", gameObject);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Gem object is null!");
+        }
+        if (obj != null)
+        {
+            if (obj.CompareTag(""))
+            {
+                obj.SetActive(false);
+                RoundManager.Instance.ReturnObjectToPool(obj);
+            }
+        }
+        else
+        {
+            Debug.Log("Tree logs object is null!");
+        }
+    }
+
+    public void ReturnObjectToPool(GameObject obj)
+    {
+        if (obj.CompareTag("Gem"))
+        {
+            //   gemPool.Add(obj);
+        }
+        else if (obj.CompareTag("") || obj.CompareTag(""))
+        {
+            //     treeLogsPool.Add(obj);
+        }
+        else if (obj.CompareTag(""))
+        {
+            //   collisionParticlePool.Add(obj);
+        }
+        else if (obj.CompareTag(""))
+        {
+            // gemParticlePool.Add(obj);
+        }
+    }
 }
