@@ -50,21 +50,17 @@ public class MainGameUIManager : MonoBehaviour
         // Check the current game state!
         if (roundManager != null)
         {
-            if (RoundManager.Instance.currentState == GameState.Playing || RoundManager.Instance.currentState == GameState.Intro)
+            if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (true)
                 {
-                    if (true)
-                    {
-                        roundManager.PauseGame();
-                    }
-
-                    else
-                    {
-                        roundManager.ResumeGame();
-                    }
+                    roundManager.PauseGame();
                 }
-            }         
+                else
+                {
+                    roundManager.ResumeGame();
+                }
+            }
         }
     }
 

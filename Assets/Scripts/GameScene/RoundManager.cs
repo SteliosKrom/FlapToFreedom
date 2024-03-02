@@ -107,6 +107,8 @@ public class RoundManager : MonoBehaviour
         pauseMenuScreen.SetActive(true);
         mainGameMusicAudioSource.Pause();
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+        Time.timeScale = 0f;
+        currentState = GameState.Pause;
 
     }
 
@@ -115,6 +117,8 @@ public class RoundManager : MonoBehaviour
         pauseMenuScreen.SetActive(false);
         mainGameMusicAudioSource.UnPause();
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+        Time.timeScale = 1f;
+        currentState = GameState.Playing;
     }
 
     /**public void UpdateTimer()
