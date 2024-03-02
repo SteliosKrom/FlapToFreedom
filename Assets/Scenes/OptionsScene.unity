@@ -1586,7 +1586,7 @@ GameObject:
   - component: {fileID: 408747523}
   m_Layer: 0
   m_Name: MainCamera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2237,7 +2237,7 @@ GameObject:
   - component: {fileID: 732678437}
   m_Layer: 5
   m_Name: SaveSettings
-  m_TagString: Apply
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2410,7 +2410,7 @@ GameObject:
   - component: {fileID: 771744432}
   m_Layer: 5
   m_Name: SoundsVolume
-  m_TagString: SoundsVolume
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3487,7 +3487,7 @@ GameObject:
   - component: {fileID: 1075367749}
   m_Layer: 5
   m_Name: MasterVolume
-  m_TagString: MasterVolume
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3621,7 +3621,7 @@ GameObject:
   - component: {fileID: 1093761910}
   m_Layer: 5
   m_Name: MenuMusicVolume
-  m_TagString: MenuMusicVolume
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4675,6 +4675,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3e4c1ab9068424e8e02e0e8819765d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioManager: {fileID: 0}
 --- !u!1 &1374428198
 GameObject:
   m_ObjectHideFlags: 0
@@ -9867,7 +9868,7 @@ GameObject:
   - component: {fileID: 1493615585}
   m_Layer: 0
   m_Name: ClickSoundEffects
-  m_TagString: ClickSoundEffects
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10554,7 +10555,7 @@ GameObject:
   - component: {fileID: 1785444723}
   m_Layer: 5
   m_Name: ResetSettings
-  m_TagString: Reset
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11113,7 +11114,7 @@ GameObject:
   - component: {fileID: 1864063845}
   m_Layer: 5
   m_Name: CanvasOptionsScene
-  m_TagString: CanvasOptionsScene
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11924,7 +11925,7 @@ GameObject:
   - component: {fileID: 6364274680914489259}
   m_Layer: 5
   m_Name: LeftBlackButton
-  m_TagString: LeftBlackButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11965,7 +11966,7 @@ GameObject:
   - component: {fileID: 3800678469576614618}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: EventSystem
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12036,8 +12037,6 @@ MonoBehaviour:
   menuMusicVolumeSliderText: {fileID: 1809991237}
   soundsVolumeSlider: {fileID: 384343374}
   soundsVolumeSliderText: {fileID: 312550659}
-  gameVolumeSlider: {fileID: 0}
-  gameVolumeSliderText: {fileID: 0}
   masterVolumeSlider: {fileID: 1551442456}
   masterVolumeSliderText: {fileID: 1630804562}
   qualityDropdown: {fileID: 1168867839}
@@ -12158,7 +12157,7 @@ GameObject:
   - component: {fileID: 5460673903954555848}
   m_Layer: 0
   m_Name: SettingsManager
-  m_TagString: SettingsManager
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

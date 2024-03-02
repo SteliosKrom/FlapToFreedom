@@ -932,7 +932,7 @@ GameObject:
   - component: {fileID: 1090135615}
   m_Layer: 5
   m_Name: CanvasTitleScene
-  m_TagString: CanvasTitleScene
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1202,7 +1202,7 @@ GameObject:
   - component: {fileID: 1327043083}
   m_Layer: 0
   m_Name: MainCamera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1462,7 +1462,7 @@ GameObject:
   - component: {fileID: 1720139230}
   m_Layer: 5
   m_Name: PressLeftMouseButtonToStart
-  m_TagString: PressAnyKeyToStart
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1595,9 +1595,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fb3a1f042ef537418564fc06cdb89a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pressAnyKeyToPlayTest: {fileID: 1720139227}
-  blinkInterval: 1.3
-  timer: 0
 --- !u!114 &1720139230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1735,7 +1732,7 @@ GameObject:
   - component: {fileID: 3800678469918382196}
   m_Layer: 0
   m_Name: EventSystem
-  m_TagString: EventSystem
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1787,7 +1784,7 @@ GameObject:
   - component: {fileID: 2142025750955702639}
   m_Layer: 0
   m_Name: ClickSoundEffects
-  m_TagString: ClickSoundEffects
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -21,20 +21,29 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnObjects", startDelay, spawnRate); //CANCEL INVOKE ON GAME OVER
+        //Pool all your objects here
+
+        StartCoroutine(SpawnObjectsCouroutine());
     }
 
-    public void SpawnObjects()
+    //re work this
+    public void SpawnObjects() //this should fetch from object pooling and enable in correct position
     {
-        if (RoundManager.Instance.currentState == GameState.Playing)
-        {
             var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
             Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
-        }
-        else
-        {
-            CancelInvoke("SpawnObjects");
-        }
+    }
 
+    private IEnumerator SpawnObjectsCouroutine()
+    {
+        yield return new WaitForSeconds(startDelay);
+
+        if(RoundManager.Instance.currentState == GameState.Playing)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(spawnRate);
+                SpawnObjects();
+            }
+        }
     }
 }
