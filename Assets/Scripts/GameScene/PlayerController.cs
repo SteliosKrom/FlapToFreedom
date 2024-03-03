@@ -4,8 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("REFERENCES")]
+    public ObjectPooling gemParticlePooling;
+    public ObjectPooling collisionParticlePooling;
+
+
     [Header("MANAGERS")]
     public MainGameUIManager mainGameUIManager;
+
 
     [Header("GAMEPLAY")]
     public Transform startingPoint;
@@ -37,6 +43,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         InputForPlayerMovement();
+        RoundManager.Instance.CheckSaveBestTime();
+        RoundManager.Instance.CheckSaveBestScore();
     }
 
     public void InputForPlayerMovement()
@@ -70,20 +78,18 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Gem"))
         {
-            GameObject gemParticle = ObjectPooling.Instance.GetPooledObject();
+            GameObject gemParticle = gemParticlePooling.GetPooledObject();
             gemParticle.transform.position = other.transform.position;
             gemParticle.SetActive(true);
             other.gameObject.SetActive(false);
+            UpdateScore();
         }
-
         else if (other.gameObject.CompareTag("Logs"))
         {
             //make sure it grabs correct pooling objects
-            GameObject collisionParticle = ObjectPooling.Instance.GetPooledObject();
-
+            GameObject collisionParticle = collisionParticlePooling.GetPooledObject();
             collisionParticle.transform.position = gameObject.transform.position;
             collisionParticle.SetActive(true);
-
             gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);

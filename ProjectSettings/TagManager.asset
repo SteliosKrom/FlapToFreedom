@@ -7,6 +7,11 @@ TagManager:
   - Bounds
   - Gem
   - Logs
+  - BestTime
+  - GameOverScreen
+  - HighScore
+  - PauseMenuScreen
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX

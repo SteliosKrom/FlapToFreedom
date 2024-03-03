@@ -4,15 +4,14 @@ using UnityEngine;
 public class ObjectPooling : MonoBehaviour
 {
     [Header("POOLING FIELDS")]
-    public static ObjectPooling Instance;
     public GameObject objectPrefab;
     [SerializeField] private int poolSize = 50;
     [SerializeField] private bool autoGrow = true;
     [SerializeField] private List<GameObject> objectPoolingList = new List<GameObject>();
 
+
     private void Awake()
     {
-
         for (int i = 0; i < poolSize; i++)
         {
             CreateObject();
@@ -48,34 +47,4 @@ public class ObjectPooling : MonoBehaviour
         }
         return pooledObject;
     }
-
-    /*public void CollectObject(GameObject obj)
-    {
-        if (obj != null)
-        {
-            if (obj.CompareTag(""))
-            {
-                obj.SetActive(false);
-                // playerController.UpdateScore();
-                RoundManager.Instance.CheckSaveBestScore();
-                RoundManager.Instance.CheckSaveBestTime();
-                Debug.Log($"{name}Player collected an object!", gameObject);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Gem object is null!");
-        }
-        if (obj != null)
-        {
-            if (obj.CompareTag(""))
-            {
-                obj.SetActive(false);
-            }
-        }
-        else
-        {
-            Debug.Log("Tree logs object is null!");
-        }
-    }*/
 }

@@ -2538,7 +2538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
-  poolingObject: {fileID: 767067297}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -3352,7 +3351,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 4410060223635755662, guid: 230f0d42a70ed104f82efe32a1216129, type: 3}
-  poolingObject: {fileID: 1051766298}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -5685,7 +5683,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPrefab: {fileID: 1070953327065362723, guid: e64b970f2dea646499ac37e7bf4d3815, type: 3}
-  poolingObject: {fileID: 1738425496}
   poolSize: 20
   autoGrow: 0
   objectPoolingList: []
@@ -6907,6 +6904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd8d93c2a2f0c8349a38ad375bc44569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemParticlePooling: {fileID: 1738425496}
+  collisionParticlePooling: {fileID: 1051766298}
   mainGameUIManager: {fileID: 1995891267}
   startingPoint: {fileID: 1851335588}
   playerRb: {fileID: 7469946879017297230}

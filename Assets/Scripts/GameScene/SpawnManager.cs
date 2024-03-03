@@ -29,15 +29,15 @@ public class SpawnManager : MonoBehaviour
     //re work this
     public void SpawnObjects() //this should fetch from object pooling and enable in correct position
     {
-            var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
-            Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
+        Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
     }
 
     private IEnumerator SpawnObjectsCouroutine()
     {
         yield return new WaitForSeconds(startDelay);
 
-        if(RoundManager.Instance.currentState == GameState.Playing)
+        if (RoundManager.Instance.currentState == GameState.Playing)
         {
             while (true)
             {
