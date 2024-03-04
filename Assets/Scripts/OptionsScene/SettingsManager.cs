@@ -7,6 +7,11 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
+    public AudioMixer myAudioMixer;
+    const string menuMusicVol = "MenuMusicVolume";
+    const string soundEffectsVol = "SoundsVolume";
+    const string masterVol = "MasterVolume";
+
     [Header("UI")]
     [SerializeField] private Slider menuMusicVolumeSlider;
     [SerializeField] private TextMeshProUGUI menuMusicVolumeSliderText;
@@ -23,12 +28,11 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Toggle fullScreenToggle;
     Resolution[] resolutions;
 
-    [Header("AUDIO")]
-    public AudioMixer myAudioMixer;
-    const string menuMusicVol = "MenuMusicVolume";
-    const string soundEffectsVol = "SoundsVolume";
-    const string masterVol = "MasterVolume";
+    [Header("AUDIO SOURCES")]
+    public AudioSource pressButtonAudioSource;
 
+    [Header("AUDIO CLIPS")]
+    public AudioClip pressButtonAudioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -48,20 +52,18 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-
     public void SaveSettings()
     {
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         //Here we save all of our settings!
         float menuMusicVolumeValue = menuMusicVolumeSlider.value;
         float soundsVolumeValue = soundsVolumeSlider.value;
         float masterVolumeValue = masterVolumeSlider.value;
-
         int qualityDropdownValue = qualityDropdown.value;
 
         PlayerPrefs.SetFloat("MenuMusicVolume", menuMusicVolumeValue);
         PlayerPrefs.SetFloat("SoundsVolume", soundsVolumeValue);
         PlayerPrefs.SetFloat("MasterVolume", masterVolumeValue);
-
         PlayerPrefs.SetInt("QualityDropdown", qualityDropdownValue);
 
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeValue) * 20);
@@ -75,24 +77,19 @@ public class SettingsManager : MonoBehaviour
         float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuMusicVolume");
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
-
         int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
-
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = menuMusicVolumeValue;
         }
-
         if (soundsVolumeSlider != null)
         {
             soundsVolumeSlider.value = soundsVolumeValue;
         }
-
         if (masterVolumeSlider != null)
         {
             masterVolumeSlider.value = masterVolumeValue;
         }
-
         if (qualityDropdown != null)
         {
             qualityDropdown.value = qualityDropdownValue;
@@ -119,27 +116,25 @@ public class SettingsManager : MonoBehaviour
 
     public void ResetSettings()
     {
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
             PlayerPrefs.SetFloat("MenuMusicVolume", menuMusicVolumeSlider.value);
         }
-
         if (soundsVolumeSlider != null)
         {
             soundsVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeSlider.value) * 20);
             PlayerPrefs.SetFloat("SoundsVolume", soundsVolumeSlider.value);
         }
-
         if (masterVolumeSlider != null)
         {
             masterVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeSlider.value) * 20);
             PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
         }
-
         if (qualityDropdown != null)
         {
             qualityDropdown.value = 0;
@@ -165,17 +160,14 @@ public class SettingsManager : MonoBehaviour
 
     public void ResolutionSettings()
     {
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
         resolutions = Screen.resolutions;
 
         if (resolutionDropdown != null)
         {
             resolutionDropdown.ClearOptions();
         }
-       
-        List<string> options = new List<string>();
-
-        int currentResolutionIndex = 0;
-
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
@@ -186,7 +178,6 @@ public class SettingsManager : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
-
         if (resolutionDropdown != null)
         {
             resolutionDropdown.AddOptions(options);

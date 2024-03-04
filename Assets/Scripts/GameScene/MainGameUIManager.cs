@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
@@ -8,24 +9,29 @@ using UnityEngine.UI;
 
 public class MainGameUIManager : MonoBehaviour
 {
+
     [Header("UI")]
-    [SerializeField] private Slider gameVolumeSlider;
-    [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
     [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("GAMEPLAY")]
-    private readonly float delay = 1.0f;
+    private readonly float continueButtondelay = 0f;
+    private readonly float homeButtonDelay = 0.1f;
+    private readonly float restartButtonDelay = 0.2f;
+    private readonly float quitButtonDelay = 0.1f;
 
-    [Header("AUDIO")]
-    public AudioMixer myAudioMixer;
-    [SerializeField] private AudioSource onPointerEnterAudioSource;
-    [SerializeField] private AudioClip onPointerEnterAudioClip;
-    const string gameMusicVol = "GameMusicVolume";
+    [Header("AUDIO SOURCES")]
+    public AudioSource onPointerEnterAudioSource;
+    public AudioSource pressButtonSoundAudioSource;
+
+    [Header("AUDIO CLIPS")]
+    public AudioClip onPointerEnterAudioClip;
+    public AudioClip pressButtonSoundAudioClip;
+    
 
     public TextMeshProUGUI ScoreText { get => scoreText; set => scoreText = value; }
     private void Start()
     {
-        gameVolumeSlider.value = 1.0f;
+        
     }
 
     private void Update()
@@ -33,39 +39,34 @@ public class MainGameUIManager : MonoBehaviour
         InputForPauseMenuScreen();
     }
 
-    public void GameVolumeSlider()
-    {
-        float gameVolume = gameVolumeSlider.value;
-        gameVolumeSliderText.text = gameVolume.ToString("0.0");
-        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
-    }
+  
 
     public void InputForPauseMenuScreen()
     {
         // Check the current game state!
         if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
         {
-            if (RoundManager.Instance.currentState == GameState.Playing || RoundManager.Instance.currentState == GameState.Intro)   //check for playing state || intro
+            if (RoundManager.Instance.currentState == GameState.Playing)
             {
                 RoundManager.Instance.PauseGame();
             }
-            else if (RoundManager.Instance.currentState == GameState.Pause || RoundManager.Instance.currentState == GameState.Intro) //make if else check for paused state
+            else if (RoundManager.Instance.currentState == GameState.Pause)
             {
                 RoundManager.Instance.ResumeGame();
             }
         }
-        
     }
 
     public void QuitGame()
     {
+        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
         StartCoroutine(QuitAfterDelay());
     }
 
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSecondsRealtime(quitButtonDelay);
 
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
@@ -85,33 +86,34 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator ContinueGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
-        RoundManager.Instance.pauseMenuScreen.SetActive(false);
-        RoundManager.Instance.MainGameMusicAudioSource.UnPause();
+        yield return new WaitForSecondsRealtime(continueButtondelay);
+        RoundManager.Instance.ResumeGame();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
 
     public void HomeBlackButton()
     {
+        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
         StartCoroutine(HomeBlackButtonAfterDelay());
     }
 
     IEnumerator HomeBlackButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
-        SceneManager.LoadScene("MainMenuScene");
+        yield return new WaitForSecondsRealtime(homeButtonDelay);
+        SceneManager.LoadScene("MainMenuScene");     
         Debug.Log("Main menu scene is loaded and home black button is pressed!");
     }
 
     public void RestartButton()
     {
+        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
         StartCoroutine(RestartButtonAfterDelay());
     }
 
     IEnumerator RestartButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSecondsRealtime(restartButtonDelay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
         Debug.Log("Restart button pressed and loaded main game scene and game over menu scree gone!");

@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     private readonly float upperBoundY = 3.5f;
     private readonly float lowerBoundY = -3.5f;
     private readonly float zBounds = 10f;
-    private readonly float xBounds = -10f;
+    private readonly float xBounds = -15f;
     private readonly float startDelay = 1f;
     private readonly float spawnRate = 3f;
 

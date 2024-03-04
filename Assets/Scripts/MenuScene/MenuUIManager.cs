@@ -1,67 +1,72 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    [Header("GAMEPLAY")]
-    public float delay = 1.0f;
+    private readonly float quitButtonDelay = 0.1f;
+    private readonly float playButtonDelay = 0.2f;
+    private readonly float optionsButtonDelay = 0.2f;
 
-    [Header("MANAGERS")]
-    public AudioManager audioManager;
+    [Header("GAMEOBJECTS")]
+    public GameObject mainMenu;
+    public GameObject optionsMenu;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
+    public AudioSource pressButtonSoundAudioSource;
+
 
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
+    public AudioClip pressButtonSoundAudioClip;
 
+
+    private void Start()
+    {
+        mainMenu.SetActive(true);
+        optionsMenu.SetActive(false);
+    }
 
     public void QuitGame()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(QuitAfterDelay());
     }
 
-
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
-
+        yield return new WaitForSecondsRealtime(quitButtonDelay);
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
         PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
-
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
-
         Application.Quit();
-        Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }
 
     public void LoadOptionsScene()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(LoadOptionsSceneAfterDelay());
-        Debug.Log("Options scene is being loaded!");
     }
-
-
 
     IEnumerator LoadOptionsSceneAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
-        SceneManager.LoadScene("OptionsScene");
-        Debug.Log("Options Button is pressed after a delay!");
+        yield return new WaitForSecondsRealtime(optionsButtonDelay);
+        optionsMenu.SetActive(true);
+        mainMenu.SetActive(false);
     }
 
     public void LoadMainGameScene()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(LoadMainGameAfterDelay());
-        Destroy(GameObject.FindWithTag("MainMenuBackgroundMusic"));
     }
-
 
     IEnumerator LoadMainGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
+        yield return new WaitForSecondsRealtime(playButtonDelay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
         Debug.Log("Play Button is pressed after a delay!");
