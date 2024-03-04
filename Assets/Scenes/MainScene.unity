@@ -7109,6 +7109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3ff4fe8ad2d83e4187d64393b3a6b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 2377504059540669454}
+  logsPooling: {fileID: 767067297}
   treeLogsPrefab: {fileID: 2471727181482173279, guid: 57b5f0dcb975c11409ee5f771a0125f4, type: 3}
 --- !u!1 &7020166510372642997
 GameObject:

@@ -6,9 +6,8 @@ public class ObjectPooling : MonoBehaviour
     [Header("POOLING FIELDS")]
     public GameObject objectPrefab;
     [SerializeField] private int poolSize = 50;
-    [SerializeField] private bool autoGrow = true;
+    [SerializeField] private bool autoGrow = false;
     [SerializeField] private List<GameObject> objectPoolingList = new List<GameObject>();
-
 
     private void Awake()
     {
@@ -37,13 +36,16 @@ public class ObjectPooling : MonoBehaviour
                 break;
             }
         }
-        if(pooledObject == null && autoGrow) 
+        if (pooledObject == null)
         {
-            pooledObject = CreateObject();
-        }
-        else
-        {
-            Debug.LogWarning("Unable to create object but it is required");
+            if (autoGrow)
+            {     
+                pooledObject = CreateObject();
+            }
+            else
+            {
+                Debug.LogWarning("Unable to create object but it is required");
+            }
         }
         return pooledObject;
     }

@@ -85,7 +85,6 @@ public class RoundManager : MonoBehaviour
         currentState = GameState.GameOver;
         gameOverMenuScreen.SetActive(true);
         AudioManager.Instance.PlaySound(playerController.gameOverAudioSource, playerController.gameOverAudioClip);
-        Instance.currentState = GameState.GameOver;
     }
 
     public void PauseGame()

@@ -61,11 +61,8 @@ public class PlayerController : MonoBehaviour
 
     public void ShowScoreOnStart()
     {
-        if (RoundManager.Instance.currentState == GameState.Playing)
-        {
-            score = 0;
-            mainGameUIManager.ScoreText.text = "Score: " + score.ToString();
-        }
+        score = 0;
+        mainGameUIManager.ScoreText.text = "Score: " + score.ToString();
     }
 
     public void UpdateScore()
