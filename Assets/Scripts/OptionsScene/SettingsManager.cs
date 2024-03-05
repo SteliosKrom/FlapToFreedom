@@ -8,12 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
+    private readonly float goBackDelay = 0.1f;
     public AudioMixer myAudioMixer;
     const string menuMusicVol = "MenuMusicVolume";
     const string soundEffectsVol = "SoundsVolume";
     const string masterVol = "MasterVolume";
     const string gameMusicVol = "GameMusicVolume";
-    private float goBackDelay = 0.1f;
 
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
@@ -66,7 +66,8 @@ public class SettingsManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        //Here we save all of our settings!
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+
         float menuMusicVolumeValue = menuMusicVolumeSlider.value;
         float soundsVolumeValue = soundsVolumeSlider.value;
         float masterVolumeValue = masterVolumeSlider.value;
@@ -84,6 +85,8 @@ public class SettingsManager : MonoBehaviour
 
     public void LoadSettings()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+
         float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuMusicVolume");
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");

@@ -17,7 +17,6 @@ public class MainGameUIManager : MonoBehaviour
     private readonly float resumeButtonDelay = 0.1f;
     private readonly float homeButtonDelay = 0.1f;
     private readonly float restartButtonDelay = 0.2f;
-    private readonly float settingsButtonDelay = 0.2f;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -67,17 +66,16 @@ public class MainGameUIManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void ContinueGameButton()
+    public void ResumeGameButton()
     {
-        StartCoroutine(ContinueGameAfterDelay());
+        StartCoroutine(ResumeGameButtonAfterDelay());
     }
 
 
-    IEnumerator ContinueGameAfterDelay()
+    IEnumerator ResumeGameButtonAfterDelay()
     {
         yield return new WaitForSecondsRealtime(resumeButtonDelay);
         RoundManager.Instance.ResumeGame();
-        Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
 
 
@@ -104,10 +102,9 @@ public class MainGameUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(restartButtonDelay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
-        Debug.Log("Restart button pressed and loaded main game scene and game over menu scree gone!");
     }
 
-    public void LoadSettingsButton()
+    /*public void LoadSettingsButton()
     {
         StartCoroutine(LoadSettingsButtonAfterDelay());
     }
@@ -115,9 +112,7 @@ public class MainGameUIManager : MonoBehaviour
     IEnumerator LoadSettingsButtonAfterDelay()
     {
         yield return new WaitForSecondsRealtime(settingsButtonDelay);
-    }
-
-
+    }*/
 
     public void OnPointerEnter()
     {

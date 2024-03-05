@@ -1316,7 +1316,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1995891267}
         m_TargetAssemblyTypeName: MainGameUIManager, Assembly-CSharp
-        m_MethodName: ContinueGameButton
+        m_MethodName: ResumeGameButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
