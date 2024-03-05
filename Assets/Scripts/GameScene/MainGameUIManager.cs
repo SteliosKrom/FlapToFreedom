@@ -17,6 +17,7 @@ public class MainGameUIManager : MonoBehaviour
     private readonly float resumeButtonDelay = 0.1f;
     private readonly float homeButtonDelay = 0.1f;
     private readonly float restartButtonDelay = 0.2f;
+    private readonly float settingsButtonDelay = 0.2f;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -90,7 +91,6 @@ public class MainGameUIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(homeButtonDelay);
         SceneManager.LoadScene("MainMenuScene");
-        Debug.Log("Main menu scene is loaded and home black button is pressed!");
     }
 
     public void RestartButton()
@@ -105,6 +105,16 @@ public class MainGameUIManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
         Debug.Log("Restart button pressed and loaded main game scene and game over menu scree gone!");
+    }
+
+    public void LoadSettingsButton()
+    {
+        StartCoroutine(LoadSettingsButtonAfterDelay());
+    }
+
+    IEnumerator LoadSettingsButtonAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(settingsButtonDelay);
     }
 
 
