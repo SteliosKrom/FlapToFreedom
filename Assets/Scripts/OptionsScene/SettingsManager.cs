@@ -48,12 +48,13 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         ResolutionSettings();
-        CheckQualityDropdownNullReference();
         LoadSettings();
+        qualityDropdown.value = 0;
+        QualitySettings.SetQualityLevel(qualityDropdown.value);
         gameVolumeSlider.value = 1.0f;
     }
 
-    public void CheckQualityDropdownNullReference()
+    /*public void CheckQualityDropdownNullReference()
     {
         if (qualityDropdown != null)
         {
@@ -61,7 +62,7 @@ public class SettingsManager : MonoBehaviour
             QualitySettings.SetQualityLevel(qualityDropdown.value);
             Debug.Log("Quality settings are: " + qualityDropdown.value);
         }
-    }
+    }*/
 
 
     public void SaveSettings()
@@ -71,25 +72,27 @@ public class SettingsManager : MonoBehaviour
         float menuMusicVolumeValue = menuMusicVolumeSlider.value;
         float soundsVolumeValue = soundsVolumeSlider.value;
         float masterVolumeValue = masterVolumeSlider.value;
+        float gameVolumeValue = gameVolumeSlider.value;
         int qualityDropdownValue = qualityDropdown.value;
 
         PlayerPrefs.SetFloat("MenuMusicVolume", menuMusicVolumeValue);
         PlayerPrefs.SetFloat("SoundsVolume", soundsVolumeValue);
         PlayerPrefs.SetFloat("MasterVolume", masterVolumeValue);
+        PlayerPrefs.SetFloat("GameVolume", gameVolumeValue);
         PlayerPrefs.SetInt("QualityDropdown", qualityDropdownValue);
 
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeValue) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeValue) * 20); 
     }
 
     public void LoadSettings()
     {
-        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
-
         float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuMusicVolume");
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
+        float gameVolumeValue = PlayerPrefs.GetFloat("GameVolume");
         int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
 
         if (menuMusicVolumeSlider != null)
@@ -107,6 +110,10 @@ public class SettingsManager : MonoBehaviour
         if (qualityDropdown != null)
         {
             qualityDropdown.value = qualityDropdownValue;
+        }
+        if (gameVolumeSlider != null)
+        {
+            gameVolumeSlider.value = gameVolumeValue;
         }
     }
 
@@ -137,6 +144,8 @@ public class SettingsManager : MonoBehaviour
 
     public void ResetSettings()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = 1.0f;
@@ -154,6 +163,12 @@ public class SettingsManager : MonoBehaviour
             masterVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeSlider.value) * 20);
             PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+        }
+        if (gameVolumeSlider != null)
+        {
+            gameVolumeSlider.value = 1.0f;
+            myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
+            PlayerPrefs.SetFloat("GameVolume", gameVolumeSlider.value); 
         }
         if (qualityDropdown != null)
         {
@@ -230,6 +245,11 @@ public class SettingsManager : MonoBehaviour
     public void OnPointerEnter()
     {
         AudioManager.Instance.PlaySound(onPointerEnterAudioSource, onPointerEnterAudioClip);
+    }
+
+    public void OnPointerClick()
+    {
+        AudioManager.Instance.PlaySound(onPointerClickAudioSource, onPointerClickAudioClip);
     }
 }
 
