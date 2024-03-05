@@ -45,8 +45,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private AudioClip mainGameMusicAudioClip;
     [SerializeField] private AudioClip pressButtonSoundAudioClip; 
 
-    public AudioClip PressButtonSoundAudioClip { get => pressButtonSoundAudioClip; set => pressButtonSoundAudioClip = value; }  
-    public AudioSource PressButtonSoundAudioSource { get => pressButtonSoundAudioSource; set => pressButtonSoundAudioSource = value; }  
+
     public AudioSource MainGameMusicAudioSource { get => mainGameMusicAudioSource; set => mainGameMusicAudioSource = value; }
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
     private void Awake()
@@ -86,7 +85,6 @@ public class RoundManager : MonoBehaviour
         currentState = GameState.GameOver;
         gameOverMenuScreen.SetActive(true);
         AudioManager.Instance.PlaySound(playerController.gameOverAudioSource, playerController.gameOverAudioClip);
-        mainGameMusicAudioSource.Stop();
     }
 
     public void PauseGame()

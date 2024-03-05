@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -9,15 +7,16 @@ using UnityEngine.UI;
 
 public class MainGameUIManager : MonoBehaviour
 {
+    public AudioMixer myAudioMixer;
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
 
     [Header("GAMEPLAY")]
-    private readonly float continueButtondelay = 0f;
+    private readonly float quitButtonAfterDelay = 0.1f;
+    private readonly float resumeButtonDelay = 0.1f;
     private readonly float homeButtonDelay = 0.1f;
     private readonly float restartButtonDelay = 0.2f;
-    private readonly float quitButtonDelay = 0.1f;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -26,31 +25,23 @@ public class MainGameUIManager : MonoBehaviour
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
     public AudioClip pressButtonSoundAudioClip;
-    
 
     public TextMeshProUGUI ScoreText { get => scoreText; set => scoreText = value; }
-    private void Start()
-    {
-        
-    }
 
     private void Update()
     {
         InputForPauseMenuScreen();
     }
 
-  
-
     public void InputForPauseMenuScreen()
     {
-        // Check the current game state!
         if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver)
         {
-            if (RoundManager.Instance.currentState == GameState.Playing)
+            if (RoundManager.Instance.currentState == GameState.Playing)   
             {
                 RoundManager.Instance.PauseGame();
             }
-            else if (RoundManager.Instance.currentState == GameState.Pause)
+            else if (RoundManager.Instance.currentState == GameState.Pause) 
             {
                 RoundManager.Instance.ResumeGame();
             }
@@ -59,23 +50,20 @@ public class MainGameUIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(QuitAfterDelay());
     }
 
-
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(quitButtonDelay);
+        yield return new WaitForSecondsRealtime(quitButtonAfterDelay);
 
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
         PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
-
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
 
         Application.Quit();
-        Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }
 
     public void ContinueGameButton()
@@ -86,7 +74,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator ContinueGameAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(continueButtondelay);
+        yield return new WaitForSecondsRealtime(resumeButtonDelay);
         RoundManager.Instance.ResumeGame();
         Debug.Log("Continue button is pressed and pause menu screen gone!");
     }
@@ -94,20 +82,20 @@ public class MainGameUIManager : MonoBehaviour
 
     public void HomeBlackButton()
     {
-        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(HomeBlackButtonAfterDelay());
     }
 
     IEnumerator HomeBlackButtonAfterDelay()
     {
         yield return new WaitForSecondsRealtime(homeButtonDelay);
-        SceneManager.LoadScene("MainMenuScene");     
+        SceneManager.LoadScene("MainMenuScene");
         Debug.Log("Main menu scene is loaded and home black button is pressed!");
     }
 
     public void RestartButton()
     {
-        AudioManager.Instance.PlaySound(RoundManager.Instance.PressButtonSoundAudioSource, RoundManager.Instance.PressButtonSoundAudioClip);
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(RestartButtonAfterDelay());
     }
 

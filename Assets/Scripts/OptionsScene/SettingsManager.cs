@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -11,8 +12,13 @@ public class SettingsManager : MonoBehaviour
     const string menuMusicVol = "MenuMusicVolume";
     const string soundEffectsVol = "SoundsVolume";
     const string masterVol = "MasterVolume";
+    const string gameMusicVol = "GameMusicVolume";
+    private float goBackDelay = 0.1f;
 
     [Header("UI")]
+    [SerializeField] private Slider gameVolumeSlider;
+    [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
+
     [SerializeField] private Slider menuMusicVolumeSlider;
     [SerializeField] private TextMeshProUGUI menuMusicVolumeSliderText;
 
@@ -29,10 +35,14 @@ public class SettingsManager : MonoBehaviour
     Resolution[] resolutions;
 
     [Header("AUDIO SOURCES")]
-    public AudioSource pressButtonAudioSource;
-
+    public AudioSource onPointerEnterAudioSource;
+    public AudioSource onPointerClickAudioSource;
+    public AudioSource pressButtonSoundAudioSource;
+   
     [Header("AUDIO CLIPS")]
-    public AudioClip pressButtonAudioClip;
+    public AudioClip onPointerEnterAudioClip;
+    public AudioClip onPointerClickAudioClip;
+    public AudioClip pressButtonSoundAudioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +50,7 @@ public class SettingsManager : MonoBehaviour
         ResolutionSettings();
         CheckQualityDropdownNullReference();
         LoadSettings();
+        gameVolumeSlider.value = 1.0f;
     }
 
     public void CheckQualityDropdownNullReference()
@@ -52,9 +63,9 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+
     public void SaveSettings()
     {
-        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         //Here we save all of our settings!
         float menuMusicVolumeValue = menuMusicVolumeSlider.value;
         float soundsVolumeValue = soundsVolumeSlider.value;
@@ -73,11 +84,11 @@ public class SettingsManager : MonoBehaviour
 
     public void LoadSettings()
     {
-        //Here we load all of our saved settings!
         float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuMusicVolume");
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
         int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
+
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = menuMusicVolumeValue;
@@ -102,6 +113,13 @@ public class SettingsManager : MonoBehaviour
         menuMusicVolumeSliderText.text = menuVolume.ToString("0.0");
     }
 
+    public void GameVolumeSlider()
+    {
+        float gameVolume = gameVolumeSlider.value;
+        gameVolumeSliderText.text = gameVolume.ToString("0.0");
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
+    }
+
     public void SoundsVolumeSlider()
     {
         float soundsVolume = soundsVolumeSlider.value;
@@ -116,7 +134,6 @@ public class SettingsManager : MonoBehaviour
 
     public void ResetSettings()
     {
-        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         if (menuMusicVolumeSlider != null)
         {
             menuMusicVolumeSlider.value = 1.0f;
@@ -142,7 +159,6 @@ public class SettingsManager : MonoBehaviour
             PlayerPrefs.SetInt("QualityDropdown", qualityDropdown.value);
             Debug.Log("Quality settings are: " + qualityDropdown.value);
         }
-
         Debug.Log("Reset settings to default!");
     }
 
@@ -160,14 +176,17 @@ public class SettingsManager : MonoBehaviour
 
     public void ResolutionSettings()
     {
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
         resolutions = Screen.resolutions;
 
         if (resolutionDropdown != null)
         {
             resolutionDropdown.ClearOptions();
         }
+       
+        List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
+
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
@@ -178,6 +197,7 @@ public class SettingsManager : MonoBehaviour
                 currentResolutionIndex = i;
             }
         }
+
         if (resolutionDropdown != null)
         {
             resolutionDropdown.AddOptions(options);
@@ -190,6 +210,23 @@ public class SettingsManager : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
+    public void GoBackButton()
+    {
+        StartCoroutine(GoBackToMainMenuSceneAfterDelay());
+    }
+
+    IEnumerator GoBackToMainMenuSceneAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(goBackDelay);
+        SceneManager.LoadScene("MainMenuScene");
+        Debug.Log("Left back button is pressed after a delay and back button is pressed!");
+    }
+
+    public void OnPointerEnter()
+    {
+        AudioManager.Instance.PlaySound(onPointerEnterAudioSource, onPointerEnterAudioClip);
     }
 }
 

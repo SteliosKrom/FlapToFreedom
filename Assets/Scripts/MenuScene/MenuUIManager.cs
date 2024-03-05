@@ -1,26 +1,25 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    private readonly float quitButtonDelay = 0.1f;
-    private readonly float playButtonDelay = 0.2f;
-    private readonly float optionsButtonDelay = 0.2f;
-
     [Header("GAMEOBJECTS")]
     public GameObject mainMenu;
     public GameObject optionsMenu;
 
+    [Header("GAMEPLAY")]
+    private readonly float quitButtonDelay = 0.2f;
+    private readonly float settingsButtonDelay = 0.1f;
+    private readonly float playButtonDelay = 0.1f;
+
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
-    public AudioSource pressButtonSoundAudioSource;
-
+    public AudioSource pressButtonAudioSource;
 
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
-    public AudioClip pressButtonSoundAudioClip;
+    public AudioClip pressButtonAudioClip;
 
 
     private void Start()
@@ -31,36 +30,41 @@ public class MenuUIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         StartCoroutine(QuitAfterDelay());
     }
+
 
     IEnumerator QuitAfterDelay()
     {
         yield return new WaitForSecondsRealtime(quitButtonDelay);
+
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
         PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
+
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
+
         Application.Quit();
+        Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }
 
-    public void LoadOptionsScene()
+    public void LoadSettingsScene()
     {
-        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
-        StartCoroutine(LoadOptionsSceneAfterDelay());
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
+        StartCoroutine(LoadSettingsAfterDelay());
     }
 
-    IEnumerator LoadOptionsSceneAfterDelay()
+    IEnumerator LoadSettingsAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(optionsButtonDelay);
-        optionsMenu.SetActive(true);
+        yield return new WaitForSecondsRealtime(settingsButtonDelay);
         mainMenu.SetActive(false);
+        optionsMenu.SetActive(true);
     }
 
     public void LoadMainGameScene()
     {
-        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
         StartCoroutine(LoadMainGameAfterDelay());
     }
 
@@ -69,7 +73,6 @@ public class MenuUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(playButtonDelay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
-        Debug.Log("Play Button is pressed after a delay!");
     }
 
     public void OnPointerEnter()
