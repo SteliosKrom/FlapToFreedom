@@ -15,6 +15,10 @@ public class SettingsManager : MonoBehaviour
     const string masterVol = "MasterVolume";
     const string gameMusicVol = "GameMusicVolume";
 
+    [Header("GAMEOBJECTS")]
+    public GameObject optionsMenu;
+    public GameObject mainMenu;
+
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
     [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
@@ -54,16 +58,18 @@ public class SettingsManager : MonoBehaviour
         gameVolumeSlider.value = 1.0f;
     }
 
-    /*public void CheckQualityDropdownNullReference()
+    public void GoBackButton()
     {
-        if (qualityDropdown != null)
-        {
-            qualityDropdown.value = 0;
-            QualitySettings.SetQualityLevel(qualityDropdown.value);
-            Debug.Log("Quality settings are: " + qualityDropdown.value);
-        }
-    }*/
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
+        StartCoroutine(GoBackToMainMenuSceneAfterDelay());
+    }
 
+    IEnumerator GoBackToMainMenuSceneAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(goBackDelay);
+        optionsMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
 
     public void SaveSettings()
     {
@@ -228,18 +234,6 @@ public class SettingsManager : MonoBehaviour
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
-
-    public void GoBackButton()
-    {
-        StartCoroutine(GoBackToMainMenuSceneAfterDelay());
-    }
-
-    IEnumerator GoBackToMainMenuSceneAfterDelay()
-    {
-        yield return new WaitForSecondsRealtime(goBackDelay);
-        SceneManager.LoadScene("MainMenuScene");
-        Debug.Log("Left back button is pressed after a delay and back button is pressed!");
     }
 
     public void OnPointerEnter()
