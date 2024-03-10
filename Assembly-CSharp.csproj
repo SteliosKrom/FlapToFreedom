@@ -83,8 +83,8 @@
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\GameScene\RepeatBackground.cs" />
+    <Compile Include="Assets\Scripts\MenuScene\SettingsManager.cs" />
     <Compile Include="Assets\Scripts\GameScene\MainGameUIManager.cs" />
-    <Compile Include="Assets\Scripts\OptionsScene\SettingsManager.cs" />
     <Compile Include="Assets\Scripts\GameScene\MoveBackgroundLeft.cs" />
   </ItemGroup>
   <ItemGroup>

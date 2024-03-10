@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -55,7 +54,7 @@ public class SettingsManager : MonoBehaviour
         LoadSettings();
         qualityDropdown.value = 0;
         QualitySettings.SetQualityLevel(qualityDropdown.value);
-        gameVolumeSlider.value = 1.0f;
+
     }
 
     public void GoBackButton()
