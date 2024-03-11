@@ -21,7 +21,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        //Pool all your objects here
         GameObject gemParticleObj = playerController.gemParticlePooling.GetPooledObject();
         GameObject collisionParticleObj = playerController.collisionParticlePooling.GetPooledObject();
         gemParticleObj.SetActive(false);
@@ -29,8 +28,15 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnObjectsCouroutine());
     }
 
-    //re work this
-    public void SpawnObjects() //this should fetch from object pooling and enable in correct position
+    private void Update()
+    {
+        if (RoundManager.Instance.currentState == GameState.GameOver)
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    public void SpawnObjects()
     {
         var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
         GameObject logsPoolingObj = Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
@@ -41,13 +47,11 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(startDelay);
 
-        if (RoundManager.Instance.currentState == GameState.Playing)
+        while (RoundManager.Instance.currentState == GameState.Playing)
         {
-            while (true)
-            {
-                yield return new WaitForSeconds(spawnRate);
-                SpawnObjects();
-            }
+            yield return new WaitForSeconds(spawnRate);
+            SpawnObjects();
+            Debug.Log("Objects are spawning", gameObject);
         }
     }
 }

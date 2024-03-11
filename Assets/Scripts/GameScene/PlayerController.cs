@@ -25,11 +25,13 @@ public class PlayerController : MonoBehaviour
     [Header("AUDIO SOURCES")]
     public AudioSource gameOverAudioSource;
     public AudioSource jumpSoundAudioSource;
+    public AudioSource gemTriggerAudioSource;
 
 
     [Header("AUDIO CLIPS")]
     public AudioClip gameOverAudioClip;
     public AudioClip jumpSoundAudioClip;
+    public AudioClip gemTriggerAudioClip;
 
 
 
@@ -79,6 +81,7 @@ public class PlayerController : MonoBehaviour
             gemParticle.transform.position = other.transform.position;
             gemParticle.SetActive(true);
             other.gameObject.SetActive(false);
+            AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
             UpdateScore();
         }
         else if (other.gameObject.CompareTag("Logs"))

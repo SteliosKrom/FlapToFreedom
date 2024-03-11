@@ -51,7 +51,6 @@ public class RoundManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
         LoadBestScoreOnStartGame();
         LoadBestTimeOnStartGame();
         UpdateBestTime(bestTime);
@@ -67,16 +66,13 @@ public class RoundManager : MonoBehaviour
     }
     public void TimeScore()
     {
-        if (Instance.currentState != GameState.GameOver) //replace with Enum
+        if (Instance.currentState != GameState.GameOver) 
         {
             timer += Time.deltaTime;
-
-            if (timer >= interval)
-            {
-                time += 1;
-                timer = 0f;
-            }
-            timerText.text = "Timer: " + time.ToString();
+            int minutes = Mathf.FloorToInt(timer / 60);
+            int seconds = Mathf.FloorToInt(timer % 60);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = "Timer: " + timerText.text;
         }
     }
 
@@ -106,14 +102,14 @@ public class RoundManager : MonoBehaviour
         currentState = GameState.Playing;
     }
 
-    /**public void UpdateTimer()
+    /*public void UpdateTimer()
     {
-        //time += Time.deltaTime;
-        //int minutes = Mathf.FloorToInt(time / 60);
-        //int seconds = Mathf.FloorToInt(time % 60);
-        //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        //timerText.text = "Timer: " + timerText.text;         
-    }**/
+        time += Time.deltaTime;
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        timerText.text = "Timer: " + timerText.text;         
+    }*/
 
     public void CheckSaveBestScore()
     {
