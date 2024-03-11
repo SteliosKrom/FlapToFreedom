@@ -1,9 +1,18 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
+    [Header("MANAGERS")]
+    public static MenuUIManager Instance;
+    public PlayerController playerController;
+
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI bestScoreText;
+    [SerializeField] TextMeshProUGUI bestTimeText;
+
     [Header("GAMEOBJECTS")]
     public GameObject mainMenu;
     public GameObject optionsMenu;
@@ -12,6 +21,9 @@ public class MenuUIManager : MonoBehaviour
     private readonly float quitButtonDelay = 0.2f;
     private readonly float settingsButtonDelay = 0.1f;
     private readonly float playButtonDelay = 0.1f;
+    public int bestScore;
+    public int bestTime;
+    public float time;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -26,6 +38,15 @@ public class MenuUIManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
+
+        LoadBestScoreOnStartGame();
+        LoadBestTimeOnStartGame();
+    }
+
+    private void Update()
+    {
+        UpdateBestTime(bestTime);
+        UpdateBestScore(bestScore);
     }
 
     public void QuitGame()
@@ -73,6 +94,32 @@ public class MenuUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(playButtonDelay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
+    }
+
+    
+
+    public void UpdateBestTime(int bestTime)
+    {
+        int minutes = Mathf.FloorToInt(bestTime / 60);
+        int seconds = Mathf.FloorToInt(bestTime % 60);
+        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public void UpdateBestScore(int bestScore)
+    {
+        bestScoreText.text = "Best Score: " + bestScore;
+    }
+
+    public void LoadBestScoreOnStartGame()
+    {
+        bestScore = PlayerPrefs.GetInt("BestScore");
+        UpdateBestScore(bestScore);
+    }
+
+    public void LoadBestTimeOnStartGame()
+    {
+        bestTime = PlayerPrefs.GetInt("BestTime");
+        UpdateBestTime(bestTime);
     }
 
     public void OnPointerEnter()
