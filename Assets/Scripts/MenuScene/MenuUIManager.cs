@@ -5,25 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    [Header("MANAGERS")]
-    public static MenuUIManager Instance;
-    public PlayerController playerController;
-
-    [Header("UI")]
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
+
+    public int bestScore;
+    public int bestTime;
+    public float time;
+
 
     [Header("GAMEOBJECTS")]
     public GameObject mainMenu;
     public GameObject optionsMenu;
 
+
     [Header("GAMEPLAY")]
     private readonly float quitButtonDelay = 0.2f;
     private readonly float settingsButtonDelay = 0.1f;
     private readonly float playButtonDelay = 0.1f;
-    public int bestScore;
-    public int bestTime;
-    public float time;
+
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -43,10 +42,18 @@ public class MenuUIManager : MonoBehaviour
         LoadBestTimeOnStartGame();
     }
 
-    private void Update()
+    public void LoadBestScoreOnStartGame()
     {
-        UpdateBestTime(bestTime);
-        UpdateBestScore(bestScore);
+        bestScore = PlayerPrefs.GetInt("BestScore");
+        bestScoreText.text = "Best Score: " + bestScore;
+    }
+
+    public void LoadBestTimeOnStartGame()
+    {
+        bestTime = PlayerPrefs.GetInt("BestTime");
+        int minutes = Mathf.FloorToInt(bestTime / 60);
+        int seconds = Mathf.FloorToInt(bestTime % 60);
+        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void QuitGame()
@@ -63,7 +70,6 @@ public class MenuUIManager : MonoBehaviour
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
         PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
-
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
 
         Application.Quit();
@@ -97,30 +103,6 @@ public class MenuUIManager : MonoBehaviour
     }
 
     
-
-    public void UpdateBestTime(int bestTime)
-    {
-        int minutes = Mathf.FloorToInt(bestTime / 60);
-        int seconds = Mathf.FloorToInt(bestTime % 60);
-        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
-    }
-
-    public void UpdateBestScore(int bestScore)
-    {
-        bestScoreText.text = "Best Score: " + bestScore;
-    }
-
-    public void LoadBestScoreOnStartGame()
-    {
-        bestScore = PlayerPrefs.GetInt("BestScore");
-        UpdateBestScore(bestScore);
-    }
-
-    public void LoadBestTimeOnStartGame()
-    {
-        bestTime = PlayerPrefs.GetInt("BestTime");
-        UpdateBestTime(bestTime);
-    }
 
     public void OnPointerEnter()
     {

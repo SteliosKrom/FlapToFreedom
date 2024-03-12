@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("MANAGERS")]
+    public BestTimeAndScoreManager bestTimeAndScoreManager;
     public MainGameUIManager mainGameUIManager;
 
 
@@ -45,8 +46,8 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         InputForPlayerMovement();
-        RoundManager.Instance.CheckSaveBestTime();
-        RoundManager.Instance.CheckSaveBestScore();
+        bestTimeAndScoreManager.CheckSaveBestScore();
+        bestTimeAndScoreManager.CheckSaveBestTime();
     }
 
     public void InputForPlayerMovement()
@@ -61,18 +62,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ShowScoreOnStart()
-    {
-        score = 0;
-        mainGameUIManager.ScoreText.text = "Score: " + score.ToString();
-    }
-
-    public void UpdateScore()
-    {
-        score++;
-        mainGameUIManager.ScoreText.text = "Score: " + score;
-    }
-
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Gem"))
@@ -82,7 +71,7 @@ public class PlayerController : MonoBehaviour
             gemParticle.SetActive(true);
             other.gameObject.SetActive(false);
             AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
-            UpdateScore();
+            mainGameUIManager.UpdateScore();
         }
         else if (other.gameObject.CompareTag("Logs"))
         {
@@ -93,8 +82,8 @@ public class PlayerController : MonoBehaviour
             gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-            RoundManager.Instance.CheckSaveBestScore();
-            RoundManager.Instance.CheckSaveBestTime();
+            bestTimeAndScoreManager.CheckSaveBestScore();
+            bestTimeAndScoreManager.CheckSaveBestTime();
         }
         else if (other.gameObject.CompareTag("Bounds"))
         {
@@ -130,6 +119,6 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         RoundManager.Instance.currentState = GameState.Playing;
-        ShowScoreOnStart();
+        mainGameUIManager.ShowScoreOnStart();
     }
 }

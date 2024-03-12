@@ -1963,6 +1963,7 @@ Transform:
   - {fileID: 1549036290438859630}
   - {fileID: 6297076732293194932}
   - {fileID: 1995891266}
+  - {fileID: 1864068597}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &617512960
@@ -5156,15 +5157,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 2377504059540669454}
-  timerText: {fileID: 1267386405}
-  bestScoreText: {fileID: 675975778}
-  bestTimeText: {fileID: 1924099046}
   gameOverMenuScreen: {fileID: 1582634312}
   pauseMenuScreen: {fileID: 1719164943}
   startingPoint: {fileID: 1851335588}
-  time: 0
-  bestScore: 0
-  bestTime: 0
   currentState: 0
   mainGameMusicAudioSource: {fileID: 1843660924}
   pressButtonSoundAudioSource: {fileID: 119461714}
@@ -5825,6 +5820,56 @@ Transform:
   - {fileID: 1638755845}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1864068596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1864068597}
+  - component: {fileID: 1864068598}
+  m_Layer: 0
+  m_Name: BestTimeAndScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1864068597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864068596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 565532568}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1864068598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864068596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be50e23fd0857348adbf5b0be3e2e57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bestScoreText: {fileID: 675975778}
+  bestTimeText: {fileID: 1924099046}
+  playerController: {fileID: 2377504059540669454}
+  bestScore: 0
+  bestTime: 0
+  time: 0
 --- !u!1 &1868347042
 GameObject:
   m_ObjectHideFlags: 0
@@ -6208,7 +6253,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAudioMixer: {fileID: 24100000, guid: 667c6bb0b0ee0f94f95d1abd9d3f6803, type: 2}
+  mainGameUIManager: {fileID: 0}
+  playerController: {fileID: 2377504059540669454}
   scoreText: {fileID: 450003680}
+  timerText: {fileID: 1267386405}
   onPointerEnterAudioSource: {fileID: 1660051143}
   pressButtonSoundAudioSource: {fileID: 696298884}
   onPointerEnterAudioClip: {fileID: 8300000, guid: aebae0e89d575dc43ae340319487ef87, type: 3}
@@ -6769,6 +6817,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gemParticlePooling: {fileID: 1738425496}
   collisionParticlePooling: {fileID: 1051766298}
+  bestTimeAndScoreManager: {fileID: 1864068598}
   mainGameUIManager: {fileID: 1995891267}
   startingPoint: {fileID: 1851335588}
   playerRb: {fileID: 7469946879017297230}

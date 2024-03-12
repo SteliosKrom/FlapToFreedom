@@ -684,6 +684,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731b77804925c374da4c076739e43edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bestScoreText: {fileID: 474089659}
+  bestTimeText: {fileID: 139061377}
+  playerController: {fileID: 0}
+  bestScore: 0
+  bestTime: 0
+  time: 0
   mainMenu: {fileID: 1447142764}
   optionsMenu: {fileID: 1269298078}
   onPointerEnterAudioSource: {fileID: 1246205370}
