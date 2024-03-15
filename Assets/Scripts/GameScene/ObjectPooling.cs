@@ -3,14 +3,16 @@ using UnityEngine;
 
 public class ObjectPooling : MonoBehaviour
 {
+    public static ObjectPooling Instance;
+
     [Header("POOLING FIELDS")]
     public GameObject objectPrefab;
     [SerializeField] private int poolSize = 50;
-    [SerializeField] private bool autoGrow = false;
     [SerializeField] private List<GameObject> objectPoolingList = new List<GameObject>();
 
     private void Awake()
     {
+        Instance = this;
         for (int i = 0; i < poolSize; i++)
         {
             CreateObject();
@@ -33,20 +35,24 @@ public class ObjectPooling : MonoBehaviour
             if (obj != null && !obj.activeInHierarchy)
             {
                 pooledObject = obj;
-                break;
             }
+            break;
         }
+
         if (pooledObject == null)
         {
-            if (autoGrow)
-            {     
-                pooledObject = CreateObject();
-            }
-            else
-            {
-                Debug.LogWarning("Unable to create object but it is required");
-            }
+            pooledObject = CreateObject();
+            Debug.Log("Created new object because pool was empty.");
+        }
+        else
+        {
+            Debug.Log("Retrieved object from the pool");
         }
         return pooledObject;
     }
+
+    /*public void ReturnObjectToPool(GameObject obj)
+    {
+        obj.SetActive(false);
+    }*/
 }

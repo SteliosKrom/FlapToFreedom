@@ -8,10 +8,6 @@ public class MenuUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
 
-    public int bestScore;
-    public int bestTime;
-    public float time;
-
 
     [Header("GAMEOBJECTS")]
     public GameObject mainMenu;
@@ -37,22 +33,25 @@ public class MenuUIManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
-
-        LoadBestScoreOnStartGame();
-        LoadBestTimeOnStartGame();
     }
 
-    public void LoadBestScoreOnStartGame()
+    private void OnEnable()
     {
-        bestScore = PlayerPrefs.GetInt("BestScore");
-        bestScoreText.text = "Best Score: " + bestScore;
+        LoadBestScore();
+        LoadBestTime();
     }
 
-    public void LoadBestTimeOnStartGame()
+    private void LoadBestScore()
     {
-        bestTime = PlayerPrefs.GetInt("BestTime");
-        int minutes = Mathf.FloorToInt(bestTime / 60);
-        int seconds = Mathf.FloorToInt(bestTime % 60);
+        int savedBestScore = PlayerPrefs.GetInt("BestScore", 0);
+        bestScoreText.text = "Best Score: " + savedBestScore;
+    }
+
+    private void LoadBestTime()
+    {
+        float savedBestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+        int minutes = Mathf.FloorToInt(savedBestTime / 60);
+        int seconds = Mathf.FloorToInt(savedBestTime % 60);
         bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 

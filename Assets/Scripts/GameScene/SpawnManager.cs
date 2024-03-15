@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -14,7 +11,7 @@ public class SpawnManager : MonoBehaviour
     private readonly float zBounds = 10f;
     private readonly float xBounds = -15f;
     private readonly float startDelay = 1f;
-    private readonly float spawnRate = 3f;
+    private readonly float spawnRate = 3;
 
 
     // Start is called before the first frame update

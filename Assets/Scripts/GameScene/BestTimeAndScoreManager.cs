@@ -3,38 +3,59 @@ using UnityEngine;
 
 public class BestTimeAndScoreManager : MonoBehaviour
 {
+    public static BestTimeAndScoreManager Instance;
+
     [Header("UI")]
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
 
-    [Header("MANAGERS")]
-    public PlayerController playerController;
-
     [Header("GAMEPLAY")]
     public int bestScore;
-    public int bestTime;
-    public float time;
+    public float bestTime;
 
 
-    public void CheckSaveBestScore()
+    private void Awake()
     {
-        if (playerController.score > bestScore)
+        Instance = this;
+        LoadBestScore();
+        LoadBestTime();
+    }
+
+    public void CheckSaveBestScore(int currentScore)
+    {
+        if (currentScore > bestScore)
         {
-            bestScore = playerController.score;
+            bestScore = currentScore;
             PlayerPrefs.SetInt("BestScore", bestScore);
             PlayerPrefs.Save();
             bestScoreText.text = "Best Score: " + bestScore;
         }
     }
 
-    public void CheckSaveBestTime()
+    public void CheckSaveBestTime(float currentTime)
     {
-        if (time > bestTime)
+        if (currentTime > bestTime)
         {
-            bestTime = (int)time;
-            PlayerPrefs.SetInt("BestTime", bestTime);
+            bestTime = currentTime;
+            PlayerPrefs.SetFloat("BestTime", bestTime);
             PlayerPrefs.Save();
-            bestTimeText.text = "Best Time: " + bestTime;
+            int minutes = Mathf.FloorToInt(bestTime / 60);
+            int seconds = Mathf.FloorToInt(bestTime % 60);
+            bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
         }
+    }
+
+    private void LoadBestScore()
+    {
+        bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        bestScoreText.text = "Best Score: " + bestScore;
+    }
+
+    private void LoadBestTime()
+    {
+        bestTime = PlayerPrefs.GetFloat("BestTime", 0f);
+        int minutes = Mathf.FloorToInt(bestTime / 60);
+        int seconds = Mathf.FloorToInt(bestTime % 60);
+        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

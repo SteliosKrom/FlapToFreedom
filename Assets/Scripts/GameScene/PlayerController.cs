@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float startJumpForce;
     private readonly float jumpForce = 1f;
     public int score;
+    private float startTime;
 
 
     [Header("AUDIO SOURCES")]
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        startTime = Time.time;
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
     }
@@ -46,8 +48,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         InputForPlayerMovement();
-        bestTimeAndScoreManager.CheckSaveBestScore();
-        bestTimeAndScoreManager.CheckSaveBestTime();
     }
 
     public void InputForPlayerMovement()
@@ -65,31 +65,50 @@ public class PlayerController : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Gem"))
-        {
+        {  
             GameObject gemParticle = gemParticlePooling.GetPooledObject();
-            gemParticle.transform.position = other.transform.position;
-            gemParticle.SetActive(true);
-            other.gameObject.SetActive(false);
-            AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
-            mainGameUIManager.UpdateScore();
+            if (gemParticle != null)
+            {
+                gemParticle.transform.position = gameObject.transform.position;
+                gemParticle.SetActive(true);
+                other.gameObject.SetActive(false);
+                AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
+                mainGameUIManager.UpdateScore();
+            }
+            else
+            {
+                Debug.LogWarning("No gem particle available in the object pool");
+            }
+            
         }
         else if (other.gameObject.CompareTag("Logs"))
         {
-            //make sure it grabs correct pooling objects
             GameObject collisionParticle = collisionParticlePooling.GetPooledObject();
-            collisionParticle.transform.position = gameObject.transform.position;
-            collisionParticle.SetActive(true);
-            gameObject.SetActive(false);
-            RoundManager.Instance.GameOver();
-            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-            bestTimeAndScoreManager.CheckSaveBestScore();
-            bestTimeAndScoreManager.CheckSaveBestTime();
+            if (collisionParticle != null)
+            {
+                collisionParticle.transform.position = gameObject.transform.position;
+                collisionParticle.SetActive(true);
+                gameObject.SetActive(false);
+                RoundManager.Instance.GameOver();
+                AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+                BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
+                float currentTime = Time.time - startTime; 
+                BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
+                BestTimeAndScoreManager.Instance.CheckSaveBestTime(currentTime);
+            }  
+            else
+            {
+                Debug.Log("No gem particle available in the object pool");
+            }
         }
         else if (other.gameObject.CompareTag("Bounds"))
         {
             gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+            float currentTime = Time.time - startTime; 
+            BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
+            BestTimeAndScoreManager.Instance.CheckSaveBestTime(currentTime);
         }
     }
 

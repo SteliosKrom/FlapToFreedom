@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3342036963596295241}
   - component: {fileID: 9178822052620841566}
   - component: {fileID: 6547881379039454186}
+  - component: {fileID: 6204716692363998303}
   m_Layer: 0
   m_Name: CollisionParticleEffect
   m_TagString: Untagged
@@ -4772,6 +4773,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnlyDeactivate: 0
+--- !u!114 &6204716692363998303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4410060223635755662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34737a46decd1dc45b8a74539dd18ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5335229607022026339
 GameObject:
   m_ObjectHideFlags: 0
