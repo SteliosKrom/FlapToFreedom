@@ -1,9 +1,13 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI plusOneScoreText;
+
     [Header("REFERENCES")]
     public ObjectPooling gemParticlePooling;
     public ObjectPooling collisionParticlePooling;
@@ -67,9 +71,10 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Gem"))
         {  
             GameObject gemParticle = gemParticlePooling.GetPooledObject();
+            Vector3 plusOneTextPosition = new Vector3(1.3f, -1.8f, -251);
             if (gemParticle != null)
             {
-                gemParticle.transform.position = gameObject.transform.position;
+                gemParticle.transform.position = other.transform.position;
                 gemParticle.SetActive(true);
                 other.gameObject.SetActive(false);
                 AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);

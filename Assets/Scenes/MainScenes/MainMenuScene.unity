@@ -196,7 +196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90.93201, y: -415.68625}
+  m_AnchoredPosition: {x: -57, y: -466}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66950565
@@ -686,10 +686,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bestScoreText: {fileID: 474089659}
   bestTimeText: {fileID: 139061377}
-  playerController: {fileID: 0}
-  bestScore: 0
-  bestTime: 0
-  time: 0
   mainMenu: {fileID: 1447142764}
   optionsMenu: {fileID: 1269298078}
   onPointerEnterAudioSource: {fileID: 1246205370}
@@ -6333,7 +6329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1447142765
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6725,7 +6721,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90.93201, y: -250.68625}
+  m_AnchoredPosition: {x: -57, y: -311}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584841835
@@ -8728,7 +8724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -90.93201, y: -83.68628}
+  m_AnchoredPosition: {x: -57, y: -155}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2043761605

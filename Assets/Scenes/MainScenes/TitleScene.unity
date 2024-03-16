@@ -553,8 +553,6 @@ MonoBehaviour:
   timer: 0
   isPressed: 0
   pressAnyKeyToPlayTest: {fileID: 1720139227}
-  pressButtonSoundAudioSource: {fileID: 2092378256}
-  pressButtonSoundAudioClip: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
 --- !u!1 &581004269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,7 +1475,6 @@ GameObject:
   - component: {fileID: 1720139226}
   - component: {fileID: 1720139228}
   - component: {fileID: 1720139227}
-  - component: {fileID: 1720139229}
   - component: {fileID: 1720139230}
   m_Layer: 5
   m_Name: PressLeftMouseButtonToStart
@@ -1602,18 +1599,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720139225}
   m_CullTransparentMesh: 1
---- !u!114 &1720139229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720139225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fb3a1f042ef537418564fc06cdb89a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1720139230
 MonoBehaviour:
   m_ObjectHideFlags: 0
