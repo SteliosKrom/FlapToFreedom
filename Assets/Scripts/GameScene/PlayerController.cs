@@ -1,17 +1,15 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("PARTICLES")]
+    public ParticleSystem gemParticle;
+    public ParticleSystem collisionParticle;
+
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI plusOneScoreText;
-
-    [Header("REFERENCES")]
-    public ObjectPooling gemParticlePooling;
-    public ObjectPooling collisionParticlePooling;
-
+    [SerializeField] private GameObject plusOneScoreGameObject;
 
     [Header("MANAGERS")]
     public BestTimeAndScoreManager bestTimeAndScoreManager;
@@ -26,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private readonly float jumpForce = 1f;
     public int score;
     private float startTime;
+    private float onTriggerExitDelay = 0.5f;
 
 
     [Header("AUDIO SOURCES")]
@@ -45,6 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         startTime = Time.time;
         playerRb = this.GetComponent<Rigidbody2D>();
+        plusOneScoreGameObject.SetActive(false);
         AddForceToPlayer();
     }
 
@@ -69,52 +69,49 @@ public class PlayerController : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Gem"))
-        {  
-            GameObject gemParticle = gemParticlePooling.GetPooledObject();
-            Vector3 plusOneTextPosition = new Vector3(1.3f, -1.8f, -251);
-            if (gemParticle != null)
-            {
-                gemParticle.transform.position = other.transform.position;
-                gemParticle.SetActive(true);
-                other.gameObject.SetActive(false);
-                AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
-                mainGameUIManager.UpdateScore();
-            }
-            else
-            {
-                Debug.LogWarning("No gem particle available in the object pool");
-            }
-            
+        {
+            Vector3 gemSpawnPos = other.transform.position;
+            Instantiate(gemParticle, gemSpawnPos, Quaternion.identity);
+            other.gameObject.SetActive(false);
+            AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
+            mainGameUIManager.UpdateScore();
+            plusOneScoreGameObject.SetActive(true);
         }
         else if (other.gameObject.CompareTag("Logs"))
         {
-            GameObject collisionParticle = collisionParticlePooling.GetPooledObject();
-            if (collisionParticle != null)
-            {
-                collisionParticle.transform.position = gameObject.transform.position;
-                collisionParticle.SetActive(true);
-                gameObject.SetActive(false);
-                RoundManager.Instance.GameOver();
-                AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-                BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
-                float currentTime = Time.time - startTime; 
-                BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
-                BestTimeAndScoreManager.Instance.CheckSaveBestTime(currentTime);
-            }  
-            else
-            {
-                Debug.Log("No gem particle available in the object pool");
-            }
+            Vector3 collisionSpawnPos = gameObject.transform.position;
+            Instantiate(collisionParticle, collisionSpawnPos, Quaternion.identity);
+            gameObject.SetActive(false);
+            RoundManager.Instance.GameOver();
+            AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
+            BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
+            float currentTime = Time.time - startTime;
+            BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
+            BestTimeAndScoreManager.Instance.CheckSaveBestTime(currentTime);
         }
         else if (other.gameObject.CompareTag("Bounds"))
         {
             gameObject.SetActive(false);
             RoundManager.Instance.GameOver();
             AudioManager.Instance.PlaySound(gameOverAudioSource, gameOverAudioClip);
-            float currentTime = Time.time - startTime; 
+            float currentTime = Time.time - startTime;
             BestTimeAndScoreManager.Instance.CheckSaveBestScore(score);
             BestTimeAndScoreManager.Instance.CheckSaveBestTime(currentTime);
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Gem"))
+        {
+            StartCoroutine(OnTriggerExit2DWithDelay());
+        }
+    }
+
+    private IEnumerator OnTriggerExit2DWithDelay()
+    {
+        yield return new WaitForSeconds(onTriggerExitDelay);
+        plusOneScoreGameObject.SetActive(false);
     }
 
     public void AddForceToPlayer()

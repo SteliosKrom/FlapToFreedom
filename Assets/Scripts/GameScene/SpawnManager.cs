@@ -6,8 +6,8 @@ public class SpawnManager : MonoBehaviour
     public PlayerController playerController;
     public GameObject treeLogsPrefab;
 
-    private readonly float upperBoundY = 3.5f;
-    private readonly float lowerBoundY = -3.5f;
+    private readonly float upperBoundY = 4f;
+    private readonly float lowerBoundY = -4f;
     private readonly float zBounds = 10f;
     private readonly float xBounds = -15f;
     private readonly float startDelay = 1f;
@@ -18,10 +18,6 @@ public class SpawnManager : MonoBehaviour
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        GameObject gemParticleObj = playerController.gemParticlePooling.GetPooledObject();
-        GameObject collisionParticleObj = playerController.collisionParticlePooling.GetPooledObject();
-        gemParticleObj.SetActive(false);
-        collisionParticleObj.SetActive(false);
         StartCoroutine(SpawnObjectsCouroutine());
     }
 
@@ -36,8 +32,7 @@ public class SpawnManager : MonoBehaviour
     public void SpawnObjects()
     {
         var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
-        GameObject logsPoolingObj = Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
-        logsPoolingObj.SetActive(true);
+        Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
     }
 
     private IEnumerator SpawnObjectsCouroutine()

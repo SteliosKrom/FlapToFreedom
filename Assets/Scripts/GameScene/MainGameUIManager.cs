@@ -15,10 +15,7 @@ public class MainGameUIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI timerText;
 
     [Header("GAMEPLAY")]
-    private readonly float quitButtonAfterDelay = 0.1f;
-    private readonly float resumeButtonDelay = 0.1f;
-    private readonly float homeButtonDelay = 0.1f;
-    private readonly float restartButtonDelay = 0.2f;
+    private readonly float delay = 0.1f;
     private float timer = 0f;
 
     [Header("AUDIO SOURCES")]
@@ -87,7 +84,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(quitButtonAfterDelay);
+        yield return new WaitForSecondsRealtime(delay);
 
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
@@ -105,7 +102,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator ResumeGameButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(resumeButtonDelay);
+        yield return new WaitForSecondsRealtime(delay);
         RoundManager.Instance.ResumeGame();
     }
 
@@ -118,7 +115,7 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator HomeBlackButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(homeButtonDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("MainMenuScene");
     }
 
@@ -130,20 +127,21 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator RestartButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(restartButtonDelay);
+        yield return new WaitForSecondsRealtime(delay);
         SceneManager.LoadScene("MainScene");
         Time.timeScale = 1f;
     }
 
-    /*public void LoadSettingsButton()
+    public void LoadSettingsButton()
     {
+        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         StartCoroutine(LoadSettingsButtonAfterDelay());
     }
 
     IEnumerator LoadSettingsButtonAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(settingsButtonDelay);
-    }*/
+        yield return new WaitForSecondsRealtime(delay);
+    }
 
     public void OnPointerEnter()
     {

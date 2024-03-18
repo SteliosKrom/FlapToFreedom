@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3051053806999894035}
   - component: {fileID: 2142025750709683283}
-  - component: {fileID: 6098327866115023365}
   m_Layer: 0
   m_Name: ClickSoundEffects
   m_TagString: Untagged
@@ -129,15 +128,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &6098327866115023365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4342227274719007135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16c5be8dbe108534f9eeb44a3171f90b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

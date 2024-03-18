@@ -8,26 +8,18 @@ public class PressAnyKeyToStartFunctionality : MonoBehaviour
 {
     public bool isPressed = false;
 
-    private AudioManager audioManager;  //use instance reference instead
-
-    private void Start()
-    {
-        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-    }
-
     // Update is called once per frame
     void Update()
     {
-        PressLeftMouseButtonToStartAndLoadMainMenuScene();
+        PressAnyKeyToStartAndLoadMainMenuScene();
     }
 
-    public void PressLeftMouseButtonToStartAndLoadMainMenuScene()
+    public void PressAnyKeyToStartAndLoadMainMenuScene()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isPressed)
+        if (Input.anyKeyDown && !isPressed)
         {
             isPressed = true;
             SceneManager.LoadScene("MainMenuScene");
-           // audioManager.PressButtonSound();
             Debug.Log("Main menu scene loads!");
         }
 
