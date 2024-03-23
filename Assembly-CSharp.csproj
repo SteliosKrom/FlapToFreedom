@@ -79,6 +79,7 @@
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_RotateCamera.cs" />
     <Compile Include="Assets\Scripts\GameScene\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\TitleScene\TitleUIManager.cs" />
+    <Compile Include="Assets\Scripts\GameScene\HandleGoBackTransitions.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
     <Compile Include="Assets\2DParticleEffects\Cartoon FX (legacy)\Demo\Assets\CFX_Demo_Translate.cs" />
     <Compile Include="Assets\Scripts\GameScene\RepeatBackground.cs" />

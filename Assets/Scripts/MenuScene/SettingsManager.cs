@@ -4,19 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
+using System;
 
+// I will try to move my GoBackToGameMenu() method to my main game ui manager class and split up this code from here to prevent errors and duplications or other way make another new class to handle that.
 public class SettingsManager : MonoBehaviour
 {
-    private readonly float goBackDelay = 0.1f;
+
     public AudioMixer myAudioMixer;
     const string menuMusicVol = "MenuMusicVolume";
     const string soundEffectsVol = "SoundsVolume";
     const string masterVol = "MasterVolume";
     const string gameMusicVol = "GameMusicVolume";
-
-    [Header("GAMEOBJECTS")]
-    public GameObject optionsMenu;
-    public GameObject mainMenu;
 
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
@@ -54,21 +52,9 @@ public class SettingsManager : MonoBehaviour
         LoadSettings();
         qualityDropdown.value = 0;
         QualitySettings.SetQualityLevel(qualityDropdown.value);
-
     }
 
-    public void GoBackButton()
-    {
-        AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
-        StartCoroutine(GoBackToMainMenuSceneAfterDelay());
-    }
-
-    IEnumerator GoBackToMainMenuSceneAfterDelay()
-    {
-        yield return new WaitForSecondsRealtime(goBackDelay);
-        optionsMenu.SetActive(false);
-        mainMenu.SetActive(true);
-    }
+    
 
     public void SaveSettings()
     {

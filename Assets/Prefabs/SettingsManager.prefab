@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &942633642587998571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7911186422574478655}
+  - component: {fileID: 9191065484364457687}
+  m_Layer: 0
+  m_Name: SettingsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7911186422574478655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942633642587998571}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9191065484364457687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942633642587998571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1a1dad5993a7244acd62256ed4bd42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myAudioMixer: {fileID: 24100000, guid: 667c6bb0b0ee0f94f95d1abd9d3f6803, type: 2}
+  gameVolumeSlider: {fileID: 0}
+  gameVolumeSliderText: {fileID: 0}
+  menuMusicVolumeSlider: {fileID: 0}
+  menuMusicVolumeSliderText: {fileID: 0}
+  soundsVolumeSlider: {fileID: 0}
+  soundsVolumeSliderText: {fileID: 0}
+  masterVolumeSlider: {fileID: 0}
+  masterVolumeSliderText: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+  resolutionDropdown: {fileID: 0}
+  fullScreenToggle: {fileID: 0}
+  onPointerEnterAudioSource: {fileID: 0}
+  onPointerClickAudioSource: {fileID: 0}
+  pressButtonSoundAudioSource: {fileID: 0}
+  onPointerEnterAudioClip: {fileID: 8300000, guid: aebae0e89d575dc43ae340319487ef87, type: 3}
+  onPointerClickAudioClip: {fileID: 8300000, guid: a7ee863012fe4af44b7158f540a86271, type: 3}
+  pressButtonSoundAudioClip: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}

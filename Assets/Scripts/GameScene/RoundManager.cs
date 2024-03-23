@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public enum GameState
@@ -6,7 +5,8 @@ public enum GameState
     Intro,
     Playing,
     Pause,
-    GameOver
+    GameOver,
+    OnSettings
 }
 
 public class RoundManager : MonoBehaviour
@@ -46,7 +46,6 @@ public class RoundManager : MonoBehaviour
         Instance = this;  
     }
     
-
     public void GameOver()
     {
         currentState = GameState.GameOver;

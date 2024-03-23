@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("PARTICLES")]
-    public ParticleSystem gemParticle;
-    public ParticleSystem collisionParticle;
+    public GameObject gemParticle;
+    public GameObject collisionParticle;
 
     [Header("UI")]
     [SerializeField] private GameObject plusOneScoreGameObject;
@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Gem"))
         {
             Vector3 gemSpawnPos = other.transform.position;
-            Instantiate(gemParticle, gemSpawnPos, Quaternion.identity);
+            GameObject newGemParticle = Instantiate(gemParticle, gemSpawnPos, Quaternion.identity);
+            mainGameUIManager.gemParticleList.Add(newGemParticle);
             other.gameObject.SetActive(false);
             AudioManager.Instance.PlaySound(gemTriggerAudioSource, gemTriggerAudioClip);
             mainGameUIManager.UpdateScore();

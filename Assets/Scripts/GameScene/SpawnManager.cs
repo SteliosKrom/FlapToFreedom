@@ -5,6 +5,7 @@ public class SpawnManager : MonoBehaviour
 {
     public PlayerController playerController;
     public GameObject treeLogsPrefab;
+    public MainGameUIManager mainGameUIManager;
 
     private readonly float upperBoundY = 4f;
     private readonly float lowerBoundY = -4f;
@@ -17,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();  
         StartCoroutine(SpawnObjectsCouroutine());
     }
 
@@ -32,7 +33,8 @@ public class SpawnManager : MonoBehaviour
     public void SpawnObjects()
     {
         var spawnPos = new Vector3(xBounds, Random.Range(lowerBoundY, upperBoundY), zBounds);
-        Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        GameObject newTreeLog = Instantiate(treeLogsPrefab, spawnPos, treeLogsPrefab.transform.rotation);
+        mainGameUIManager.treeLogsList.Add(newTreeLog);
     }
 
     private IEnumerator SpawnObjectsCouroutine()
