@@ -12,12 +12,14 @@ public class MenuUIManager : MonoBehaviour
     [Header("GAMEOBJECTS")]
     public GameObject mainMenu;
     public GameObject optionsMenu;
+    public GameObject creditsMenu;
 
 
     [Header("GAMEPLAY")]
     private readonly float quitButtonDelay = 0.2f;
     private readonly float settingsButtonDelay = 0.1f;
     private readonly float playButtonDelay = 0.1f;
+    private readonly float creditsButtonDelay = 0.1f;
 
 
     [Header("AUDIO SOURCES")]
@@ -33,6 +35,7 @@ public class MenuUIManager : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        creditsMenu.SetActive(false);
     }
 
     private void OnEnable()
@@ -101,7 +104,18 @@ public class MenuUIManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    
+    public void LoadCredits()
+    {
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
+        StartCoroutine(LoadCreditsAfterDelay());
+    }
+
+    IEnumerator LoadCreditsAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(creditsButtonDelay);
+        creditsMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
 
     public void OnPointerEnter()
     {

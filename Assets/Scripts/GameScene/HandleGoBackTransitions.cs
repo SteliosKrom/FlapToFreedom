@@ -11,6 +11,7 @@ public class HandleGoBackTransitions : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject backgroundLayers;
     [SerializeField] private GameObject groundLayers;
+    [SerializeField] private GameObject creditsMenu;
 
     [Header("GAMEPLAY")]
     public float goBackDelay = 0.1f;
@@ -32,6 +33,7 @@ public class HandleGoBackTransitions : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(goBackDelay);
         optionsMenu.SetActive(false);
+        creditsMenu.SetActive(false);
         mainMenu.SetActive(true);
     } 
 }

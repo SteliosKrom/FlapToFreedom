@@ -17,7 +17,6 @@ public class MainGameUIManager : MonoBehaviour
     public GameObject mainGame;
     public GameObject groundLayers;
     public GameObject backgroundLayers;
-    public GameObject mainMenu;
     public GameObject player;
 
     [Header("UI")]
@@ -41,7 +40,8 @@ public class MainGameUIManager : MonoBehaviour
 
     private void Awake()
     {
-        mainMenu.SetActive(false);
+        mainGame.SetActive(true);
+        optionsMenu.SetActive(false);   
     }
     private void Update()
     {
@@ -157,7 +157,7 @@ public class MainGameUIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         RoundManager.Instance.currentState = GameState.OnSettings;
-        SetObjectsInactiveActive(false, false, false, false, false, true);
+        SetObjectsInactiveActive(false, false, false, false, true);
 
         foreach (GameObject treeLog in treeLogsList)
         {
@@ -172,11 +172,10 @@ public class MainGameUIManager : MonoBehaviour
         }
     }
 
-    public void SetObjectsInactiveActive(bool mainGameActive, bool backgroundLayersActive, bool groundLayersActive, bool playerActive, bool mainMenuActive, bool optionsMenuActive)
+    public void SetObjectsInactiveActive(bool mainGameActive, bool backgroundLayersActive, bool groundLayersActive, bool playerActive, bool optionsMenuActive)
     {
         optionsMenu.SetActive(optionsMenuActive);
         mainGame.SetActive(mainGameActive);
-        mainMenu.SetActive(mainMenuActive);
         backgroundLayers.SetActive(backgroundLayersActive);
         groundLayers.SetActive(groundLayersActive);
         player.SetActive(playerActive);
