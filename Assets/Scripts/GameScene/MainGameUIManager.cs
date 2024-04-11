@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -10,21 +9,16 @@ public class MainGameUIManager : MonoBehaviour
     public AudioMixer myAudioMixer;
     public PlayerController playerController;
 
-    [Header("GAME OBJECTS")]
-    public List<GameObject> treeLogsList;
-    public List<GameObject> gemParticleList;
     public GameObject optionsMenu;
     public GameObject mainGame;
-    public GameObject groundLayers;
-    public GameObject backgroundLayers;
-    public GameObject player;
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI timerText;
 
     [Header("GAMEPLAY")]
-    private readonly float delay = 0.1f;
+    private readonly float quitDelay = 0.5f;
+    private readonly float delay = 0.2f;
     private float timer = 0f;
     public float goBackDelay = 0.1f;
 
@@ -40,9 +34,11 @@ public class MainGameUIManager : MonoBehaviour
 
     private void Awake()
     {
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        optionsMenu.SetActive(false);
         mainGame.SetActive(true);
-        optionsMenu.SetActive(false);   
     }
+
     private void Update()
     {
         if (RoundManager.Instance.currentState == GameState.Playing)
@@ -51,6 +47,7 @@ public class MainGameUIManager : MonoBehaviour
         }
         InputForPauseMenuScreen();
     }
+
 
     public void TimeScore()
     {
@@ -70,19 +67,23 @@ public class MainGameUIManager : MonoBehaviour
         ScoreText.text = "Score: " + playerController.score.ToString();
     }
 
-    public void UpdateScore()
+    public void UpdateScore(int increment = 1)
     {
-        playerController.score++;
-        ScoreText.text = "Score: " + playerController.score;
+        playerController.score += increment;
+        ScoreText.text = "Score: " + playerController.score.ToString();
     }
 
     public void InputForPauseMenuScreen()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && RoundManager.Instance.currentState != GameState.GameOver && RoundManager.Instance.currentState != GameState.OnSettings)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (RoundManager.Instance.currentState == GameState.Playing)
             {
                 RoundManager.Instance.PauseGame();
+                playerController.informPlayerForPowerUp.SetActive(false);
+                playerController.informPlayerIncreasePowerUp.SetActive(false);
+                playerController.plusOneScoreGameObject.SetActive(false);
+                playerController.plusTwoScoreGameObject.SetActive(false);
             }
             else if (RoundManager.Instance.currentState == GameState.Pause)
             {
@@ -99,14 +100,14 @@ public class MainGameUIManager : MonoBehaviour
 
     IEnumerator QuitAfterDelay()
     {
-        yield return new WaitForSecondsRealtime(delay);
-
+        yield return new WaitForSecondsRealtime(quitDelay);
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
-        PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
+        PlayerPrefs.SetFloat("MenuVolume", 1.0f);
+        PlayerPrefs.SetFloat("GameVolume", 1.0f);
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
-
         Application.Quit();
+        Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }
 
     public void ResumeGameButton()
@@ -120,7 +121,6 @@ public class MainGameUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(delay);
         RoundManager.Instance.ResumeGame();
     }
-
 
     public void HomeBlackButton()
     {
@@ -157,28 +157,8 @@ public class MainGameUIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         RoundManager.Instance.currentState = GameState.OnSettings;
-        SetObjectsInactiveActive(false, false, false, false, true);
-
-        foreach (GameObject treeLog in treeLogsList)
-        {
-            treeLog.SetActive(false);
-        }
-        foreach (GameObject gemParticle in gemParticleList)
-        {
-            if (gemParticle != null)
-            {
-                gemParticle.SetActive(false);
-            }  
-        }
-    }
-
-    public void SetObjectsInactiveActive(bool mainGameActive, bool backgroundLayersActive, bool groundLayersActive, bool playerActive, bool optionsMenuActive)
-    {
-        optionsMenu.SetActive(optionsMenuActive);
-        mainGame.SetActive(mainGameActive);
-        backgroundLayers.SetActive(backgroundLayersActive);
-        groundLayers.SetActive(groundLayersActive);
-        player.SetActive(playerActive);
+        mainGame.SetActive(false);
+        optionsMenu.SetActive(true);
     }
 
     public void GoBackToGameButton()
@@ -192,29 +172,7 @@ public class MainGameUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(goBackDelay);
         RoundManager.Instance.currentState = GameState.Pause;
         optionsMenu.SetActive(false);
-        SetObjectsActive(true, true, true, true, false, false, true);
-
-        foreach (GameObject treeLog in treeLogsList)
-        {
-            treeLog.SetActive(true);
-        }
-        foreach (GameObject gemParticle in gemParticleList)
-        {
-            if (gemParticle != null)
-            {
-                gemParticle.SetActive(true);
-            }
-        }
-    }
-
-    public void SetObjectsActive(bool pauseMenuScreenActive, bool groundLayersActive, bool backgroundLayersActive, bool mainGameActive, bool mainMenuActive, bool optionsMenuActive, bool playerActive)
-    {
-        RoundManager.Instance.pauseMenuScreen.SetActive(pauseMenuScreenActive);
-        mainGame.SetActive(mainGameActive);
-        optionsMenu.SetActive(optionsMenuActive);
-        backgroundLayers.SetActive(backgroundLayersActive);
-        groundLayers.SetActive(groundLayersActive);
-        player.SetActive(playerActive);
+        mainGame.SetActive(true);
     }
 
     public void OnPointerEnter()

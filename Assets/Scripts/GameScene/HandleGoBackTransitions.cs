@@ -35,5 +35,7 @@ public class HandleGoBackTransitions : MonoBehaviour
         optionsMenu.SetActive(false);
         creditsMenu.SetActive(false);
         mainMenu.SetActive(true);
+        backgroundLayers.SetActive(true);
+        groundLayers.SetActive(true);
     } 
 }

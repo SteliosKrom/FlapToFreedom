@@ -12,6 +12,12 @@ TagManager:
   - HighScore
   - PauseMenuScreen
   - FxTemporaire
+  - Background
+  - Ground
+  - PowerUp
+  - PlayerPowerUpAura
+  - PowerUpIncreaseScoreBy2
+  - PlayerBoostAuraIncrease
   layers:
   - Default
   - TransparentFX

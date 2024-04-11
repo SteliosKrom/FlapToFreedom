@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState
@@ -15,20 +16,16 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance;
     [SerializeField] private PlayerController playerController;
 
-
     [Header("UI")]
 
     public GameObject gameOverMenuScreen;
     public GameObject pauseMenuScreen;
 
-
     [Header("GAMEPLAY")]
     public Transform startingPoint;
 
-
     [Header("STATES")]
     public GameState currentState;
-
 
     [Header("AUDIO SOURCES")]
     [SerializeField] private AudioSource mainGameMusicAudioSource;
@@ -38,20 +35,33 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private AudioClip mainGameMusicAudioClip;
     [SerializeField] private AudioClip pressButtonSoundAudioClip; 
 
-
     public AudioSource MainGameMusicAudioSource { get => mainGameMusicAudioSource; set => mainGameMusicAudioSource = value; }
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
     private void Awake()
     {
-        Instance = this;  
+        Instance = this;
     }
-    
+
+    private void Start()
+    {
+        Cursor.visible = false;
+    }
+
     public void GameOver()
     {
         currentState = GameState.GameOver;
         gameOverMenuScreen.SetActive(true);
         AudioManager.Instance.PlaySound(playerController.gameOverAudioSource, playerController.gameOverAudioClip);
-        mainGameMusicAudioSource.Stop();
+        MainGameMusicAudioSource.Stop();
+        PlayerController.plusOneScoreGameObject.SetActive(false);
+        PlayerController.plusTwoScoreGameObject.SetActive(false);
+        PlayerController.informPlayerForPowerUp.SetActive(false);
+        PlayerController.informPlayerIncreasePowerUp.SetActive(false);
+        PlayerController.powerUpIncreaseScoreByTwoParticle.SetActive(false);
+        PlayerController.powerUpParticle.SetActive(false);
+        PlayerController.gemParticle.SetActive(false);
+        PlayerController.collisionParticle.SetActive(false);
+        Cursor.visible = true;
     }
 
     public void PauseGame()
@@ -61,6 +71,7 @@ public class RoundManager : MonoBehaviour
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         Time.timeScale = 0f;
         currentState = GameState.Pause;
+        Cursor.visible = true;
     }
 
     public void ResumeGame()
@@ -70,5 +81,6 @@ public class RoundManager : MonoBehaviour
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
         Time.timeScale = 1f;
         currentState = GameState.Playing;
+        Cursor.visible = false;
     }    
 }

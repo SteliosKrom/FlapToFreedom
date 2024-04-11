@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
-using System;
 
-// I will try to move my GoBackToGameMenu() method to my main game ui manager class and split up this code from here to prevent errors and duplications or other way make another new class to handle that.
 public class SettingsManager : MonoBehaviour
 {
 
@@ -39,22 +36,18 @@ public class SettingsManager : MonoBehaviour
     public AudioSource onPointerEnterAudioSource;
     public AudioSource onPointerClickAudioSource;
     public AudioSource pressButtonSoundAudioSource;
-   
+
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
     public AudioClip onPointerClickAudioClip;
     public AudioClip pressButtonSoundAudioClip;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         ResolutionSettings();
         LoadSettings();
-        qualityDropdown.value = 0;
-        QualitySettings.SetQualityLevel(qualityDropdown.value);
     }
-
-    
 
     public void SaveSettings()
     {
@@ -66,7 +59,7 @@ public class SettingsManager : MonoBehaviour
         float gameVolumeValue = gameVolumeSlider.value;
         int qualityDropdownValue = qualityDropdown.value;
 
-        PlayerPrefs.SetFloat("MenuMusicVolume", menuMusicVolumeValue);
+        PlayerPrefs.SetFloat("MenuVolume", menuMusicVolumeValue);
         PlayerPrefs.SetFloat("SoundsVolume", soundsVolumeValue);
         PlayerPrefs.SetFloat("MasterVolume", masterVolumeValue);
         PlayerPrefs.SetFloat("GameVolume", gameVolumeValue);
@@ -75,37 +68,31 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeValue) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
-        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeValue) * 20); 
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeValue) * 20);
     }
 
     public void LoadSettings()
     {
-        float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuMusicVolume");
+        float menuMusicVolumeValue = PlayerPrefs.GetFloat("MenuVolume");
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
         float gameVolumeValue = PlayerPrefs.GetFloat("GameVolume");
         int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
 
         if (menuMusicVolumeSlider != null)
-        {
             menuMusicVolumeSlider.value = menuMusicVolumeValue;
-        }
+
         if (soundsVolumeSlider != null)
-        {
             soundsVolumeSlider.value = soundsVolumeValue;
-        }
+
         if (masterVolumeSlider != null)
-        {
             masterVolumeSlider.value = masterVolumeValue;
-        }
-        if (qualityDropdown != null)
-        {
-            qualityDropdown.value = qualityDropdownValue;
-        }
+
         if (gameVolumeSlider != null)
-        {
             gameVolumeSlider.value = gameVolumeValue;
-        }
+
+        if (qualityDropdown != null)
+            qualityDropdown.value = qualityDropdownValue;
     }
 
     public void MenuMusicVolumeSlider()
@@ -118,7 +105,6 @@ public class SettingsManager : MonoBehaviour
     {
         float gameVolume = gameVolumeSlider.value;
         gameVolumeSliderText.text = gameVolume.ToString("0.0");
-        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
     }
 
     public void SoundsVolumeSlider()
@@ -141,7 +127,7 @@ public class SettingsManager : MonoBehaviour
         {
             menuMusicVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
-            PlayerPrefs.SetFloat("MenuMusicVolume", menuMusicVolumeSlider.value);
+            PlayerPrefs.SetFloat("MenuVolume", menuMusicVolumeSlider.value);
         }
         if (soundsVolumeSlider != null)
         {
@@ -159,7 +145,7 @@ public class SettingsManager : MonoBehaviour
         {
             gameVolumeSlider.value = 1.0f;
             myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
-            PlayerPrefs.SetFloat("GameVolume", gameVolumeSlider.value); 
+            PlayerPrefs.SetFloat("GameVolume", gameVolumeSlider.value);
         }
         if (qualityDropdown != null)
         {
@@ -177,12 +163,6 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("Current quality level: " + QualitySettings.GetQualityLevel());
     }
 
-    public void FullScreenMode(bool isFullScreen)
-    {
-        Screen.fullScreen = isFullScreen;
-        Debug.Log("Fullscreen mode is: " + isFullScreen);
-    }
-
     public void ResolutionSettings()
     {
         resolutions = Screen.resolutions;
@@ -191,7 +171,7 @@ public class SettingsManager : MonoBehaviour
         {
             resolutionDropdown.ClearOptions();
         }
-       
+
         List<string> options = new List<string>();
 
         int currentResolutionIndex = 0;
@@ -212,13 +192,16 @@ public class SettingsManager : MonoBehaviour
             resolutionDropdown.AddOptions(options);
             resolutionDropdown.value = currentResolutionIndex;
             resolutionDropdown.RefreshShownValue();
-        }      
+        }
     }
 
     public void SetResolution(int resolutionIndex)
     {
-        Resolution resolution = resolutions[resolutionIndex];
-        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        if (resolutionIndex >= 0 && resolutionIndex < resolutions.Length)
+        {
+            Resolution resolution = resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        }
     }
 
     public void OnPointerEnter()

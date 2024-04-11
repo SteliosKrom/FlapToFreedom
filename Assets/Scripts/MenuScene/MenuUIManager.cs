@@ -16,7 +16,7 @@ public class MenuUIManager : MonoBehaviour
 
 
     [Header("GAMEPLAY")]
-    private readonly float quitButtonDelay = 0.2f;
+    private readonly float quitButtonDelay = 0.5f;
     private readonly float settingsButtonDelay = 0.1f;
     private readonly float playButtonDelay = 0.1f;
     private readonly float creditsButtonDelay = 0.1f;
@@ -29,7 +29,6 @@ public class MenuUIManager : MonoBehaviour
     [Header("AUDIO CLIPS")]
     public AudioClip onPointerEnterAudioClip;
     public AudioClip pressButtonAudioClip;
-
 
     private void Start()
     {
@@ -68,12 +67,11 @@ public class MenuUIManager : MonoBehaviour
     IEnumerator QuitAfterDelay()
     {
         yield return new WaitForSecondsRealtime(quitButtonDelay);
-
         PlayerPrefs.SetFloat("MasterVolume", 1.0f);
         PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
-        PlayerPrefs.SetFloat("MenuMusicVolume", 1.0f);
+        PlayerPrefs.SetFloat("MenuVolume", 1.0f);
+        PlayerPrefs.SetFloat("GameVolume", 1.0f);
         PlayerPrefs.SetInt("QualityDropdownValue", 0);
-
         Application.Quit();
         Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }
