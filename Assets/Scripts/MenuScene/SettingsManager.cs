@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -6,7 +5,6 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
-
     public AudioMixer myAudioMixer;
     const string menuMusicVol = "MenuMusicVolume";
     const string soundEffectsVol = "SoundsVolume";
@@ -28,9 +26,7 @@ public class SettingsManager : MonoBehaviour
 
     [Header("DISPLAY")]
     [SerializeField] private TMP_Dropdown qualityDropdown;
-    [SerializeField] private TMP_Dropdown resolutionDropdown;
-    [SerializeField] private Toggle fullScreenToggle;
-    Resolution[] resolutions;
+    [SerializeField] private Toggle fullscreenToggle;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -45,7 +41,6 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        ResolutionSettings();
         LoadSettings();
     }
 
@@ -69,6 +64,12 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
         myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeValue) * 20);
+
+        Debug.Log("Game volume is saved: " + gameVolumeValue);
+        Debug.Log("Menu volume is saved: " + menuMusicVolumeValue);
+        Debug.Log("Master volume is saved: " + masterVolumeValue);
+        Debug.Log("Sounds volume are saved: " + soundsVolumeValue);
+        Debug.Log("Quality dropdown is saved: " + qualityDropdownValue);
     }
 
     public void LoadSettings()
@@ -157,51 +158,26 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("Reset settings to default!");
     }
 
+    public void ToggleScreenMode()
+    {
+        if (Screen.fullScreen)
+        {
+            int screenWidth = 1920;
+            int screenHeight = 1080;
+            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.Windowed);
+        }
+        else
+        {
+            int screenWidth = Screen.currentResolution.width;
+            int screenHeight = Screen.currentResolution.height;
+            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.ExclusiveFullScreen);
+        }
+    }
+
     public void GraphicsQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
         Debug.Log("Current quality level: " + QualitySettings.GetQualityLevel());
-    }
-
-    public void ResolutionSettings()
-    {
-        resolutions = Screen.resolutions;
-
-        if (resolutionDropdown != null)
-        {
-            resolutionDropdown.ClearOptions();
-        }
-
-        List<string> options = new List<string>();
-
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-
-        if (resolutionDropdown != null)
-        {
-            resolutionDropdown.AddOptions(options);
-            resolutionDropdown.value = currentResolutionIndex;
-            resolutionDropdown.RefreshShownValue();
-        }
-    }
-
-    public void SetResolution(int resolutionIndex)
-    {
-        if (resolutionIndex >= 0 && resolutionIndex < resolutions.Length)
-        {
-            Resolution resolution = resolutions[resolutionIndex];
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-        }
     }
 
     public void OnPointerEnter()

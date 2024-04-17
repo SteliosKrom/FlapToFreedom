@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum GameState
@@ -39,7 +38,15 @@ public class RoundManager : MonoBehaviour
     public PlayerController PlayerController { get => playerController; set => playerController = value; }
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.Log("Game object: " + name + "is not found");
+            return;
+        }  
     }
 
     private void Start()
@@ -57,10 +64,6 @@ public class RoundManager : MonoBehaviour
         PlayerController.plusTwoScoreGameObject.SetActive(false);
         PlayerController.informPlayerForPowerUp.SetActive(false);
         PlayerController.informPlayerIncreasePowerUp.SetActive(false);
-        PlayerController.powerUpIncreaseScoreByTwoParticle.SetActive(false);
-        PlayerController.powerUpParticle.SetActive(false);
-        PlayerController.gemParticle.SetActive(false);
-        PlayerController.collisionParticle.SetActive(false);
         Cursor.visible = true;
     }
 

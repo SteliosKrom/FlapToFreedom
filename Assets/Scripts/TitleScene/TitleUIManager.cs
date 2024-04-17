@@ -18,7 +18,6 @@ public class TitleUIManager : MonoBehaviour
         timer = 0f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
@@ -36,7 +35,6 @@ public class TitleUIManager : MonoBehaviour
         {
             isPressed = true;
             SceneManager.LoadScene("MainMenuScene");
-            Debug.Log("Main menu scene loads!");
         }
 
         else

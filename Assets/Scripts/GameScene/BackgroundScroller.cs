@@ -14,7 +14,10 @@ public class BackgroundScroller : MonoBehaviour
 
     void Update()
     {
-        distance = distance + (Time.deltaTime * scrollSpeed) / 5f;
-        mat.SetTextureOffset("_MainTex", new Vector2(distance, 0));
+        if (RoundManager.Instance.currentState == GameState.Playing)
+        {
+            distance = distance + (Time.deltaTime * scrollSpeed) / 5f;
+            mat.SetTextureOffset("_MainTex", new Vector2(distance, 0));
+        }
     }
 }
