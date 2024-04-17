@@ -47,6 +47,7 @@ public class MenuUIManager : MonoBehaviour
     {
         int savedBestScore = PlayerPrefs.GetInt("BestScore", 0);
         bestScoreText.text = "Best Score: " + savedBestScore;
+        Debug.Log("Best score is: " + bestScoreText.text);
     }
 
     private void LoadBestTime()
@@ -55,6 +56,7 @@ public class MenuUIManager : MonoBehaviour
         int minutes = Mathf.FloorToInt(savedBestTime / 60);
         int seconds = Mathf.FloorToInt(savedBestTime % 60);
         bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+        Debug.Log("Best time is: " + bestTimeText.text);
     }
 
     public void QuitGame()
@@ -87,6 +89,7 @@ public class MenuUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(settingsButtonDelay);
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
+        Debug.Log("Settings are loaded after a delay");
     }
 
     public void LoadMainGameScene()

@@ -64,12 +64,6 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
         myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeValue) * 20);
         myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeValue) * 20);
-
-        Debug.Log("Game volume is saved: " + gameVolumeValue);
-        Debug.Log("Menu volume is saved: " + menuMusicVolumeValue);
-        Debug.Log("Master volume is saved: " + masterVolumeValue);
-        Debug.Log("Sounds volume are saved: " + soundsVolumeValue);
-        Debug.Log("Quality dropdown is saved: " + qualityDropdownValue);
     }
 
     public void LoadSettings()
@@ -80,20 +74,11 @@ public class SettingsManager : MonoBehaviour
         float gameVolumeValue = PlayerPrefs.GetFloat("GameVolume");
         int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
 
-        if (menuMusicVolumeSlider != null)
-            menuMusicVolumeSlider.value = menuMusicVolumeValue;
-
-        if (soundsVolumeSlider != null)
-            soundsVolumeSlider.value = soundsVolumeValue;
-
-        if (masterVolumeSlider != null)
-            masterVolumeSlider.value = masterVolumeValue;
-
-        if (gameVolumeSlider != null)
-            gameVolumeSlider.value = gameVolumeValue;
-
-        if (qualityDropdown != null)
-            qualityDropdown.value = qualityDropdownValue;
+        menuMusicVolumeSlider.value = menuMusicVolumeValue;
+        soundsVolumeSlider.value = soundsVolumeValue;
+        masterVolumeSlider.value = masterVolumeValue;
+        gameVolumeSlider.value = gameVolumeValue;
+        qualityDropdown.value = qualityDropdownValue;
     }
 
     public void MenuMusicVolumeSlider()
