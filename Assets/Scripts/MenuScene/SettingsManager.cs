@@ -11,6 +11,12 @@ public class SettingsManager : MonoBehaviour
     const string masterVol = "MasterVolume";
     const string gameMusicVol = "GameMusicVolume";
 
+    const float defaultMenuVolume = 1.0f;
+    const float defaultGameVolume = 1.0f;
+    const float defaultSoundsVolume = 1.0f;
+    const float defaultMasterVolume = 1.0f;
+    const int defaultQualityValue = 0;
+
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
     [SerializeField] private TextMeshProUGUI gameVolumeSliderText;
@@ -38,9 +44,19 @@ public class SettingsManager : MonoBehaviour
     public AudioClip onPointerClickAudioClip;
     public AudioClip pressButtonSoundAudioClip;
 
-
     void Start()
     {
+        soundsVolumeSlider.value = defaultSoundsVolume;
+        menuMusicVolumeSlider.value = defaultMenuVolume;
+        masterVolumeSlider.value = defaultMasterVolume;
+        gameVolumeSlider.value = defaultGameVolume;
+        qualityDropdown.value = defaultQualityValue;
+
+        myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
+
         LoadSettings();
     }
 
@@ -79,30 +95,39 @@ public class SettingsManager : MonoBehaviour
         masterVolumeSlider.value = masterVolumeValue;
         gameVolumeSlider.value = gameVolumeValue;
         qualityDropdown.value = qualityDropdownValue;
+
+        myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolumeSlider.value) * 20);
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
     }
 
     public void MenuMusicVolumeSlider()
     {
         float menuVolume = menuMusicVolumeSlider.value;
         menuMusicVolumeSliderText.text = menuVolume.ToString("0.0");
+        myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuVolume) * 20);
     }
 
     public void GameVolumeSlider()
     {
         float gameVolume = gameVolumeSlider.value;
         gameVolumeSliderText.text = gameVolume.ToString("0.0");
+        myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolume) * 20);
     }
 
     public void SoundsVolumeSlider()
     {
         float soundsVolume = soundsVolumeSlider.value;
         soundsVolumeSliderText.text = soundsVolume.ToString("0.0");
+        myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolume) * 20);
     }
 
     public void MasterVolumeSlider()
     {
         float masterVolume = masterVolumeSlider.value;
         masterVolumeSliderText.text = masterVolume.ToString("0.0");
+        myAudioMixer.SetFloat(masterVol, Mathf.Log10(masterVolume) * 20);
     }
 
     public void ResetSettings()

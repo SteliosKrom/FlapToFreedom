@@ -69,11 +69,6 @@ public class MenuUIManager : MonoBehaviour
     IEnumerator QuitAfterDelay()
     {
         yield return new WaitForSecondsRealtime(quitButtonDelay);
-        PlayerPrefs.SetFloat("MasterVolume", 1.0f);
-        PlayerPrefs.SetFloat("SoundsVolume", 1.0f);
-        PlayerPrefs.SetFloat("MenuVolume", 1.0f);
-        PlayerPrefs.SetFloat("GameVolume", 1.0f);
-        PlayerPrefs.SetInt("QualityDropdownValue", 0);
         Application.Quit();
         Debug.Log("Game quits and editor play mode stops and our values reset to default!");
     }

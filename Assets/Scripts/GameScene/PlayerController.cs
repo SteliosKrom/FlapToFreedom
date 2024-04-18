@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space))
             {
-                playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+                playerRb.velocity = Vector2.up * jumpForce;
                 AudioManager.Instance.PlaySound(jumpSoundAudioSource, jumpSoundAudioClip);
             }
         }
@@ -251,7 +251,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddForceToPlayer()
     {
-        playerRb.AddForce(Vector2.up * startJumpForce, ForceMode2D.Impulse);
+        playerRb.velocity = Vector2.up * startJumpForce;
         StartCoroutine(PlayIntro());
     }
 

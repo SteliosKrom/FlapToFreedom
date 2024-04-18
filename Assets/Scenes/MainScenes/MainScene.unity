@@ -4959,7 +4959,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Invisibility Boost!
+  m_text: Invicibility Boost!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7dc3cdbb54487cd4eae7687399c9035c, type: 2}
   m_sharedMaterial: {fileID: -9061458706648311415, guid: 7dc3cdbb54487cd4eae7687399c9035c, type: 2}
@@ -6560,11 +6560,11 @@ MonoBehaviour:
   startingPoint: {fileID: 1851335588}
   speed: 10
   playerRb: {fileID: 7469946879017297230}
-  startJumpForce: 4
-  jumpForce: 2.2
+  startJumpForce: 40
+  jumpForce: 15
   score: 0
   shieldDuration: 10
-  powerUpIncreaseDuration: 4
+  powerUpIncreaseDuration: 5
   gameOverAudioSource: {fileID: 350903519}
   jumpSoundAudioSource: {fileID: 1204626868}
   gemTriggerAudioSource: {fileID: 706781144}
@@ -6784,7 +6784,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
