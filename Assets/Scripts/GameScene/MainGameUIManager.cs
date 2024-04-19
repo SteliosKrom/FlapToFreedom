@@ -57,14 +57,14 @@ public class MainGameUIManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(timer / 60);
             int seconds = Mathf.FloorToInt(timer % 60);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-            timerText.text = "Timer: " + timerText.text;
+            timerText.text = "TIMER: " + timerText.text;
         }
     }
 
     public void ShowScoreOnStart()
     {
         playerController.score = 0;
-        ScoreText.text = "Score: " + playerController.score.ToString();
+        ScoreText.text = "SCORE: " + playerController.score.ToString();
     }
 
     public void UpdateScore(int increment = 1)

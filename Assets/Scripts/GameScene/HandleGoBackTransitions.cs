@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class HandleGoBackTransitions : MonoBehaviour
@@ -12,6 +13,7 @@ public class HandleGoBackTransitions : MonoBehaviour
     [SerializeField] private GameObject backgroundLayers;
     [SerializeField] private GameObject groundLayers;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject controlsMenu;
 
     [Header("GAMEPLAY")]
     public float goBackDelay = 0.1f;
@@ -34,6 +36,7 @@ public class HandleGoBackTransitions : MonoBehaviour
         yield return new WaitForSecondsRealtime(goBackDelay);
         optionsMenu.SetActive(false);
         creditsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
         mainMenu.SetActive(true);
         backgroundLayers.SetActive(true);
         groundLayers.SetActive(true);

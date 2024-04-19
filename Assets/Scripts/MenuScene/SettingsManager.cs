@@ -33,6 +33,7 @@ public class SettingsManager : MonoBehaviour
     [Header("DISPLAY")]
     [SerializeField] private TMP_Dropdown qualityDropdown;
     [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private Toggle vSyncToggle;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -46,6 +47,19 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
+        fullscreenToggle.isOn = Screen.fullScreen;
+
+        if (QualitySettings.vSyncCount == 0)
+        {
+            vSyncToggle.isOn = false;
+            onPointerClickAudioSource.Stop();
+        }
+        else
+        {
+            vSyncToggle.isOn = true;
+            onPointerClickAudioSource.Stop();
+        }
+
         soundsVolumeSlider.value = defaultSoundsVolume;
         menuMusicVolumeSlider.value = defaultMenuVolume;
         masterVolumeSlider.value = defaultMasterVolume;
@@ -62,6 +76,9 @@ public class SettingsManager : MonoBehaviour
 
     public void SaveSettings()
     {
+        Screen.fullScreen = fullscreenToggle.isOn;
+        ToggleSynq();
+
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
 
         float menuMusicVolumeValue = menuMusicVolumeSlider.value;
@@ -168,19 +185,15 @@ public class SettingsManager : MonoBehaviour
         Debug.Log("Reset settings to default!");
     }
 
-    public void ToggleScreenMode()
+    public void ToggleSynq()
     {
-        if (Screen.fullScreen)
+        if (vSyncToggle.isOn)
         {
-            int screenWidth = 1920;
-            int screenHeight = 1080;
-            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.Windowed);
+            QualitySettings.vSyncCount = 1;
         }
         else
         {
-            int screenWidth = Screen.currentResolution.width;
-            int screenHeight = Screen.currentResolution.height;
-            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.ExclusiveFullScreen);
+            QualitySettings.vSyncCount = 0;
         }
     }
 

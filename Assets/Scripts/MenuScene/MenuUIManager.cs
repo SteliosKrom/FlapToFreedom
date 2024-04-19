@@ -13,6 +13,7 @@ public class MenuUIManager : MonoBehaviour
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject creditsMenu;
+    public GameObject controlsMenu;
 
 
     [Header("GAMEPLAY")]
@@ -20,6 +21,7 @@ public class MenuUIManager : MonoBehaviour
     private readonly float settingsButtonDelay = 0.1f;
     private readonly float playButtonDelay = 0.1f;
     private readonly float creditsButtonDelay = 0.1f;
+    private readonly float controlsButtonDelay = 0.1f;
 
 
     [Header("AUDIO SOURCES")]
@@ -35,6 +37,7 @@ public class MenuUIManager : MonoBehaviour
         mainMenu.SetActive(true);
         optionsMenu.SetActive(false);
         creditsMenu.SetActive(false);
+        controlsMenu.SetActive(false);
     }
 
     private void OnEnable()
@@ -46,7 +49,7 @@ public class MenuUIManager : MonoBehaviour
     private void LoadBestScore()
     {
         int savedBestScore = PlayerPrefs.GetInt("BestScore", 0);
-        bestScoreText.text = "Best Score: " + savedBestScore;
+        bestScoreText.text = "BEST SCORE: " + savedBestScore;
         Debug.Log("Best score is: " + bestScoreText.text);
     }
 
@@ -55,7 +58,7 @@ public class MenuUIManager : MonoBehaviour
         float savedBestTime = PlayerPrefs.GetFloat("BestTime", 0f);
         int minutes = Mathf.FloorToInt(savedBestTime / 60);
         int seconds = Mathf.FloorToInt(savedBestTime % 60);
-        bestTimeText.text = "Best Time: " + string.Format("{0:00}:{1:00}", minutes, seconds);
+        bestTimeText.text = "BEST TIME: " + string.Format("{0:00}:{1:00}", minutes, seconds);
         Debug.Log("Best time is: " + bestTimeText.text);
     }
 
@@ -84,6 +87,7 @@ public class MenuUIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(settingsButtonDelay);
         mainMenu.SetActive(false);
         optionsMenu.SetActive(true);
+        controlsMenu.SetActive(false);
         Debug.Log("Settings are loaded after a delay");
     }
 
@@ -110,6 +114,21 @@ public class MenuUIManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(creditsButtonDelay);
         creditsMenu.SetActive(true);
+        mainMenu.SetActive(false);
+        controlsMenu.SetActive(false);
+    }
+
+    public void LoadControls()
+    {
+        AudioManager.Instance.PlaySound(pressButtonAudioSource, pressButtonAudioClip);
+        StartCoroutine(LoadControlsAfterDelay());
+    }
+
+    IEnumerator LoadControlsAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(controlsButtonDelay);
+        controlsMenu.SetActive(true);
+        creditsMenu.SetActive(false);
         mainMenu.SetActive(false);
     }
 
