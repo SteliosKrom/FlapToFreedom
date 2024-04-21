@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     public int score;
     private float startTime;
-    private readonly float onTriggerExitDelay = 2f;
+    private readonly float onTriggerExitDelay = 2.5f;
     private bool hasShield = false;
     [SerializeField] private float shieldDuration;
     [SerializeField] private float powerUpIncreaseDuration;
