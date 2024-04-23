@@ -7,9 +7,10 @@ public class MenuUIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI bestScoreText;
     [SerializeField] TextMeshProUGUI bestTimeText;
+    [SerializeField] private Animator creditsAnim;
 
 
-    [Header("GAMEOBJECTS")]
+    [Header("GAME OBJECTS")]
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject creditsMenu;
@@ -116,6 +117,7 @@ public class MenuUIManager : MonoBehaviour
         creditsMenu.SetActive(true);
         mainMenu.SetActive(false);
         controlsMenu.SetActive(false);
+        creditsAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     public void LoadControls()

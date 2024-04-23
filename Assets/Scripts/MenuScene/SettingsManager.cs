@@ -15,7 +15,6 @@ public class SettingsManager : MonoBehaviour
     const float defaultGameVolume = 1.0f;
     const float defaultSoundsVolume = 1.0f;
     const float defaultMasterVolume = 1.0f;
-    const int defaultQualityValue = 0;
 
     [Header("UI")]
     [SerializeField] private Slider gameVolumeSlider;
@@ -31,7 +30,6 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI masterVolumeSliderText;
 
     [Header("DISPLAY")]
-    [SerializeField] private TMP_Dropdown qualityDropdown;
     [SerializeField] private Toggle fullscreenToggle;
     [SerializeField] private Toggle vSyncToggle;
 
@@ -64,7 +62,6 @@ public class SettingsManager : MonoBehaviour
         menuMusicVolumeSlider.value = defaultMenuVolume;
         masterVolumeSlider.value = defaultMasterVolume;
         gameVolumeSlider.value = defaultGameVolume;
-        qualityDropdown.value = defaultQualityValue;
 
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeSlider.value) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
@@ -76,8 +73,30 @@ public class SettingsManager : MonoBehaviour
 
     public void SaveSettings()
     {
-        Screen.fullScreen = fullscreenToggle.isOn;
-        ToggleSynq();
+        if (fullscreenToggle.isOn)
+        {
+            int screenWidth = Screen.currentResolution.width;
+            int screenHeight = Screen.currentResolution.height;
+            Screen.fullScreen = fullscreenToggle.isOn;
+            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.ExclusiveFullScreen);
+        }
+        else
+        {
+            int screenWidth = 1920;
+            int screenHeight = 1080;
+            Screen.fullScreen = !fullscreenToggle.isOn;
+            Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.Windowed);
+        }
+
+        if (vSyncToggle.isOn)
+        {
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+        }
+
 
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
 
@@ -85,13 +104,11 @@ public class SettingsManager : MonoBehaviour
         float soundsVolumeValue = soundsVolumeSlider.value;
         float masterVolumeValue = masterVolumeSlider.value;
         float gameVolumeValue = gameVolumeSlider.value;
-        int qualityDropdownValue = qualityDropdown.value;
 
         PlayerPrefs.SetFloat("MenuVolume", menuMusicVolumeValue);
         PlayerPrefs.SetFloat("SoundsVolume", soundsVolumeValue);
         PlayerPrefs.SetFloat("MasterVolume", masterVolumeValue);
         PlayerPrefs.SetFloat("GameVolume", gameVolumeValue);
-        PlayerPrefs.SetInt("QualityDropdown", qualityDropdownValue);
 
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeValue) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeValue) * 20);
@@ -105,13 +122,11 @@ public class SettingsManager : MonoBehaviour
         float soundsVolumeValue = PlayerPrefs.GetFloat("SoundsVolume");
         float masterVolumeValue = PlayerPrefs.GetFloat("MasterVolume");
         float gameVolumeValue = PlayerPrefs.GetFloat("GameVolume");
-        int qualityDropdownValue = PlayerPrefs.GetInt("QualityDropdown");
 
         menuMusicVolumeSlider.value = menuMusicVolumeValue;
         soundsVolumeSlider.value = soundsVolumeValue;
         masterVolumeSlider.value = masterVolumeValue;
         gameVolumeSlider.value = gameVolumeValue;
-        qualityDropdown.value = qualityDropdownValue;
 
         myAudioMixer.SetFloat(soundEffectsVol, Mathf.Log10(soundsVolumeSlider.value) * 20);
         myAudioMixer.SetFloat(menuMusicVol, Mathf.Log10(menuMusicVolumeSlider.value) * 20);
@@ -175,33 +190,9 @@ public class SettingsManager : MonoBehaviour
             myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
             PlayerPrefs.SetFloat("GameVolume", gameVolumeSlider.value);
         }
-        if (qualityDropdown != null)
-        {
-            qualityDropdown.value = 0;
-            QualitySettings.SetQualityLevel(qualityDropdown.value);
-            PlayerPrefs.SetInt("QualityDropdown", qualityDropdown.value);
-            Debug.Log("Quality settings are: " + qualityDropdown.value);
-        }
         Debug.Log("Reset settings to default!");
     }
 
-    public void ToggleSynq()
-    {
-        if (vSyncToggle.isOn)
-        {
-            QualitySettings.vSyncCount = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-        }
-    }
-
-    public void GraphicsQuality(int qualityIndex)
-    {
-        QualitySettings.SetQualityLevel(qualityIndex);
-        Debug.Log("Current quality level: " + QualitySettings.GetQualityLevel());
-    }
 
     public void OnPointerEnter()
     {

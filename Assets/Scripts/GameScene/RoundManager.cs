@@ -14,6 +14,7 @@ public class RoundManager : MonoBehaviour
     [Header("MANAGERS")]
     public static RoundManager Instance;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private CountdownTimer countdownTimer;
 
     [Header("UI")]
 
@@ -64,6 +65,10 @@ public class RoundManager : MonoBehaviour
         PlayerController.plusTwoScoreGameObject.SetActive(false);
         PlayerController.informPlayerForPowerUp.SetActive(false);
         PlayerController.informPlayerIncreasePowerUp.SetActive(false);
+        countdownTimer.invicibilityCountdown.SetActive(false);
+        countdownTimer.invicibilityText.SetActive(false);
+        countdownTimer.doubleScoreCountdown.SetActive(false);
+        countdownTimer.doubleScoreText.SetActive(false);
         Cursor.visible = true;
     }
 

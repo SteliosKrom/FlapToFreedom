@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    public CountdownTimer countdownTimer;
+
     [Header("PARTICLES")]
     public GameObject gemParticle;
     public GameObject collisionParticle;
@@ -29,12 +31,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpForce;
     public int score;
     private float startTime;
-    private readonly float onTriggerExitDelay = 2.5f;
-    private bool hasShield = false;
+    private readonly float onTriggerExitDelayInform = 2f;
+    private readonly float onTriggerExitDelayPlus = 1f;
+    public bool hasShield = false;
     [SerializeField] private float shieldDuration;
     [SerializeField] private float powerUpIncreaseDuration;
     private float shieldTimer = 0f;
-    private bool hasPowerUpIncrease = false;
+    public bool hasPowerUpIncrease = false;
     private float powerUpIncreaseTimer = 0f;
 
 
@@ -54,6 +57,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
+
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
         startTime = Time.time;
@@ -81,6 +85,7 @@ public class PlayerController : MonoBehaviour
             {
                 hasPowerUpIncrease = false;
                 ResetPowerUpIncreaseByTwo();
+                informPlayerIncreasePowerUp.SetActive(false);
             }
         }
     }
@@ -210,6 +215,10 @@ public class PlayerController : MonoBehaviour
             AudioManager.Instance.PlaySound(powerUpAudioSource, powerUpAudioClip);
             ActivateShield();
             informPlayerForPowerUp.SetActive(true);
+            countdownTimer.InvicibilityCountdownTimer();
+            countdownTimer.invicibilityCountdown.SetActive(true);
+            countdownTimer.invicibilityText.SetActive(true);
+
         }
         else if (other.gameObject.CompareTag("PowerUpIncreaseScoreBy2"))
         {
@@ -221,6 +230,9 @@ public class PlayerController : MonoBehaviour
             AudioManager.Instance.PlaySound(powerUpAudioSource, powerUpAudioClip);
             ActivatePowerUpIncreaseByTwo();
             informPlayerIncreasePowerUp.SetActive(true);
+            countdownTimer.InvicibilityCountdownTimer();
+            countdownTimer.doubleScoreCountdown.SetActive(true);
+            countdownTimer.doubleScoreText.SetActive(true);
         }
     }
 
@@ -228,25 +240,31 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Gem"))
         {
-            StartCoroutine(OnTriggerExit2DWithDelay());
+            StartCoroutine(OnTriggerExit2DWithDelayPlus());
         }
         else if (other.gameObject.CompareTag("PowerUp"))
         {
-            StartCoroutine(OnTriggerExit2DWithDelay());
+            StartCoroutine(OnTriggerExit2DWithDelayInform());
         }
         else if (other.gameObject.CompareTag("PowerUpIncreaseScoreBy2"))
         {
-            StartCoroutine(OnTriggerExit2DWithDelay());
+            StartCoroutine(OnTriggerExit2DWithDelayInform());
         }
     }
 
-    private IEnumerator OnTriggerExit2DWithDelay()
+
+    private IEnumerator OnTriggerExit2DWithDelayInform()
     {
-        yield return new WaitForSeconds(onTriggerExitDelay);
-        plusOneScoreGameObject.SetActive(false);
-        plusTwoScoreGameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(onTriggerExitDelayInform);
         informPlayerForPowerUp.SetActive(false);
         informPlayerIncreasePowerUp.SetActive(false);
+    }
+
+    private IEnumerator OnTriggerExit2DWithDelayPlus()
+    {
+        yield return new WaitForSecondsRealtime(onTriggerExitDelayPlus);
+        plusOneScoreGameObject.SetActive(false);
+        plusTwoScoreGameObject.SetActive(false);
     }
 
     public void AddForceToPlayer()
