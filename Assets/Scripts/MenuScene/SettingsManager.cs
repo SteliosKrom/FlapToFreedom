@@ -32,6 +32,7 @@ public class SettingsManager : MonoBehaviour
     [Header("DISPLAY")]
     [SerializeField] private Toggle fullscreenToggle;
     [SerializeField] private Toggle vSyncToggle;
+    [SerializeField] private Toggle antiAliasToggle;
 
     [Header("AUDIO SOURCES")]
     public AudioSource onPointerEnterAudioSource;
@@ -46,17 +47,8 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         fullscreenToggle.isOn = Screen.fullScreen;
-
-        if (QualitySettings.vSyncCount == 0)
-        {
-            vSyncToggle.isOn = false;
-            onPointerClickAudioSource.Stop();
-        }
-        else
-        {
-            vSyncToggle.isOn = true;
-            onPointerClickAudioSource.Stop();
-        }
+        VSyncInitial();
+        AntiAliasInitial();
 
         soundsVolumeSlider.value = defaultSoundsVolume;
         menuMusicVolumeSlider.value = defaultMenuVolume;
@@ -69,9 +61,63 @@ public class SettingsManager : MonoBehaviour
         myAudioMixer.SetFloat(gameMusicVol, Mathf.Log10(gameVolumeSlider.value) * 20);
 
         LoadSettings();
+        onPointerClickAudioSource.Stop();
     }
 
-    public void SaveSettings()
+    private void AntiAliasInitial()
+    {
+        if (QualitySettings.antiAliasing == 0)
+        {
+            antiAliasToggle.isOn = false;
+            Debug.Log($"Start game anti alias value is {QualitySettings.antiAliasing} and {antiAliasToggle.isOn}");
+        }
+        else
+        {
+            antiAliasToggle.isOn = true;
+            Debug.Log($"Start game anti alias value is {QualitySettings.antiAliasing} and {antiAliasToggle.isOn}");
+        }
+    }
+
+    private void VSyncInitial()
+    {
+        if (QualitySettings.vSyncCount == 0)
+        {
+            vSyncToggle.isOn = false;
+            Debug.Log($"Start game vSyncToggle value is {QualitySettings.vSyncCount} and {vSyncToggle.isOn}");
+        }
+        else
+        {
+            vSyncToggle.isOn = true;
+            Debug.Log($"Start game vSyncToggle value is {QualitySettings.vSyncCount} and {vSyncToggle.isOn}");
+        }
+    }
+
+    public void SaveAntiAliasingAndVSyncOptions()
+    {
+        if (vSyncToggle.isOn)
+        {
+            QualitySettings.vSyncCount = 1;
+            Debug.Log($"vSyncCount value is {QualitySettings.vSyncCount} and vSyncToggle is {vSyncToggle.isOn}");
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+            Debug.Log($"vSyncCount value is {QualitySettings.vSyncCount} and vSyncToggle is {vSyncToggle.isOn}");
+        }
+
+        if (antiAliasToggle.isOn)
+        {
+            QualitySettings.antiAliasing = 2;
+            Debug.Log($"Anti aliasing value is{QualitySettings.antiAliasing} and {antiAliasToggle.isOn}");
+        }
+        else
+        {
+            QualitySettings.antiAliasing = 0;
+            Debug.Log($"Anti aliasing value is{QualitySettings.antiAliasing} and {antiAliasToggle.isOn}");
+        }
+    }
+
+    public void SaveFullScreenMode()
     {
         if (fullscreenToggle.isOn)
         {
@@ -87,16 +133,12 @@ public class SettingsManager : MonoBehaviour
             Screen.fullScreen = !fullscreenToggle.isOn;
             Screen.SetResolution(screenWidth, screenHeight, FullScreenMode.Windowed);
         }
+    }
 
-        if (vSyncToggle.isOn)
-        {
-            QualitySettings.vSyncCount = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-        }
-
+    public void SaveSettings()
+    {
+        SaveFullScreenMode();
+        SaveAntiAliasingAndVSyncOptions();
 
         AudioManager.Instance.PlaySound(pressButtonSoundAudioSource, pressButtonSoundAudioClip);
 
