@@ -13,7 +13,6 @@ public class BestTimeAndScoreManager : MonoBehaviour
     public int bestScore;
     public float bestTime;
 
-
     private void Awake()
     {
         Instance = this;

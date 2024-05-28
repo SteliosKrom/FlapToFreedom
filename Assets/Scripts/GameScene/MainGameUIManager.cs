@@ -14,7 +14,7 @@ public class MainGameUIManager : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI timerText;
 
     [Header("GAMEPLAY")]
     private readonly float quitDelay = 0.5f;
@@ -70,7 +70,7 @@ public class MainGameUIManager : MonoBehaviour
     public void UpdateScore(int increment = 1)
     {
         playerController.score += increment;
-        ScoreText.text = "Score: " + playerController.score.ToString();
+        ScoreText.text = "SCORE: " + playerController.score.ToString();
     }
 
     public void InputForPauseMenuScreen()
