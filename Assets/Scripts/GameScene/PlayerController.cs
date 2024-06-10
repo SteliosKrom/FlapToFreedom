@@ -57,7 +57,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         mainGameUIManager = GameObject.Find("MainGameUIManager").GetComponent<MainGameUIManager>();
-
         playerRb = this.GetComponent<Rigidbody2D>();
         AddForceToPlayer();
         startTime = Time.time;
