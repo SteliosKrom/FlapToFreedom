@@ -1,0 +1,1 @@
+It is an endless 2D Arcade-Style game, where you have in control a bird and try to avoid obstacles in order to maintain your score and increase your highscore. Be careful! Your bird will find different obstacles, as long as you progress increasing difficulty to challenge yourself. How far can you go? It's all up to you!
