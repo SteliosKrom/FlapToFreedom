@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviour
     [Header("MANAGERS")]
     public PlayerController playerController; //remove player controller reference
     //remove unused tags
-    public MainGameUIManager mainGameUIManager;  //unused reference
+    public MainGameUIManager mainGameUIManager;
 
     [Header("Object Pooling")]
     public ObjectPooling gemParticlePooling;
 
 
     [Header("UI")]
-    [SerializeField] TextMeshProUGUI scoreText;     //this should not be on player it should be on UI so move it out of here
+    [SerializeField] TextMeshProUGUI scoreText;
 
 
     [Header("GAMEPLAY")]
@@ -25,10 +25,10 @@ public class PlayerController : MonoBehaviour
     public float startJumpForce;
     private readonly float jumpForce = 1f;
     public int score;
-    [SerializeField] private GameObject player;     //Remove unncessary
-    [SerializeField] private float lowerYRange; //unused
-    [SerializeField] private float upperYRange; //unused
-    [SerializeField] private float xBounds; //unused
+    [SerializeField] private GameObject player;
+    [SerializeField] private float lowerYRange; 
+    [SerializeField] private float upperYRange; 
+    [SerializeField] private float xBounds; 
 
 
     [Header("AUDIO SOURCES")]
